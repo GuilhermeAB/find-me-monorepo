@@ -186,6 +186,7 @@ describe('AlertPolicy', () => {
         birthDate: new DateVO('1990-01-01'),
         disappearDate: new DateVO('2021-01-01'),
         name: 'John Smith',
+        description: 'Lorem ipsum dolor sit',
         location: {
           type: AlertLocationType.Point,
           coordinates: [180, 90],

@@ -3,7 +3,7 @@ import { Policy } from '../../../base';
 
 export class AlertPersonPolicy extends Policy {
   public static validatePDC(value: unknown): void {
-    if (value && typeof value !== 'boolean') {
+    if (value == null || (value && typeof value !== 'boolean')) {
       Policy.error({ key: 'InvalidPDCValue' });
     }
   }

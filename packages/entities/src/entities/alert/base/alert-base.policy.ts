@@ -103,6 +103,7 @@ export class AlertPolicy extends Policy {
     AlertPolicy.validateAge(props.birthDate);
     AlertPolicy.validateDisappearDate(props.disappearDate);
     AlertPolicy.validateName(props.name);
+    AlertPolicy.validateDescription(props.description);
     AlertPolicy.validateLatitude(props.location.coordinates[1]);
     AlertPolicy.validateLongitude(props.location.coordinates[0]);
   }
