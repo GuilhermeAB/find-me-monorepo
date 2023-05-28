@@ -1,0 +1,10 @@
+{
+  "name": "@find-me/date",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@find-me/errors": "workspace:^",
+    "date-fns": "^2.30.0"
+  }
+}

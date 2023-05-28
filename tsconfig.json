@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "commonjs",
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+
+    "noEmit": true,
+
+    "strict": true,
+
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "useUnknownInCatchVariables": true,
+
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "paths": {
+      "@find-me/*": [
+        "./packages/*",
+        "./backend/*",
+        "./crawler/*",
+        "./frontend/*",
+        "./standard/*",
+        "./adapters/*"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "**/*/dist", "**/*.test.ts"],
+  "include": ["**/*.ts"]
+}

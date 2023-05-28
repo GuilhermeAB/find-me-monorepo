@@ -1,0 +1,4 @@
+dist/
+*.d.ts
+.pnp.cjs
+.pnp.loader.mjs

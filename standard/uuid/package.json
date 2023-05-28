@@ -1,0 +1,13 @@
+{
+  "name": "@find-me/uuid",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@find-me/errors": "workspace:^",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1"
+  }
+}

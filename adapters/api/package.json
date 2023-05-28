@@ -1,0 +1,17 @@
+{
+  "name": "@find-me/api",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@fastify/cors": "^8.2.1",
+    "@fastify/multipart": "^7.6.0",
+    "@find-me/database": "workspace:^",
+    "@find-me/date": "workspace:^",
+    "@find-me/errors": "workspace:^",
+    "@find-me/i18n": "workspace:^",
+    "@find-me/uuid": "workspace:^",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.17.0"
+  }
+}

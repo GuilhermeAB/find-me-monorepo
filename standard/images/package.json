@@ -1,0 +1,13 @@
+{
+  "name": "@find-me/images",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@find-me/errors": "workspace:^",
+    "sharp": "^0.32.1"
+  },
+  "pnpIgnorePatterns": [
+    "/node_modules/sharp/"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@find-me/repositories",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@find-me/database": "workspace:^",
+    "@find-me/date": "workspace:^",
+    "@find-me/entities": "workspace:^",
+    "@find-me/errors": "workspace:^",
+    "@find-me/uuid": "workspace:^"
+  }
+}

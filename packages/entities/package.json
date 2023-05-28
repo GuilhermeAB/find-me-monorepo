@@ -1,0 +1,11 @@
+{
+  "name": "@find-me/entities",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@find-me/date": "workspace:^",
+    "@find-me/errors": "workspace:^",
+    "@find-me/uuid": "workspace:^"
+  }
+}
