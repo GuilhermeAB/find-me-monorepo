@@ -7,6 +7,6 @@
     "@find-me/date": "workspace:^",
     "@find-me/errors": "workspace:^",
     "dotenv": "^16.0.3",
-    "mongoose": "^7.1.1"
+    "mongoose": "^7.2.1"
   }
 }

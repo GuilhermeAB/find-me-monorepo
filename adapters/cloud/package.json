@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.332.0",
-    "@aws-sdk/s3-request-presigner": "^3.332.0",
+    "@aws-sdk/client-s3": "^3.341.0",
+    "@aws-sdk/s3-request-presigner": "^3.341.0",
     "@find-me/errors": "workspace:^",
     "dotenv": "^16.0.3"
   }

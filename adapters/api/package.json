@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@fastify/cors": "^8.2.1",
+    "@fastify/cors": "^8.3.0",
     "@fastify/multipart": "^7.6.0",
     "@find-me/database": "workspace:^",
     "@find-me/date": "workspace:^",
