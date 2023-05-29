@@ -62,8 +62,8 @@ export class AlertEntity<T> extends Entity<AlertProps<T>> {
     const alert = new AlertEntity({
       props: {
         type: create.type as AlertTypeEnum,
-        name: create.name,
-        description: create.description,
+        name: create.name.trim(),
+        description: create.description.trim(),
         birthDate: new DateVO(create.birthDate),
         disappearDate: new DateVO(create.disappearDate),
         location: create.location,

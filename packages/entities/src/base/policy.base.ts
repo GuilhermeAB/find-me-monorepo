@@ -37,6 +37,15 @@ export class Policy {
     return true;
   }
 
+  public static isEnumValue<T>(value: unknown, enumObject: T): boolean {
+    const values = Object.values(enumObject as Record<string, string>);
+
+    if (!values.includes(String(value))) {
+      return false;
+    }
+    return true;
+  }
+
   protected static error(error: ValidationErrorProps): void {
     throw new ValidationError(error);
   }
