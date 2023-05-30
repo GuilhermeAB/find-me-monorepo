@@ -6,7 +6,7 @@ import { AccountEntity } from '../account/account.entity';
 export const RANDOM_CODE_LENGTH = 8;
 
 function generateRandomCode(length: number): string {
-  const randomNumbers = Array.from({ length: length - 1 }, () => Math.floor(Math.random() * 10));
+  const randomNumbers = Array.from({ length }, () => Math.floor(Math.random() * 10));
   const code = randomNumbers.join('');
 
   return code;

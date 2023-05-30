@@ -6,7 +6,10 @@ import {
   PersonEntity,
 } from '@find-me/entities';
 import { ValidationError } from '@find-me/errors';
+import { randomBytes, scryptSync } from 'crypto';
 import { AccountService } from '../base';
+
+const PASSWORD_SALT = 32;
 
 export class AccountCreateService extends AccountService {
   private async validateEmail(email: string): Promise<void> {
@@ -15,6 +18,13 @@ export class AccountCreateService extends AccountService {
     if (exists) {
       throw new ValidationError({ key: 'EmailAlreadyExists' });
     }
+  }
+
+  private static encryptPassword(password: string): string {
+    const salt = randomBytes(PASSWORD_SALT).toString('hex');
+    const encryptedPassword = scryptSync(password, salt, 128).toString('hex');
+
+    return `${encryptedPassword}.${salt}`;
   }
 
   public async create(accountProps: Omit<CreateAccountProps, 'person'>, personProps: CreatePersonProps): Promise<void> {
@@ -31,6 +41,8 @@ export class AccountCreateService extends AccountService {
     account.validate();
 
     await this.validateEmail(account.getProps().email);
+
+    account.password = AccountCreateService.encryptPassword(account.getProps().password);
 
     await this.personRepository.create(person);
     await this.detailsRepository.create(details);
