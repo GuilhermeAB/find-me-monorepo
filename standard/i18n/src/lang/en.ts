@@ -50,4 +50,5 @@ export const en = {
   RoleInvalid: 'Role invalid',
   StatusRequired: 'Status required',
   StatusInvalid: 'Status invalid',
+  EmailAlreadyExists: 'Email already registered',
 };

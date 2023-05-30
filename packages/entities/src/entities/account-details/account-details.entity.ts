@@ -40,7 +40,8 @@ export interface AccountDetailsProps extends
   RecoverData,
   SignInData,
   PasswordChangeData {
-  account: UUID | AccountEntity
+  account: UUID | AccountEntity,
+  isNew?: boolean,
 }
 
 export type CreateAccountDetailsProps = Omit<AccountDetailsProps, 'account'> & {
@@ -72,8 +73,8 @@ export class AccountDetailsEntity extends Entity<AccountDetailsProps> {
     this.props.lastFailedSignInAttempt = undefined;
   }
 
-  public static create(create: CreateAccountDetailsProps, isNew = true): AccountDetailsEntity {
-    const activationData = !isNew ? {
+  public static create(create: CreateAccountDetailsProps): AccountDetailsEntity {
+    const activationData = !create.isNew ? {
       activationCode: create.activationCode,
       activationCodeCreatedAt: create.activationCodeCreatedAt,
       failedActivationAttempts: create.failedActivationAttempts,

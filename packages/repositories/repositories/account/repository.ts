@@ -7,4 +7,12 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
   protected Model = DTOAccount.model;
 
   protected mapper = new AccountMapper(AccountEntity);
+
+  public async emailExists(email: string): Promise<boolean> {
+    const result = await this.Model.exists({
+      email,
+    }).exec();
+
+    return !!result;
+  }
 }

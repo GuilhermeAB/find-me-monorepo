@@ -32,6 +32,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:backend/alert"\
       },\
       {\
+        "name": "@find-me/auth",\
+        "reference": "workspace:backend/auth"\
+      },\
+      {\
         "name": "@find-me/web",\
         "reference": "workspace:frontend/web"\
       },\
@@ -73,6 +77,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [\
       ["@find-me/alert", ["workspace:backend/alert"]],\
       ["@find-me/api", ["workspace:adapters/api"]],\
+      ["@find-me/auth", ["workspace:backend/auth"]],\
       ["@find-me/cloud", ["workspace:adapters/cloud"]],\
       ["@find-me/database", ["workspace:adapters/database"]],\
       ["@find-me/date", ["workspace:standard/date"]],\
@@ -5010,6 +5015,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@find-me/uuid", "workspace:standard/uuid"],\
             ["dotenv", "npm:16.0.3"],\
             ["fastify", "npm:4.17.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@find-me/auth", [\
+        ["workspace:backend/auth", {\
+          "packageLocation": "./backend/auth/",\
+          "packageDependencies": [\
+            ["@find-me/auth", "workspace:backend/auth"],\
+            ["@find-me/api", "workspace:adapters/api"],\
+            ["@find-me/date", "workspace:standard/date"],\
+            ["@find-me/errors", "workspace:standard/errors"],\
+            ["@find-me/services", "workspace:packages/services"],\
+            ["esbuild", "npm:0.17.19"],\
+            ["rimraf", "npm:5.0.1"],\
+            ["sharp", "npm:0.32.1"],\
+            ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"]\
           ],\
           "linkType": "SOFT"\
         }]\

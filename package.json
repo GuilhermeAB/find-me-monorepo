@@ -13,7 +13,9 @@
     "test": "jest",
     "web": "yarn workspace @find-me/web run dev",
     "alert": "yarn workspace @find-me/alert run build && yarn workspace @find-me/alert run serve",
-    "alert:dev": "yarn workspace @find-me/alert run dev"
+    "alert:dev": "yarn workspace @find-me/alert run dev",
+    "auth": "yarn workspace @find-me/auth run build && yarn workspace @find-me/auth run serve",
+    "auth:dev": "yarn workspace @find-me/auth run dev"
   },
   "workspaces": {
     "packages": [

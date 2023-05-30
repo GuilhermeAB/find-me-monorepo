@@ -3254,6 +3254,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@find-me/auth@workspace:backend/auth":
+  version: 0.0.0-use.local
+  resolution: "@find-me/auth@workspace:backend/auth"
+  dependencies:
+    "@find-me/api": "workspace:^"
+    "@find-me/date": "workspace:^"
+    "@find-me/errors": "workspace:^"
+    "@find-me/services": "workspace:^"
+    esbuild: ^0.17.19
+    rimraf: ^5.0.1
+    sharp: ^0.32.1
+    typescript: 5.0.4
+  languageName: unknown
+  linkType: soft
+
 "@find-me/cloud@workspace:^, @find-me/cloud@workspace:adapters/cloud":
   version: 0.0.0-use.local
   resolution: "@find-me/cloud@workspace:adapters/cloud"

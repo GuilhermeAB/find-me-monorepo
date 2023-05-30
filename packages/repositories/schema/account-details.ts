@@ -7,7 +7,7 @@ export type DTOAccountDetailsType = Omit<AccountDetailsEntityType, 'id'> & { _id
 class AccountDetails extends DTO<DTOAccountDetailsType> {
   public static create(): AccountDetails {
     const schema = new AccountDetails({
-      name: 'AccountDetails',
+      name: 'Account_Details',
       schema: {
         _id: String,
         activationCode: String,
