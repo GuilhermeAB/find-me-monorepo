@@ -51,4 +51,9 @@ export const en = {
   StatusRequired: 'Status required',
   StatusInvalid: 'Status invalid',
   EmailAlreadyExists: 'Email already registered',
+  SignInManyFailedAttempts: 'Many failed sign in attempts. Try again in {value} minute(s)',
+  InvalidEmailOrPassword: 'Email or password invalid',
+  AccountDisabled: 'Account disabled',
+  AuthenticationRequired: 'Authentication required',
+  RememberMeInvalid: 'Remember me invalid value',
 };

@@ -17,6 +17,8 @@ export enum MethodType {
 export interface MethodParams {
   params: Record<string, string>,
   data: Record<string, string>,
+  cookies?: Record<string, string>,
+  headers?: Record<string, string | string[] | undefined>,
   file?: MultipartFile,
 }
 
@@ -24,6 +26,7 @@ export interface MethodResponse {
   status: Status,
   message?: string,
   value?: unknown,
+  token?: string,
 }
 
 interface RouteControllerProps {

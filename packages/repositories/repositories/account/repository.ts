@@ -15,4 +15,33 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
 
     return !!result;
   }
+
+  public async findByEmail(email: string): Promise<AccountEntity | undefined> {
+    const result = await this.Model.findOne(
+      {
+        email,
+      },
+      undefined,
+      {
+        session: this.session,
+        lean: true,
+      },
+    ).exec();
+
+    return result ? this.mapper.toEntity(result) : undefined;
+  }
+
+  public async findByAccount(id: string): Promise<AccountEntity | undefined> {
+    const result = await this.Model.findById(
+      id,
+      undefined,
+      {
+        lean: true,
+      },
+    )
+      .populate('person')
+      .exec();
+
+    return result ? this.mapper.toEntity(result) : undefined;
+  }
 }

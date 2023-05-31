@@ -1,12 +1,16 @@
 import { ApiServer, RouteController } from 'adapters/api';
 import {
   accountCreate,
+  accountSignIn,
+  accountLoggedUser,
 } from './controllers';
 
 class AuthAPI {
   private static routes(): RouteController[] {
     return [
       accountCreate.create(),
+      accountSignIn.create(),
+      accountLoggedUser.create(),
     ];
   }
 

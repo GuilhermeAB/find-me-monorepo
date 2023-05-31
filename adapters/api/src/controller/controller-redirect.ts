@@ -18,6 +18,10 @@ export class RouteRedirectController extends RouteController {
           ...request.body as Record<string, string>,
           ...(request.query as Record<string, string>),
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        cookies: request.cookies,
       };
 
       if (this.props.validation) {

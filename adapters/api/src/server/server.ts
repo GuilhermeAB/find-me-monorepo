@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { config } from 'dotenv';
 import multipart from '@fastify/multipart';
+import cookie, { FastifyCookieOptions } from '@fastify/cookie';
 import cors from '@fastify/cors';
 import { RouteController } from '../controller/controller.base';
 import { RouteFileController } from '../controller';
@@ -66,6 +67,11 @@ export class ApiServer {
         },
       });
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+    await server.register(cookie as any, {
+      secret: 'authorization',
+    } as FastifyCookieOptions);
 
     if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

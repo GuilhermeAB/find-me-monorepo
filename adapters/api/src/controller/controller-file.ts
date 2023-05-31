@@ -26,6 +26,10 @@ export class RouteFileController extends RouteController {
           ...body,
           ...(request.query as Record<string, string>),
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        cookies: request.cookies,
         file: request.body.file,
       };
 

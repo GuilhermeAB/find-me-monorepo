@@ -11,6 +11,10 @@
     "@find-me/errors": "workspace:^",
     "@find-me/images": "workspace:^",
     "@find-me/repositories": "workspace:^",
-    "@find-me/uuid": "workspace:^"
+    "@find-me/uuid": "workspace:^",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9"
   }
 }

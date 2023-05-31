@@ -17,4 +17,40 @@ export class AccountDetailsRepository extends Repository<DTOAccountDetailsType, 
 
     return result ? this.mapper.toEntity(result) : undefined;
   }
+
+  public async increaseFailedSignIn(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $inc: {
+          failedSignInAttempts: 1,
+        },
+        $set: {
+          lastFailedSignInAttempt: Date.now(),
+        },
+      },
+    ).exec();
+  }
+
+  public async saveLastSignIn(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          lastSignInAt: Date.now(),
+        },
+        $unset: {
+          failedSignInAttempts: 0,
+          lastFailedSignInAttempt: null,
+        },
+      },
+      {
+        session: this.session,
+      },
+    ).exec();
+  }
 }
