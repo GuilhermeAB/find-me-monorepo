@@ -86,14 +86,14 @@ export class Authentication {
     }
   }
 
-  public static authenticate(cookies?: Record<string, string | string[] | undefined>): TokenBody {
-    if (!cookies?.authentication) {
+  public static authenticate(value?: Record<string, string | string[] | undefined>): TokenBody {
+    if (!value?.authentication) {
       throw new ValidationError({
         key: 'AuthenticationRequired',
         status: Status.Unauthorized,
       });
     }
 
-    return Authentication.parseToken(cookies.authentication as string);
+    return Authentication.parseToken(value.authentication as string);
   }
 }
