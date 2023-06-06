@@ -14,6 +14,11 @@ const routes = [
     name: 'Alert',
     component: () => import('@/views/alert/Alert.vue'),
   },
+  {
+    path: '/sign-in',
+    name: 'SignIn',
+    component: () => import('@/views/authentication/Authentication.vue'),
+  },
 ];
 
 const router = createRouter({

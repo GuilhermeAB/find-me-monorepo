@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar elevation='0' extension-height='1'>
+  <v-app-bar v-if='isVisible' elevation='0' extension-height='1'>
     <!-- <v-app-bar-nav-icon /> -->
     <v-app-bar-title>
       <v-tooltip location='bottom'>
@@ -30,7 +30,11 @@
       <Theme />
       <Language />
 
-      <v-btn variant='flat' color='primary'>
+      <v-btn
+        variant='flat'
+        color='primary'
+        @click='goToSignIn'
+      >
         {{ $t('SignIn') }}
       </v-btn>
     </template>
@@ -43,12 +47,20 @@
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
+  import { ref, watch } from 'vue';
   import Language from '../language/Language.vue';
   import Theme from '../theme/Theme.vue';
 
   const router = useRouter();
+  const isVisible = ref(router.currentRoute.value.name !== 'SignIn');
+  watch(router.currentRoute, () => {
+    isVisible.value = router.currentRoute.value.name !== 'SignIn';
+  });
 
   function goToHome (): void {
     router.push({ name: 'Home' });
+  }
+  function goToSignIn (): void {
+    router.push({ name: 'SignIn' });
   }
 </script>

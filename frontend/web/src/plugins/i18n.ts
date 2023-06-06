@@ -36,6 +36,11 @@ export const i18n = createI18n({
       Description: 'Description',
       DescriptionLength: 'Max 400 characters',
       NameLength: 'Name must be at least {min} characters and not more than {max} characters',
+      Email: 'Email',
+      Password: 'Password',
+      RememberMe: 'Remember me',
+      SignUp: 'Sign up',
+      ForgotPassword: 'Forgot my password',
     },
     pt: {
       SignIn: 'Entrar',
@@ -68,6 +73,11 @@ export const i18n = createI18n({
       Description: 'Descrição',
       DescriptionLength: 'Máximo de 400 caracteres',
       NameLength: 'Nome deve possuir no mínimo {min} caracteres e não mais que {max} caracteres',
+      Email: 'Email',
+      Password: 'Senha',
+      RememberMe: 'Manter conectado',
+      SignUp: 'Registrar',
+      ForgotPassword: 'Esqueci minha senha',
     },
     // Other locales and translations
   },

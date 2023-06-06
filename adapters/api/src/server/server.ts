@@ -77,6 +77,7 @@ export class ApiServer {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await server.register(cors, {
         origin: 'http://localhost:8080',
+        credentials: true,
       });
     }
   }
