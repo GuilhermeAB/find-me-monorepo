@@ -3,7 +3,7 @@ import {
   MethodParams, MethodResponse, MethodType, RouteFileController, Session,
 } from '@find-me/api';
 import { Status } from '@find-me/errors';
-import { AlertCreateService } from '@find-me/services';
+import { AlertCreateService, Authentication } from '@find-me/services';
 import { AlertLocationType, AlertTypeEnum } from '@find-me/entities';
 
 class AlertCreateController {
@@ -22,7 +22,10 @@ class AlertCreateController {
     Guard.isDate(data.disappearDate);
   }
 
-  private async method({ data, file }: MethodParams, session?: Session): Promise<MethodResponse> {
+  private async method({
+    data, file, cookies, headers,
+  }: MethodParams, session?: Session): Promise<MethodResponse> {
+    const user = Authentication.authenticate({ ...cookies, ...headers });
     const service = new AlertCreateService(session);
 
     const {
@@ -53,6 +56,7 @@ class AlertCreateController {
           ...info,
           isPCD: data.isPCD === 'true',
         },
+        account: user.accountId,
       },
       image!,
     );

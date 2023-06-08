@@ -1,5 +1,6 @@
 /* eslint-disable eqeqeq */
 import axios from 'axios';
+import { User } from '../authentication';
 
 export enum AlertType {
   Person = 'Person',
@@ -32,7 +33,8 @@ export interface Alert {
   info: {
     isPCD?: boolean,
     petType?: PetType,
-  }
+  },
+  account: User,
 }
 
 export interface CreateAlert {
@@ -105,6 +107,7 @@ export class AlertService {
       url: 'alert/create',
       method: 'POST',
       data: form,
+      withCredentials: true,
     });
   }
 
@@ -134,6 +137,7 @@ export class AlertService {
       url: `alert/update/${id}`,
       method: 'PUT',
       data: form,
+      withCredentials: true,
     });
   }
 

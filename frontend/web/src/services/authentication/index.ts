@@ -42,6 +42,7 @@ export class AuthenticationService {
       baseURL: url,
       url: 'auth/sign-in',
       method: 'POST',
+      withCredentials: true,
       data: {
         email,
         password,

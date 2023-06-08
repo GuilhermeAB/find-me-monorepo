@@ -4,7 +4,7 @@ import {
   MethodParams, MethodResponse, MethodType, RouteFileController, Session,
 } from '@find-me/api';
 import { Status } from '@find-me/errors';
-import { AlertUpdateService } from '@find-me/services';
+import { AlertUpdateService, Authentication } from '@find-me/services';
 
 class AlertUpdateController {
   private static validation({ data, params }: MethodParams): void {
@@ -24,7 +24,10 @@ class AlertUpdateController {
     Guard.isDate(data.disappearDate);
   }
 
-  private async method({ data, params, file }: MethodParams, session?: Session): Promise<MethodResponse> {
+  private async method({
+    data, params, file, cookies, headers,
+  }: MethodParams, session?: Session): Promise<MethodResponse> {
+    const user = Authentication.authenticate({ ...cookies, ...headers });
     const service = new AlertUpdateService(session);
 
     const {
@@ -55,6 +58,7 @@ class AlertUpdateController {
           ...info,
           isPCD: Boolean(data.isPCD),
         },
+        account: user.accountId,
       },
       image,
     );

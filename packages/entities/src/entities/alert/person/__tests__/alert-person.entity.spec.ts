@@ -2,6 +2,7 @@ import { DateVO } from '@find-me/date';
 import { AlertPersonEntity } from '..';
 import { AlertLocationType, AlertTypeEnum } from '../../base';
 import { AlertPersonPolicy } from '../alert-person.policy';
+import { UUID } from '@find-me/uuid';
 
 describe('AlertPersonEntity', () => {
   test('create method should create an AlertPersonEntity instance', () => {
@@ -20,7 +21,8 @@ describe('AlertPersonEntity', () => {
       },
       info: {
         isPCD: true,
-      }
+      },
+      account: UUID.generate('503130bb-a450-40d3-a95d-e1913d33f417'),
     });
 
     expect(entity).toBeInstanceOf(AlertPersonEntity);
@@ -47,7 +49,8 @@ describe('AlertPersonEntity', () => {
       },
       info: {
         isPCD: false,
-      }
+      },
+      account: UUID.generate('503130bb-a450-40d3-a95d-e1913d33f417'),
     });
 
     // Call the validatePerson method of the entity

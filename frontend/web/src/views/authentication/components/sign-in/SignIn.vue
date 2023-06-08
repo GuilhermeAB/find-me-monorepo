@@ -1,5 +1,5 @@
 <template>
-  <v-card variant='flat' width='60%' color='transparent'>
+  <v-card variant='flat' width='80%' color='transparent'>
     <v-card-title>
       {{ $t('SignIn') }}
     </v-card-title>
@@ -20,6 +20,7 @@
           hide-details
           variant='outlined'
           class='mb-2'
+          type='password'
           :label='$t("Password")'
           :rules='[rules.required]'
         />
@@ -45,7 +46,13 @@
 
         <v-divider class='mt-6 mb-6' />
 
-        <v-btn block color='primary' variant='outlined' class='mb-3'>
+        <v-btn
+          block
+          color='primary'
+          variant='outlined'
+          class='mb-3'
+          @click='signUp'
+        >
           {{ $t('SignUp') }}
         </v-btn>
 
@@ -53,6 +60,7 @@
           block
           variant='text'
           color='primary'
+          @click='forgotPassword'
         >
           {{ $t('ForgotPassword') }}
         </v-btn>
@@ -68,6 +76,8 @@
   import { Composer } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { useAuthenticationStore } from '../../../../store/authentication';
+
+  const emit = defineEmits(['sign-up', 'forgot-password']);
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -101,5 +111,13 @@
         loading.value = false;
       }
     }
+  }
+
+  function signUp (): void {
+    emit('sign-up');
+  }
+
+  function forgotPassword (): void {
+    emit('forgot-password');
   }
 </script>

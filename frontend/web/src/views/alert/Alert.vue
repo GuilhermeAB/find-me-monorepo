@@ -121,6 +121,12 @@
                 {{ item.description }}
               </span>
             </div>
+
+            <div class='text-caption mt-4'>
+              <span>
+                {{ $t('AlertCreatedBy', { value: item.account.person.name }) }}
+              </span>
+            </div>
           </v-col>
         </v-row>
 

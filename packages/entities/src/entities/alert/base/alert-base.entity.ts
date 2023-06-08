@@ -1,6 +1,8 @@
 import { CreateDateVO, DateVO } from '@find-me/date';
+import { UUID } from '@find-me/uuid';
 import { Entity } from '../../../base';
 import { AlertPolicy } from './alert-base.policy';
+import { AccountEntity } from '../../account';
 
 export enum AlertTypeEnum {
   Person = 'Person',
@@ -24,13 +26,15 @@ export interface AlertProps<T> {
   disappearDate: DateVO,
   location: Location,
   info: T,
+  account: UUID | AccountEntity,
 }
 
-export type CreateAlertProps<T> = Omit<AlertProps<T>, 'birthDate' | 'disappearDate' | 'type'> & {
+export type CreateAlertProps<T> = Omit<AlertProps<T>, 'birthDate' | 'disappearDate' | 'type' | 'account'> & {
   birthDate: CreateDateVO,
   disappearDate: CreateDateVO,
   info: T,
   type: string | AlertTypeEnum,
+  account: string | UUID | AccountEntity,
 };
 
 export class AlertEntity<T> extends Entity<AlertProps<T>> {
@@ -68,6 +72,7 @@ export class AlertEntity<T> extends Entity<AlertProps<T>> {
         disappearDate: new DateVO(create.disappearDate),
         location: create.location,
         info: create.info,
+        account: typeof create.account === 'string' || create.account instanceof UUID ? UUID.generate(create.account) : create.account,
       },
       timestamps: true,
     });

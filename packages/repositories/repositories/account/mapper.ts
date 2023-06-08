@@ -22,7 +22,7 @@ export class AccountMapper extends Mapper<AccountEntity, DTOAccountType> {
       updatedAt,
       props: {
         ...props,
-        person: person instanceof UUID ? person : personMapper.toEntity(person),
+        person: person instanceof UUID || typeof person === 'string' ? person : personMapper.toEntity(person),
       },
     };
   }

@@ -28,8 +28,9 @@ export class RouteFileController extends RouteController {
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        cookies: request.cookies,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
+        cookies: request.cookies && Object.keys(request.cookies).length ? request.cookies : undefined,
+        headers: request.headers,
         file: request.body.file,
       };
 

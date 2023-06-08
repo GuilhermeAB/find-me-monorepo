@@ -59,6 +59,12 @@ export class AlertUpdateService extends AlertService {
       throw new ValidationError({ key: 'AlertNotFound' });
     }
 
+    const { account } = alert.getProps();
+    const accountId = account instanceof UUID ? account.value : account.getProps().id.value;
+    if (props.account !== accountId) {
+      throw new ValidationError({ key: 'AlertNotFound' });
+    }
+
     alert.name = props.name;
     alert.description = props.description;
     alert.birthDate = props.birthDate;
@@ -86,6 +92,7 @@ export class AlertUpdateService extends AlertService {
         disappearDate,
         location,
         info: info as AlertPersonPropsBase,
+        account: accountId,
       });
     } else {
       AlertPetEntity.create({
@@ -96,6 +103,7 @@ export class AlertUpdateService extends AlertService {
         disappearDate,
         location,
         info: info as AlertPetPropsBase,
+        account: accountId,
       });
     }
 

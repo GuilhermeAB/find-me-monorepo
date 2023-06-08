@@ -86,9 +86,7 @@ export abstract class RouteController {
   protected async requestErrorHandler(response: FastifyReply, error: Error): Promise<void> {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
-      console.log(error.name);
-      // eslint-disable-next-line no-console
-      console.log(error.message);
+      console.log(error);
     }
 
     if (error instanceof ValidationError) {

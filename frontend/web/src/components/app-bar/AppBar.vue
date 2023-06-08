@@ -30,13 +30,7 @@
       <Theme />
       <Language />
 
-      <v-btn
-        variant='flat'
-        color='primary'
-        @click='goToSignIn'
-      >
-        {{ $t('SignIn') }}
-      </v-btn>
+      <AppBarUser />
     </template>
 
     <template #extension>
@@ -50,6 +44,7 @@
   import { ref, watch } from 'vue';
   import Language from '../language/Language.vue';
   import Theme from '../theme/Theme.vue';
+  import AppBarUser from './AbbBarUser.vue';
 
   const router = useRouter();
   const isVisible = ref(router.currentRoute.value.name !== 'SignIn');
@@ -59,8 +54,5 @@
 
   function goToHome (): void {
     router.push({ name: 'Home' });
-  }
-  function goToSignIn (): void {
-    router.push({ name: 'SignIn' });
   }
 </script>

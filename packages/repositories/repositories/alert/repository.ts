@@ -39,6 +39,55 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
     ).exec();
   }
 
+  public async findById(id: string): Promise<AlertEntity<unknown> | undefined> {
+    const result = await this.Model.findOne(
+      {
+        _id: id,
+      },
+      undefined,
+      {
+        session: this.session,
+        lean: true,
+      },
+    )
+      .populate({
+        path: 'account',
+        populate: [
+          { path: 'person' },
+        ],
+      })
+      .exec();
+
+    return result ? this.mapper.toEntity(result) : undefined;
+  }
+
+  public async list(): Promise<unknown[] | undefined> {
+    const result = await this.Model.find(
+      {},
+      undefined,
+      {
+        session: this.session,
+        lean: true,
+      },
+    )
+      .populate({
+        path: 'account',
+        populate: [
+          { path: 'person' },
+        ],
+      })
+      .limit(100)
+      .exec();
+
+    const list = result && result.length ? this.mapper.toEntities(result) : undefined;
+
+    if (list) {
+      return list.map((item) => item.getFlatProps(['password']));
+    }
+
+    return undefined;
+  }
+
   public async getNearby(latitude: number, longitude: number, type?: string): Promise<unknown[] | undefined> {
     let filter: Record<string, unknown> = {
       location: {
@@ -70,13 +119,19 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
         lean: true,
       },
     )
+      .populate({
+        path: 'account',
+        populate: [
+          { path: 'person' },
+        ],
+      })
       .limit(100)
       .exec();
 
     const list = result && result.length ? this.mapper.toEntities(result) : undefined;
 
     if (list) {
-      return list.map((item) => item.getFlatProps());
+      return list.map((item) => item.getFlatProps(['password']));
     }
 
     return undefined;

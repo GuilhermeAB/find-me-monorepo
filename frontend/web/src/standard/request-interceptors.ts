@@ -1,5 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { useNotificationStore } from '../store/notification';
+import { useAuthenticationStore } from '../store/authentication';
 
 enum Status {
   Success = 200,
@@ -63,4 +64,16 @@ axios.interceptors.response.use((response: AxiosResponse<MethodResponse>) => {
   }
 
   throw error;
+});
+
+axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
+  if (request.withCredentials) {
+    const authentication = useAuthenticationStore();
+
+    if (authentication.currentToken) {
+      request.headers.Authentication = authentication.currentToken;
+    }
+  }
+
+  return request;
 });

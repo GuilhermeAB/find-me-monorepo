@@ -10,7 +10,16 @@ import { AccountGetLoggedService, Authentication } from '@find-me/services';
 
 class AccountLoggedUserController {
   private async method({ cookies, headers }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = Authentication.authenticate(cookies || headers);
+    let user;
+
+    try {
+      user = Authentication.authenticate({ ...cookies, ...headers });
+    } catch (e) {
+      return {
+        status: Status.Success,
+        value: undefined,
+      };
+    }
 
     const service = new AccountGetLoggedService(session);
 

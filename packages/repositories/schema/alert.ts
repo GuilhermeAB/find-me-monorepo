@@ -1,7 +1,14 @@
 import { DTO } from '@find-me/database';
-import { AlertEntityType } from '@find-me/entities';
+import { AccountEntityType, AlertEntityType, PersonEntityType } from '@find-me/entities';
+import { DTOAccount } from './account';
 
-export type DTOAlertType = Omit<AlertEntityType, 'id'> & { _id: string };
+export type DTOAlertType = Omit<AlertEntityType, 'id' | 'account'> & {
+  _id: string,
+  account: Omit<AccountEntityType, 'id' | 'person'> & {
+    _id: string,
+    person: Omit<PersonEntityType, 'id'> & { _id: string }
+  }
+};
 
 class Alert extends DTO<DTOAlertType> {
   public static create(): Alert {
@@ -19,6 +26,7 @@ class Alert extends DTO<DTOAlertType> {
           coordinates: { type: [Number], index: true }, // longitude, latitude
         },
         info: {},
+        account: { type: String, ref: DTOAccount.name },
       },
       options: {
         timestamps: true,

@@ -33,6 +33,7 @@ export const i18n = createI18n({
       Alert: 'Alert',
       LastSeenAt: 'Last seen at',
       HomePage: 'Home page',
+      Home: 'Home',
       Description: 'Description',
       DescriptionLength: 'Max 400 characters',
       NameLength: 'Name must be at least {min} characters and not more than {max} characters',
@@ -41,6 +42,7 @@ export const i18n = createI18n({
       RememberMe: 'Remember me',
       SignUp: 'Sign up',
       ForgotPassword: 'Forgot my password',
+      AlertCreatedBy: 'Alert created by {value}',
     },
     pt: {
       SignIn: 'Entrar',
@@ -70,6 +72,7 @@ export const i18n = createI18n({
       Alert: 'Alerta',
       LastSeenAt: 'Visto por último em',
       HomePage: 'Página inicial',
+      Home: 'Início',
       Description: 'Descrição',
       DescriptionLength: 'Máximo de 400 caracteres',
       NameLength: 'Nome deve possuir no mínimo {min} caracteres e não mais que {max} caracteres',
@@ -78,6 +81,7 @@ export const i18n = createI18n({
       RememberMe: 'Manter conectado',
       SignUp: 'Registrar',
       ForgotPassword: 'Esqueci minha senha',
+      AlertCreatedBy: 'Alerta criado por {value}',
     },
     // Other locales and translations
   },
