@@ -42,6 +42,16 @@ export class CommentRepository extends Repository<DTOCommentType, CommentEntity>
     return result ? this.mapper.toEntities(result) : undefined;
   }
 
+  public async exists(id: string): Promise<boolean> {
+    const result = await this.Model.exists(
+      {
+        _id: id,
+      },
+    ).exec();
+
+    return !!result;
+  }
+
   public async findCommentById(id: string): Promise<CommentEntity | undefined> {
     const result = await this.Model.findOne(
       {

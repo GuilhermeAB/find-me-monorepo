@@ -56,4 +56,7 @@ export const en = {
   AccountDisabled: 'Account disabled',
   AuthenticationRequired: 'Authentication required',
   RememberMeInvalid: 'Remember me invalid value',
+  CommentNotFound: 'Comment not found',
+  ContentRequired: 'Content required',
+  ContentLength: 'Content must be at least {min} characters and not more than {max} characters',
 };
