@@ -4,3 +4,6 @@ export * from './alert-image/get-by-alert';
 export * from './alert/update';
 export * from './alert/list-nearby';
 export * from './alert/get-by-id';
+export * from './comment/create';
+export * from './comment/create-reply';
+export * from './comment/list';

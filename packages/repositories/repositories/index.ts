@@ -3,3 +3,4 @@ export * from './alert-image';
 export * from './person';
 export * from './account';
 export * from './account-details';
+export * from './comment';

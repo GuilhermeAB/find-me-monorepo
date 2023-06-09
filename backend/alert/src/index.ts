@@ -6,6 +6,9 @@ import {
   alertUpdate,
   alertListNearby,
   alertGetById,
+  commentCreate,
+  commentCreateReply,
+  commentList,
 } from './controllers';
 
 class AlertAPI {
@@ -17,6 +20,9 @@ class AlertAPI {
       alertUpdate.create(),
       alertListNearby.create(),
       alertGetById.create(),
+      commentCreate.create(),
+      commentCreateReply.create(),
+      commentList.create(),
     ];
   }
 

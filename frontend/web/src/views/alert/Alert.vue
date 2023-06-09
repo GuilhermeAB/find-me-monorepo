@@ -100,6 +100,10 @@
               </span>
               <span class='text-body-2'>
                 {{ birthDateFormatted }}
+
+                <span class='text-caption'>
+                  ({{ $t('Age', { value: age }) }})
+                </span>
               </span>
             </div>
 
@@ -188,7 +192,7 @@
   } from '@vue-leaflet/vue-leaflet';
   import L from 'leaflet';
   import { useLocale } from 'vuetify';
-  import { formatDistance, format } from 'date-fns';
+  import { formatDistance, format, differenceInYears } from 'date-fns';
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
   import { Alert, AlertService, AlertType } from '@/services';
@@ -217,6 +221,7 @@
   let birthDateFormatted: string;
   let disappearDateFormatted: string;
   const disappearDateLabel = ref(getDisappearDateLabel());
+  let age: number;
 
   onMounted(async () => {
     item.value = await AlertService.getById(id);
@@ -226,6 +231,7 @@
       disappearDateFormatted = format(new Date(item.value.disappearDate), 'dd/MM/yyyy HH:mm');
 
       disappearDateLabel.value = getDisappearDateLabel();
+      age = differenceInYears(new Date(), new Date(item.value.birthDate));
     }
   });
 

@@ -5,3 +5,5 @@ export * from './alert-image';
 export * from './account';
 export * from './account-details';
 export * from './person';
+export * from './comment';
+export * from './comment-reply';

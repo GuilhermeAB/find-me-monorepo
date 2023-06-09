@@ -43,6 +43,7 @@ export const i18n = createI18n({
       SignUp: 'Sign up',
       ForgotPassword: 'Forgot my password',
       AlertCreatedBy: 'Alert created by {value}',
+      Age: '{value} years',
     },
     pt: {
       SignIn: 'Entrar',
@@ -82,6 +83,7 @@ export const i18n = createI18n({
       SignUp: 'Registrar',
       ForgotPassword: 'Esqueci minha senha',
       AlertCreatedBy: 'Alerta criado por {value}',
+      Age: '{value} anos',
     },
     // Other locales and translations
   },
