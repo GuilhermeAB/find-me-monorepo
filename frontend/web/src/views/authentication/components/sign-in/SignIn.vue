@@ -86,7 +86,6 @@
 
   const rules = {
     required: (value: unknown): boolean | string => !!value || $t('ValueRequired'),
-    descriptionLength: (value: string): boolean | string => value.length <= 400 || $t('DescriptionLength'),
   };
 
   const form = ref();
