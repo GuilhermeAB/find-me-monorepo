@@ -176,6 +176,12 @@
             </v-sheet>
           </v-col>
         </v-row>
+
+        <v-row v-if='item'>
+          <v-col cols='12'>
+            <AlertComment :id='id' />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -196,6 +202,7 @@
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
   import { Alert, AlertService, AlertType } from '@/services';
+  import AlertComment from './AlertComment.vue';
 
   const route = useRoute();
   const id = route.params.id as string;
