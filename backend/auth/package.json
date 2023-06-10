@@ -15,9 +15,9 @@
     "@find-me/date": "workspace:^",
     "@find-me/errors": "workspace:^",
     "@find-me/services": "workspace:^",
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.18.0",
     "rimraf": "^5.0.1",
     "sharp": "^0.32.1",
-    "typescript": "5.0.4"
+    "typescript": "5.1.3"
   }
 }
