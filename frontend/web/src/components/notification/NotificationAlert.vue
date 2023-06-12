@@ -3,8 +3,8 @@
     <template #default>
       <v-alert
         closable
-        :type='type'
-        :text='te(code) || !message ? $t(code, params) : message'
+        :type='(type as "error" | "success" | "warning" | "info")'
+        :text='te(code) || !message ? $t(code, params!) : message'
         density='compact'
         class='notification-alert'
         @click:close='notification.remove(id)'
@@ -20,9 +20,13 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import { ref, watch, inject } from 'vue';
+  import { useI18n, Composer } from 'vue-i18n';
   import { useNotificationStore } from '../../store/notification';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const props = defineProps({
     id: {

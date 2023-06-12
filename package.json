@@ -6,15 +6,18 @@
   "author": "Guilherme Afonso Borchardt",
   "license": "MIT",
   "private": true,
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.6.0",
   "scripts": {
     "build": "turbo run build",
     "lint": "eslint . --max-warnings 0",
     "test": "jest",
     "web": "yarn workspace @find-me/web run dev",
+    "web:build": "yarn workspace @find-me/web run build",
     "alert": "yarn workspace @find-me/alert run build && yarn workspace @find-me/alert run serve",
     "alert:dev": "yarn workspace @find-me/alert run dev",
+    "alert:docker": "yarn workspace @find-me/alert run build:docker",
     "auth": "yarn workspace @find-me/auth run build && yarn workspace @find-me/auth run serve",
+    "auth:docker": "yarn workspace @find-me/auth run build:docker",
     "auth:dev": "yarn workspace @find-me/auth run dev"
   },
   "workspaces": {

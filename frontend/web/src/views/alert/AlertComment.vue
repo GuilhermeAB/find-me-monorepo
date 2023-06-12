@@ -45,9 +45,14 @@
 </template>
 
 <script setup lang='ts'>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, inject } from 'vue';
+  import { Composer } from 'vue-i18n';
   import { CommentType, CommentService } from '@/services/comment';
   import AlertCommentItem from './AlertCommentItem.vue';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const props = defineProps({
     id: {

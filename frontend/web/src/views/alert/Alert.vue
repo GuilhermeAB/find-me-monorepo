@@ -189,7 +189,9 @@
 
 <script setup lang='ts'>
   import { useRoute } from 'vue-router';
-  import { onMounted, ref, watch } from 'vue';
+  import {
+    onMounted, ref, watch, inject,
+  } from 'vue';
   import {
     LMap,
     LTileLayer,
@@ -201,8 +203,13 @@
   import { formatDistance, format, differenceInYears } from 'date-fns';
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
+  import { Composer } from 'vue-i18n';
   import { Alert, AlertService, AlertType } from '@/services';
   import AlertComment from './AlertComment.vue';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const route = useRoute();
   const id = route.params.id as string;

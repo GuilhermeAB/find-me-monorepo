@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@find-me/date": "workspace:^",
-    "@find-me/errors": "workspace:^",
+    "@find-me/date": "1.0.0",
+    "@find-me/errors": "1.0.0",
     "dotenv": "^16.1.4",
     "mongoose": "^7.2.3"
   }

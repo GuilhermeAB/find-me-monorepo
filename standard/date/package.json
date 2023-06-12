@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@find-me/errors": "workspace:^",
+    "@find-me/errors": "1.0.0",
     "date-fns": "^2.30.0"
   }
 }

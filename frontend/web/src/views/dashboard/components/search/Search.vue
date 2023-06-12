@@ -27,10 +27,15 @@
 </template>
 
 <script setup lang='ts'>
-  import { ref, watch } from 'vue';
+  import { ref, watch, inject } from 'vue';
   import { debounce } from 'lodash';
+  import { Composer } from 'vue-i18n';
   import { AlertType } from '@/services';
   import { useAlertStore } from '../../../../store/alert';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const alert = useAlertStore();
 

@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: web
+    restart: no
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: yarn run dev --host
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+  # alert:
+  #   container_name: alert
+  #   restart: on-failure
+  #   build:
+  #     context: .
+  #     dockerfile: ./backend/alert/Dockerfile
+  #   env_file:
+  #     - ./backend/alert/.env
+  #   ports:
+  #     - "3000:3000"
+  # web:
+  #   container_name: web
+  #   restart: on-failure
+  #   build:
+  #     context: .
+  #     dockerfile: ./frontend/web/Dockerfile
+  #   command: yarn web --host
+  #   env_file:
+  #     - ./frontend/web/.env
+  #   ports:
+  #     - "8080:8080"

@@ -61,10 +61,16 @@
 <script setup lang='ts'>
   import {
     ref,
+    inject,
   } from 'vue';
   import { useRouter } from 'vue-router';
+  import { Composer } from 'vue-i18n';
   import SignIn from './components/sign-in/SignIn.vue';
   import SignUp from './components/sign-up/SignUp.vue';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const router = useRouter();
 

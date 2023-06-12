@@ -82,7 +82,7 @@
           variant='outlined'
           show-size
           accept='image/png, image/jpeg'
-          prepend-icon
+          prepend-icon=''
           prepend-inner-icon='mdi-camera'
           class='mt-1'
           :label='$t("Image")'

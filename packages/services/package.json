@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@find-me/cloud": "workspace:^",
-    "@find-me/database": "workspace:^",
-    "@find-me/date": "workspace:^",
-    "@find-me/entities": "workspace:^",
-    "@find-me/errors": "workspace:^",
-    "@find-me/images": "workspace:^",
-    "@find-me/repositories": "workspace:^",
-    "@find-me/uuid": "workspace:^",
+    "@find-me/cloud": "1.0.0",
+    "@find-me/database": "1.0.0",
+    "@find-me/date": "1.0.0",
+    "@find-me/entities": "1.0.0",
+    "@find-me/errors": "1.0.0",
+    "@find-me/images": "1.0.0",
+    "@find-me/repositories": "1.0.0",
+    "@find-me/uuid": "1.0.0",
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {

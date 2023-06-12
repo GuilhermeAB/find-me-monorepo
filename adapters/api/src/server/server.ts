@@ -5,6 +5,8 @@ import cookie, { FastifyCookieOptions } from '@fastify/cookie';
 import cors from '@fastify/cors';
 import { RouteController } from '../controller/controller.base';
 import { RouteFileController } from '../controller';
+// import { privateKey } from '../cert/private-key';
+// import { certificate } from '../cert/certificate';
 
 const DEFAULT_PORT = 3000;
 
@@ -30,6 +32,10 @@ export class ApiServer {
       port: create.port || DEFAULT_PORT,
       server: fastify({
         logger: true,
+        // https: {
+        //   key: privateKey,
+        //   cert: certificate,
+        // },
       }),
     };
 
@@ -74,7 +80,7 @@ export class ApiServer {
     } as FastifyCookieOptions);
 
     if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await server.register(cors, {
         origin: 'http://localhost:8080',
         credentials: true,
@@ -92,6 +98,7 @@ export class ApiServer {
 
     await server.listen({
       port,
+      host: '0.0.0.0',
     });
   }
 }

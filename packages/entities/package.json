@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@find-me/date": "workspace:^",
-    "@find-me/errors": "workspace:^",
-    "@find-me/uuid": "workspace:^"
+    "@find-me/date": "1.0.0",
+    "@find-me/errors": "1.0.0",
+    "@find-me/uuid": "1.0.0"
   }
 }

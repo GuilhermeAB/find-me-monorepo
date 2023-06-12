@@ -14,8 +14,14 @@
 </template>
 
 <script setup lang='ts'>
-  import { onBeforeMount } from 'vue';
+  import { onBeforeMount, inject } from 'vue';
   import { useTheme } from 'vuetify';
+
+  import { Composer } from 'vue-i18n';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const { global } = useTheme();
 

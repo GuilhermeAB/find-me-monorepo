@@ -22,8 +22,13 @@
 
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
-  import { onMounted } from 'vue';
+  import { onMounted, inject } from 'vue';
+  import { Composer } from 'vue-i18n';
   import { useAuthenticationStore } from '@/store/authentication';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const router = useRouter();
   const authentication = useAuthenticationStore();

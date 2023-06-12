@@ -41,10 +41,15 @@
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { ref, watch } from 'vue';
+  import { ref, watch, inject } from 'vue';
+  import { Composer } from 'vue-i18n';
   import Language from '../language/Language.vue';
   import Theme from '../theme/Theme.vue';
   import AppBarUser from './AbbBarUser.vue';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const router = useRouter();
   const isVisible = ref(router.currentRoute.value.name !== 'SignIn');

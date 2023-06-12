@@ -119,8 +119,13 @@
   import { formatDistanceStrict } from 'date-fns';
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
-  import { ref } from 'vue';
+  import { ref, inject } from 'vue';
+  import { Composer } from 'vue-i18n';
   import { CommentService, CommentType } from '@/services/comment';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const props = defineProps<{
     item: CommentType,

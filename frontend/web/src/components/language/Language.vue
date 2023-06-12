@@ -29,13 +29,19 @@
 
 <script setup lang='ts'>
   import {
-    mergeProps, inject, ref, watch, onBeforeMount,
+    mergeProps,
+    ref,
+    watch,
+    onBeforeMount,
+    inject,
   } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useLocale } from 'vuetify';
   import CountryFlag from 'vue-country-flag-next';
 
   const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
   const { current } = useLocale();
 
   onBeforeMount(() => {

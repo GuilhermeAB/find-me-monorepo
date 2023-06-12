@@ -110,11 +110,17 @@
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
   import { useLocale, useTheme } from 'vuetify';
-  import { watch, ref, computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import {
+    watch, ref, computed, inject,
+  } from 'vue';
+  import { useI18n, Composer } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { AlertService, AlertType } from '@/services';
   import { useAlertStore } from '../../../../store/alert';
+
+  const $i18n = inject<Composer>('$i18n');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const $t = $i18n!.t;
 
   const props = defineProps({
     item: {

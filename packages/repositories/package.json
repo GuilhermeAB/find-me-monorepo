@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "dependencies": {
-    "@find-me/database": "workspace:^",
-    "@find-me/date": "workspace:^",
-    "@find-me/entities": "workspace:^",
-    "@find-me/errors": "workspace:^",
-    "@find-me/uuid": "workspace:^"
+    "@find-me/database": "1.0.0",
+    "@find-me/date": "1.0.0",
+    "@find-me/entities": "1.0.0",
+    "@find-me/errors": "1.0.0",
+    "@find-me/uuid": "1.0.0"
   }
 }
