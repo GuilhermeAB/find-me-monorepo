@@ -1,5 +1,6 @@
 import { ApiServer, RouteController } from 'adapters/api';
 import {
+  health,
   accountCreate,
   accountSignIn,
   accountLoggedUser,
@@ -8,6 +9,7 @@ import {
 class AuthAPI {
   private static routes(): RouteController[] {
     return [
+      health.create(),
       accountCreate.create(),
       accountSignIn.create(),
       accountLoggedUser.create(),

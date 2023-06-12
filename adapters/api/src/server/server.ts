@@ -79,10 +79,10 @@ export class ApiServer {
       secret: 'authorization',
     } as FastifyCookieOptions);
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.CORS_ORIGIN_URL) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await server.register(cors, {
-        origin: 'http://localhost:8080',
+        origin: process.env.CORS_ORIGIN_URL,
         credentials: true,
       });
     }

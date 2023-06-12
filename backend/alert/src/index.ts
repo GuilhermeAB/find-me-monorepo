@@ -9,11 +9,13 @@ import {
   commentCreate,
   commentCreateReply,
   commentList,
+  health,
 } from './controllers';
 
 class AlertAPI {
   private static routes(): RouteController[] {
     return [
+      health.create(),
       alertCreate.create(),
       alertList.create(),
       alertImageGetByAlertId.create(),
