@@ -6,7 +6,8 @@ services:
     restart: no
     build:
       context: .
-      dockerfile: ./backend/auth/Dockerfile
+      dockerfile: ./Dockerfile
+    command: node ./dist/index.js
     env_file:
       - ./backend/auth/.env
     ports:
