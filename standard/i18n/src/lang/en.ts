@@ -59,4 +59,5 @@ export const en = {
   CommentNotFound: 'Comment not found',
   ContentRequired: 'Content required',
   ContentLength: 'Content must be at least {min} characters and not more than {max} characters',
+  InvalidToken: 'Invalid token',
 };

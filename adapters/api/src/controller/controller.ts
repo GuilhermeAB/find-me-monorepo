@@ -42,7 +42,8 @@ export class RouteJsonController extends RouteController {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         response.setCookie('authentication', token, {
-          // path: '/',
+          domain: process.env.URL_DOMAIN,
+          path: '/',
           httpOnly: true,
           secure: true,
           sameSite: 'strict',
