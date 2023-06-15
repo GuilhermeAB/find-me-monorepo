@@ -8,7 +8,7 @@ class CommentCreateController {
   private async method({
     data, params, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers });
     const service = new CommentCreateService(session);
 
     const {

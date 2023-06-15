@@ -4794,6 +4794,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/services/",\
           "packageDependencies": [\
             ["@find-me/services", "workspace:packages/services"],\
+            ["@find-me/cache", "workspace:adapters/cache"],\
             ["@find-me/cloud", "workspace:adapters/cloud"],\
             ["@find-me/database", "workspace:adapters/database"],\
             ["@find-me/date", "workspace:standard/date"],\

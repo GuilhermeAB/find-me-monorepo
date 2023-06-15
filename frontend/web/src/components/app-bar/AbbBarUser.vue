@@ -27,7 +27,7 @@
         {{ $t('Profile') }}
       </v-list-item>
 
-      <v-list-item>
+      <v-list-item @click='signOut'>
         {{ $t('SignOut') }}
       </v-list-item>
     </v-list>
@@ -39,6 +39,7 @@
   import { onMounted, inject, ref } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useAuthenticationStore } from '@/store/authentication';
+  import { AuthenticationService } from '@/services';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -59,5 +60,12 @@
 
   function goToProfile (): void {
     router.push({ name: 'Profile' });
+  }
+
+  async function signOut (): Promise<void> {
+    await AuthenticationService.signOut();
+    await authentication.loggedUser();
+    user.value = authentication.currentUser;
+    router.push({ name: 'Home' });
   }
 </script>

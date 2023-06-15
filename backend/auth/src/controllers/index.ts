@@ -4,3 +4,4 @@ export * from './account/get-logged';
 export * from './health/health';
 export * from './account/update-password';
 export * from './account/update-person';
+export * from './account/sign-out';

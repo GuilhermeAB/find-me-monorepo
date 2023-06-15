@@ -8,6 +8,7 @@ import {
   lastDayOfMonth,
   addYears,
   isFuture,
+  differenceInMilliseconds,
 } from 'date-fns';
 
 export interface DateVOProps {
@@ -90,6 +91,10 @@ export class DateVO {
 
   public static differenceInMinutes(dateLeft: Date | number | DateVO, dateRight: Date | number | DateVO): number {
     return this.executeDateFunction(dateLeft, dateRight, differenceInMinutes);
+  }
+
+  public static differenceInMilliseconds(dateLeft: Date | number | DateVO, dateRight: Date | number | DateVO): number {
+    return this.executeDateFunction(dateLeft, dateRight, differenceInMilliseconds);
   }
 
   public static differenceInDays(dateLeft: Date | number | DateVO, dateRight: Date | number | DateVO): number {

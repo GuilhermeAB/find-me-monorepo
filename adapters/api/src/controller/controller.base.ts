@@ -27,6 +27,7 @@ export interface MethodResponse {
   message?: string,
   value?: unknown,
   token?: string,
+  clearCookies?: string[],
 }
 
 interface RouteControllerProps {

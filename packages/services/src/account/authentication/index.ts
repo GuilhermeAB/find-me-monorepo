@@ -1,3 +1,4 @@
+import { CacheService } from '@find-me/cache';
 import { DateVO } from '@find-me/date';
 import { AccountEntity, AccountRole, AccountStatus } from '@find-me/entities';
 import { Status, ValidationError } from '@find-me/errors';
@@ -14,6 +15,8 @@ export interface TokenBody {
   createdAt: Date,
   revocationDate: Date,
 }
+
+const BLOCKLIST_CACHE_FOLDER = 'blocklist';
 
 export class Authentication {
   private static generateTokenId(accountId: string, hashToken: string): string {
@@ -86,7 +89,7 @@ export class Authentication {
     }
   }
 
-  public static authenticate(value?: Record<string, string | string[] | undefined>): TokenBody {
+  public static async authenticate(value?: Record<string, string | string[] | undefined>): Promise<TokenBody> {
     if (!value?.authentication) {
       throw new ValidationError({
         key: 'AuthenticationRequired',
@@ -94,6 +97,23 @@ export class Authentication {
       });
     }
 
-    return Authentication.parseToken(value.authentication as string);
+    const token = Authentication.parseToken(value.authentication as string);
+    const cache = new CacheService();
+
+    const exists = await cache.exists(`${BLOCKLIST_CACHE_FOLDER}:${token.tokenId}`);
+    if (exists) {
+      throw new ValidationError({
+        key: 'AuthenticationRequired',
+        status: Status.Unauthorized,
+      });
+    }
+
+    return token;
+  }
+
+  public static async signOut(token: TokenBody): Promise<void> {
+    const cache = new CacheService();
+
+    await cache.add(`${BLOCKLIST_CACHE_FOLDER}:${token.tokenId}`, token.revocationDate.toString(), token.revocationDate);
   }
 }

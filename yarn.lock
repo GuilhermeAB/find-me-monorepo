@@ -3093,7 +3093,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@find-me/cache@workspace:adapters/cache":
+"@find-me/cache@1.0.0, @find-me/cache@workspace:adapters/cache":
   version: 0.0.0-use.local
   resolution: "@find-me/cache@workspace:adapters/cache"
   dependencies:
@@ -3182,6 +3182,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@find-me/services@workspace:packages/services"
   dependencies:
+    "@find-me/cache": 1.0.0
     "@find-me/cloud": 1.0.0
     "@find-me/database": 1.0.0
     "@find-me/date": 1.0.0

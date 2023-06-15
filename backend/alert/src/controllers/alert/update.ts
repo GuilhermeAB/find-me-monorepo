@@ -27,7 +27,7 @@ class AlertUpdateController {
   private async method({
     data, params, file, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers });
     const service = new AlertUpdateService(session);
 
     const {

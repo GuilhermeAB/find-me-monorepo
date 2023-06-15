@@ -13,7 +13,7 @@ class AccountLoggedUserController {
     let user;
 
     try {
-      user = Authentication.authenticate({ ...cookies, ...headers });
+      user = await Authentication.authenticate({ ...cookies, ...headers });
     } catch (e) {
       return {
         status: Status.Success,

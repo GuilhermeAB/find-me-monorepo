@@ -78,6 +78,7 @@ export const i18n = createI18n({
       SignInSuccess: 'Sign in successfully',
       PasswordUpdated: 'Password updated',
       PersonUpdated: 'Person updated',
+      SignOutSuccess: 'Sign out successfully',
 
       // WEB
       SignIn: 'Sign in',
@@ -209,6 +210,7 @@ export const i18n = createI18n({
       SignInSuccess: 'Conectado',
       PasswordUpdated: 'Senha atualizada',
       PersonUpdated: 'Pessoa atualizada',
+      SignOutSuccess: 'Desconectado',
 
       // WEB
       SignIn: 'Entrar',

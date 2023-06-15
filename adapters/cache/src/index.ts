@@ -1,3 +1,4 @@
+import { DateVO } from '@find-me/date';
 import { ValidationError } from '@find-me/errors';
 import { createClient } from 'redis';
 import type { RedisClientType } from 'redis';
@@ -23,11 +24,11 @@ export class CacheService {
     });
   }
 
-  public async add(key: string, revocationDate: Date): Promise<void> {
+  public async add(key: string, value: string, revocationDate: Date): Promise<void> {
     await this.client.connect();
 
-    await this.client.set(key, revocationDate.toString(), {
-      PX: (new Date(revocationDate)).getTime(),
+    await this.client.set(key, value, {
+      PX: DateVO.differenceInMilliseconds(DateVO.generate(revocationDate), new Date()),
     });
 
     await this.client.disconnect();

@@ -53,6 +53,15 @@ export class AuthenticationService {
     return data?.value;
   }
 
+  public static async signOut(): Promise<void> {
+    await axios({
+      baseURL: url,
+      url: 'auth/sign-out',
+      method: 'POST',
+      withCredentials: true,
+    });
+  }
+
   public static async signUp(email: string, password: string, name: string, birthDate: string): Promise<void> {
     await axios({
       baseURL: url,

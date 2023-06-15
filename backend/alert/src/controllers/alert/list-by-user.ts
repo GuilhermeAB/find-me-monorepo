@@ -7,7 +7,7 @@ import { AlertListService, Authentication } from '@find-me/services';
 
 class AlertListByUserController {
   private async method({ cookies, headers }: MethodParams): Promise<MethodResponse> {
-    const user = Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers });
     const service = new AlertListService();
 
     const list = await service.listByUser(user.accountId);

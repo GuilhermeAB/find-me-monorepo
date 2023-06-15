@@ -17,7 +17,7 @@ class AccountUpdatePasswordController {
   }
 
   private async method({ data, cookies, headers }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers });
     const service = new AccountUpdate(session);
 
     const {

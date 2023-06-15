@@ -191,9 +191,12 @@
 </template>
 
 <script setup lang='ts'>
-  import { inject, ref, onMounted } from 'vue';
+  import {
+    inject, ref, onMounted, watch,
+  } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useDisplay } from 'vuetify';
+  import { useRouter } from 'vue-router';
   import { useAuthenticationStore } from '@/store/authentication';
   import AlertListItem from '../dashboard/components/alert/AlertListItem.vue';
   import ProfileEdit from './components/ProfileEdit.vue';
@@ -203,10 +206,14 @@
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
   const { mobile } = useDisplay();
+  const router = useRouter();
 
   const authentication = useAuthenticationStore();
 
   const account = ref(authentication.currentUser);
+  watch(account, () => {
+    router.replace({ name: 'Home' });
+  });
 
   const editProfileDialog = ref(false);
 

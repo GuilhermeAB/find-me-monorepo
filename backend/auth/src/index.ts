@@ -6,6 +6,7 @@ import {
   accountLoggedUser,
   accountUpdatePassword,
   accountUpdatePerson,
+  accountSignOut,
 } from './controllers';
 
 class AuthAPI {
@@ -14,6 +15,7 @@ class AuthAPI {
       health.create(),
       accountCreate.create(),
       accountSignIn.create(),
+      accountSignOut.create(),
       accountLoggedUser.create(),
       accountUpdatePassword.create(),
       accountUpdatePerson.create(),

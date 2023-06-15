@@ -70,4 +70,5 @@ export const en = {
   SignInSuccess: 'Sign in successfully',
   PasswordUpdated: 'Password updated',
   PersonUpdated: 'Person updated',
+  SignOutSuccess: 'Sign out successfully',
 };

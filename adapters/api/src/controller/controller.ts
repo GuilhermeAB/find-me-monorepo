@@ -32,7 +32,7 @@ export class RouteJsonController extends RouteController {
       database = await RouteController.getDatabase().startTransaction();
 
       const {
-        status, message, value, token,
+        status, message, value, token, clearCookies,
       } = await this.props.method(params, database.session);
 
       await Database.commitTransaction(database.session, database.connection);
@@ -47,6 +47,15 @@ export class RouteJsonController extends RouteController {
           httpOnly: true,
           secure: true,
           sameSite: 'strict',
+        });
+      }
+
+      if (clearCookies) {
+        clearCookies.forEach((key) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          response.clearCookie(key);
         });
       }
 
