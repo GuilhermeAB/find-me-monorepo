@@ -8,7 +8,7 @@
       cover
       aspect-ratio='1'
       :src='AlertService.image(item.id)'
-      height='16rem'
+      :height='imageHeight'
     >
       <v-row no-gutters>
         <v-avatar
@@ -77,7 +77,7 @@
     </v-card-item>
 
     <v-card-text
-      class='pa-3 py-2'
+      class='pa-2'
       :class='{
         "bg-grey-darken-3": global.name.value === "dark",
         "bg-grey-lighten-3": global.name.value === "light"
@@ -90,10 +90,13 @@
         variant='outlined'
         @click.stop='openDetails'
       >
-        <v-icon class='mr-2'>
+        <v-icon>
           mdi-eye-outline
         </v-icon>
-        {{ $t('Details') }}
+
+        <span class='ml-2 hidden-md-and-down'>
+          {{ $t('Details') }}
+        </span>
       </v-btn>
 
       <div v-else class='text-container'>
@@ -126,6 +129,10 @@
     item: {
       type: Object,
       required: true,
+    },
+    imageHeight: {
+      type: String,
+      default: '16rem',
     },
   });
 
@@ -160,7 +167,9 @@
   }
 
   function openDetails (): void {
-    alert.setSelectedId(undefined);
+    if (alert.selected) {
+      alert.setSelectedId(undefined);
+    }
 
     router.push({ name: 'Alert', params: { id: props.item.id } });
   }

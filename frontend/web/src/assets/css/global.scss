@@ -15,3 +15,7 @@ html {
 *::-webkit-scrollbar-thumb {
   background-color: rgb(63, 191, 84);
 }
+
+.leaflet-container {
+  border-radius: 10px;
+}

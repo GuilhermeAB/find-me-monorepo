@@ -3,7 +3,7 @@
     <template #activator='{ props }'>
       <v-btn
         :icon='global.current.value.dark ? "mdi-weather-sunny" : "mdi-weather-night"'
-        class='mr-2'
+        class='mr-1'
         v-bind='props'
         @click='toggleTheme'
       />

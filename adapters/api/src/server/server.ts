@@ -82,7 +82,7 @@ export class ApiServer {
     if (process.env.CORS_ORIGIN_URL) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await server.register(cors, {
-        origin: process.env.CORS_ORIGIN_URL,
+        origin: [process.env.CORS_ORIGIN_URL, /\.find-me-project\.com$/],
         credentials: true,
       });
     }

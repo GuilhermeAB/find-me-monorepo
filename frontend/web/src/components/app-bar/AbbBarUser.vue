@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    v-if='!authentication.currentUser'
+    v-if='!user'
     variant='flat'
     color='primary'
     @click='goToSignIn'
@@ -8,21 +8,35 @@
     {{ $t('SignIn') }}
   </v-btn>
 
-  <v-btn
-    v-else
-    icon
-    variant='flat'
-    color='primary'
-  >
-    <v-icon size='large'>
-      mdi-account
-    </v-icon>
-  </v-btn>
+  <v-menu v-else location='bottom'>
+    <template #activator='{ props }'>
+      <v-btn
+        icon
+        variant='flat'
+        color='primary'
+        v-bind='props'
+      >
+        <v-icon>
+          mdi-account
+        </v-icon>
+      </v-btn>
+    </template>
+
+    <v-list class='pa-0'>
+      <v-list-item @click='goToProfile'>
+        {{ $t('Profile') }}
+      </v-list-item>
+
+      <v-list-item>
+        {{ $t('SignOut') }}
+      </v-list-item>
+    </v-list>
+  </v-menu>
 </template>
 
 <script setup lang='ts'>
   import { useRouter } from 'vue-router';
-  import { onMounted, inject } from 'vue';
+  import { onMounted, inject, ref } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useAuthenticationStore } from '@/store/authentication';
 
@@ -33,11 +47,17 @@
   const router = useRouter();
   const authentication = useAuthenticationStore();
 
+  const user = ref<unknown>(undefined);
   onMounted(async () => {
     await authentication.loggedUser();
+    user.value = authentication.currentUser;
   });
 
   function goToSignIn (): void {
     router.push({ name: 'SignIn' });
+  }
+
+  function goToProfile (): void {
+    router.push({ name: 'Profile' });
   }
 </script>

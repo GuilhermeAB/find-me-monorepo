@@ -136,4 +136,33 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
 
     return undefined;
   }
+
+  public async listByUser(accountId: string): Promise<unknown[] | undefined> {
+    const result = await this.Model.find(
+      {
+        account: accountId,
+      },
+      undefined,
+      {
+        session: this.session,
+        lean: true,
+      },
+    )
+      .populate({
+        path: 'account',
+        populate: [
+          { path: 'person' },
+        ],
+      })
+      .limit(100)
+      .exec();
+
+    const list = result && result.length ? this.mapper.toEntities(result) : undefined;
+
+    if (list) {
+      return list.map((item) => item.getFlatProps(['password']));
+    }
+
+    return undefined;
+  }
 }

@@ -43,17 +43,21 @@ export const useAlertStore = defineStore('alert', {
       } else {
         this.selectedId = id;
 
-        const alert = this.list!.find((item) => item.id === id)!;
-        this.setLocation({
-          latitude: alert.location.coordinates[1],
-          longitude: alert.location.coordinates[0],
-        });
+        const alert = this.list!.find((item) => item.id === id);
+        if (alert) {
+          this.setLocation({
+            latitude: alert.location.coordinates[1],
+            longitude: alert.location.coordinates[0],
+          });
+        }
       }
     },
     setMapCenter(value: LatLgn) {
       this.mapCenter = value;
     },
     async getList() {
+      this.selectedId = undefined;
+      this.location = undefined;
       this.alerts = await AlertService.list();
     },
     async getNearby(latitude: number, longitude: number, type?: string) {

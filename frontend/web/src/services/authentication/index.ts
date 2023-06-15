@@ -80,4 +80,31 @@ export class AuthenticationService {
 
     return data.value;
   }
+
+  public static async updatePerson(name: string, birthDate: string): Promise<void> {
+    await axios({
+      baseURL: url,
+      url: 'auth/update-person',
+      method: 'PATCH',
+      data: {
+        name,
+        birthDate,
+      },
+      withCredentials: true,
+    });
+  }
+
+  public static async updatePassword(currentPassword: string, password: string, repeatPassword: string): Promise<void> {
+    await axios({
+      baseURL: url,
+      url: 'auth/update-password',
+      method: 'PATCH',
+      data: {
+        currentPassword,
+        password,
+        repeatPassword,
+      },
+      withCredentials: true,
+    });
+  }
 }

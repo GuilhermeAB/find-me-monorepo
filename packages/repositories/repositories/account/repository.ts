@@ -44,4 +44,25 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
 
     return result ? this.mapper.toEntity(result) : undefined;
   }
+
+  public async updateOne(entity: AccountEntity): Promise<void> {
+    const {
+      id,
+      password,
+    } = entity.getProps();
+
+    await this.Model.updateOne(
+      {
+        _id: id.value,
+      },
+      {
+        $set: {
+          password,
+        },
+      },
+      {
+        session: this.session,
+      },
+    ).exec();
+  }
 }

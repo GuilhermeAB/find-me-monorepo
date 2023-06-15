@@ -37,11 +37,30 @@
     </v-card-text>
   </v-card>
 
-  <div v-if='list'>
+  <div v-if='list && list.length'>
     <div v-for='item in list' :key='item.id'>
       <AlertCommentItem :item='item' />
     </div>
   </div>
+
+  <v-sheet
+    v-else
+    class='d-flex align-center justify-center flex-wrap text-center mx-auto'
+    rounded
+    width='100%'
+    min-width='100'
+    min-height='100'
+  >
+    <div>
+      <p class='text-body-2'>
+        <v-icon class='mr-3'>
+          mdi-message-alert-outline
+        </v-icon>
+
+        {{ $t('NoCommentsFound') }}
+      </p>
+    </div>
+  </v-sheet>
 </template>
 
 <script setup lang='ts'>

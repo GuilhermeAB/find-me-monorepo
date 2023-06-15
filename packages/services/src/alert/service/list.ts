@@ -14,4 +14,8 @@ export class AlertListService extends AlertService {
 
     return result ? result.getFlatProps(['password']) : undefined;
   }
+
+  public async listByUser(accountId: string): Promise<unknown[] | undefined> {
+    return this.repository.listByUser(accountId);
+  }
 }

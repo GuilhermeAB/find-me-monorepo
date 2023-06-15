@@ -19,6 +19,11 @@ const routes = [
     name: 'SignIn',
     component: () => import('@/views/authentication/Authentication.vue'),
   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/profile/Profile.vue'),
+  },
 ];
 
 const router = createRouter({

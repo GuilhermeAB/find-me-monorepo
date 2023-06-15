@@ -44,7 +44,7 @@ export class Authentication {
 
     const body: TokenBody = {
       accountId: id.value,
-      personId: person instanceof UUID || typeof person === 'string' ? person.value : person.getProps().id.value,
+      personId: person instanceof UUID || typeof person === 'string' ? UUID.generate(person).value : person.getProps().id.value,
       tokenId: Authentication.generateTokenId(id.value, AUTHENTICATION_SECRET_TOKEN_HASH),
       role,
       status,

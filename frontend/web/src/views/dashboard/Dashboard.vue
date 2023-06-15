@@ -38,7 +38,7 @@
           color='transparent'
           width='100%'
           height='100%'
-          :max-height='maxHeight - 63'
+          :max-height='!smAndDown ? maxHeight - 63 : ""'
           style='overflow: auto;'
         >
           <AlertList />
@@ -62,7 +62,7 @@
   import Search from './components/search/Search.vue';
   import { useAlertStore } from '../../store/alert';
 
-  const { height } = useDisplay();
+  const { height, smAndDown } = useDisplay();
   const alert = useAlertStore();
 
   onMounted(() => {

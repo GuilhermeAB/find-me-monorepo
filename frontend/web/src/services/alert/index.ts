@@ -66,6 +66,17 @@ export class AlertService {
     return data?.value?.list;
   }
 
+  public static async listByUser(): Promise<Alert[] | undefined> {
+    const { data } = await axios<{ value?: { list?: Alert[] } }>({
+      baseURL: url,
+      url: 'alert/list-by-user',
+      method: 'GET',
+      withCredentials: true,
+    });
+
+    return data?.value?.list;
+  }
+
   public static async listNearby(latitude: number, longitude: number, type?: string): Promise<Alert[] | undefined> {
     const { data } = await axios<{ value?: { list?: Alert[] } }>({
       baseURL: url,

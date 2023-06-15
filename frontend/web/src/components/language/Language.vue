@@ -5,7 +5,7 @@
         <template #activator='{ props: tooltip }'>
           <v-btn
             icon='mdi-translate'
-            class='mr-2'
+            class='mr-1'
             v-bind='mergeProps(menu, tooltip)'
           />
         </template>
