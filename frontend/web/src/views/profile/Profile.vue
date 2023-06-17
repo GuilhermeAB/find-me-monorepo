@@ -102,22 +102,36 @@
               </v-row>
 
               <v-row>
-                <v-col
-                  v-for='item in alertList'
-                  :key='item.id'
-                  cols='12'
-                  sm='4'
-                  md='3'
-                  lg='3'
-                  xl='3'
-                  xxl='3'
-                  class='pa-0 pb-2 px-1'
+                <v-carousel
+                  v-if='alertList && alertList.length'
+                  hide-delimiters
+                  show-arrows='hover'
+                  height='100%'
                 >
-                  <AlertListItem :item='item' image-height='10rem' />
-                </v-col>
+                  <template v-for='(item, index) in alertList'>
+                    <v-carousel-item v-if='(index + 1) % columns === 1 || columns === 1' :key='index'>
+                      <v-row no-gutters style='height: 100%'>
+                        <template v-for='(n, i) in columns' :key='i'>
+                          <v-col
+                            v-if='alertList[index + i]'
+                            class='pa-0 pb-2 px-1'
+                            cols='12'
+                            sm='12'
+                            md='6'
+                            lg='3'
+                            xl='3'
+                            xxl='3'
+                          >
+                            <AlertListItem :item='alertList[index + i]' :image-height='imageHeight' />
+                          </v-col>
+                        </template>
+                      </v-row>
+                    </v-carousel-item>
+                  </template>
+                </v-carousel>
 
                 <v-col
-                  v-if='!alertList || !alertList.length'
+                  v-else
                   cols='12'
                   sm='12'
                   md='12'
@@ -192,7 +206,7 @@
 
 <script setup lang='ts'>
   import {
-    inject, ref, onMounted, watch,
+    inject, ref, onMounted, watch, computed,
   } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useDisplay } from 'vuetify';
@@ -205,14 +219,48 @@
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
-  const { mobile } = useDisplay();
+  const {
+    mobile, xl, lg, md,
+  } = useDisplay();
   const router = useRouter();
 
   const authentication = useAuthenticationStore();
 
   const account = ref(authentication.currentUser);
   watch(account, () => {
-    router.replace({ name: 'Home' });
+    if (!account.value) {
+      router.replace({ name: 'Home' });
+    }
+  });
+
+  const columns = computed(() => {
+    if (xl.value) {
+      return 4;
+    }
+
+    if (lg.value) {
+      return 4;
+    }
+
+    if (md.value) {
+      return 2;
+    }
+    return 1;
+  });
+
+  const imageHeight = computed(() => {
+    if (xl.value) {
+      return '10rem';
+    }
+
+    if (lg.value) {
+      return '10rem';
+    }
+
+    if (md.value) {
+      return '12rem';
+    }
+    return '20rem';
   });
 
   const editProfileDialog = ref(false);

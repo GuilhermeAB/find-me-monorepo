@@ -91,13 +91,15 @@ export class AuthenticationService {
   }
 
   public static async updatePerson(name: string, birthDate: string): Promise<void> {
+    const [birthDay, birthMonth, birthYear] = birthDate.split('/');
+
     await axios({
       baseURL: url,
       url: 'auth/update-person',
       method: 'PATCH',
       data: {
         name,
-        birthDate,
+        birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
       },
       withCredentials: true,
     });

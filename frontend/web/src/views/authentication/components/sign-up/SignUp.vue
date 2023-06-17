@@ -17,10 +17,12 @@
 
         <v-text-field
           v-model='birthDate'
+          v-maska:[dateMask]
           hide-details
           variant='outlined'
           class='mb-3'
           :label='$t("BirthDate")'
+          placeholder='dd/MM/yyyy'
           :rules='[rules.required]'
         />
 
@@ -73,6 +75,7 @@
     ref, inject,
   } from 'vue';
   import { Composer } from 'vue-i18n';
+  import { vMaska } from 'maska';
   import { AuthenticationService } from '@/services/authentication';
 
   const emit = defineEmits(['sign-in']);
@@ -84,6 +87,8 @@
   const rules = {
     required: (value: unknown): boolean | string => !!value || $t('ValueRequired'),
   };
+
+  const dateMask = { mask: '##/##/####' };
 
   const form = ref();
   const name = ref<string>('');

@@ -100,12 +100,15 @@ export class AlertService {
   }
 
   public static async create(alert: CreateAlert, image?: Blob): Promise<void> {
+    const [birthDay, birthMonth, birthYear] = alert.birthDate.split('/');
+    const [disappearDay, disappearMonth, disappearYear] = alert.disappearDate.substring(0, 10).split('/');
+
     const form = new FormData();
     form.append('type', alert.type);
     form.append('name', alert.name);
     form.append('description', alert.description);
-    form.append('birthDate', alert.birthDate);
-    form.append('disappearDate', alert.disappearDate);
+    form.append('birthDate', `${birthYear}-${birthMonth}-${birthDay}`);
+    form.append('disappearDate', `${disappearYear}-${disappearMonth}-${disappearDay} ${alert.disappearDate.substring(11, 16)}`);
     form.append('latitude', alert.latitude.toString());
     form.append('longitude', alert.longitude.toString());
 
@@ -130,12 +133,15 @@ export class AlertService {
   }
 
   public static async update(id: string, alert: CreateAlert, image?: Blob): Promise<void> {
+    const [birthDay, birthMonth, birthYear] = alert.birthDate.split('/');
+    const [disappearDay, disappearMonth, disappearYear] = alert.disappearDate.substring(0, 10).split('/');
+
     const form = new FormData();
     form.append('type', alert.type);
     form.append('name', alert.name);
     form.append('description', alert.description);
-    form.append('birthDate', alert.birthDate);
-    form.append('disappearDate', alert.disappearDate);
+    form.append('birthDate', `${birthYear}-${birthMonth}-${birthDay}`);
+    form.append('disappearDate', `${disappearYear}-${disappearMonth}-${disappearDay} ${alert.disappearDate.substring(11, 16)}`);
     form.append('latitude', alert.latitude.toString());
     form.append('longitude', alert.longitude.toString());
 

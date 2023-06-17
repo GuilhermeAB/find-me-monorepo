@@ -26,10 +26,12 @@
 
           <v-text-field
             v-model='birthDate'
+            v-maska:[dateMask]
             hide-details
             variant='outlined'
             class='mb-2'
             :label='$t("BirthDate")'
+            placeholder='dd/MM/yyyy'
             :rules='[rules.required]'
           />
 
@@ -97,6 +99,7 @@
   import { Composer } from 'vue-i18n';
   import { useAuthenticationStore } from '@/store/authentication';
   import { AuthenticationService } from '@/services';
+  import { vMaska } from 'maska';
 
   const emit = defineEmits(['updated']);
 
@@ -106,6 +109,7 @@
 
   const authentication = useAuthenticationStore();
   const account = authentication.currentUser;
+  const dateMask = { mask: '##/##/####' };
 
   const tab = ref('one');
   const rules = {
@@ -124,8 +128,13 @@
   const loading = ref(false);
 
   onMounted(() => {
-    name.value = account?.person.name || '';
-    birthDate.value = account?.person.birthDate.substring(0, 10) || '';
+    if (account) {
+      const birthDateProp = account.person.birthDate.toString().substring(0, 10);
+      const [birthYear, birthMonth, birthDay] = birthDateProp.split('-');
+
+      name.value = account.person.name;
+      birthDate.value = `${birthDay}/${birthMonth}/${birthYear}`;
+    }
   });
 
   async function saveData (): Promise<void> {

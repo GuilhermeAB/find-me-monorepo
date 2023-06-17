@@ -40,15 +40,19 @@
         />
         <v-text-field
           v-model='birthDate'
+          v-maska:[dateMask]
           variant='outlined'
           :label='$t("BirthDate")'
+          placeholder='dd/MM/yyyy'
           :rules='[rules.required]'
           class='mt-1'
         />
         <v-text-field
           v-model='disappearDate'
+          v-maska:[dateTimeMask]
           variant='outlined'
           :label='$t("DisappearDate")'
+          placeholder='dd/MM/yyyy hh:mm'
           :rules='[rules.required]'
           class='mt-1'
         />
@@ -149,6 +153,7 @@
     LIcon,
   } from '@vue-leaflet/vue-leaflet';
   import L from 'leaflet';
+  import { vMaska } from 'maska';
   import {
     AlertType, PetType, AlertService, Alert,
   } from '@/services';
@@ -177,6 +182,8 @@
     markerLatLng.value = [lat, lng];
   };
 
+  const dateMask = { mask: '##/##/####' };
+  const dateTimeMask = { mask: '##/##/#### ##:##' };
   const type = ref(AlertType.Person);
   const petTypeList = Object.values(PetType).map((i) => $t(i));
 
@@ -191,12 +198,17 @@
 
   onMounted(() => {
     if (editMode.value && props.alert) {
+      const birthDateProp = props.alert.birthDate.toString().substring(0, 10);
+      const [birthYear, birthMonth, birthDay] = birthDateProp.split('-');
+      const disappearDateProp = props.alert.disappearDate.toString().substring(0, 10);
+      const [disappearYear, disappearMonth, disappearDay] = disappearDateProp.split('-');
+
       type.value = props.alert.type;
       petType.value = props.alert.info.petType;
       name.value = props.alert.name;
       description.value = props.alert.description;
-      birthDate.value = props.alert.birthDate.toString().substring(0, 10);
-      disappearDate.value = props.alert.disappearDate.toString().substring(0, 10);
+      birthDate.value = `${birthDay}/${birthMonth}/${birthYear}`;
+      disappearDate.value = `${disappearDay}/${disappearMonth}/${disappearYear} ${props.alert.disappearDate.toString().substring(11, 16)}`;
       pcd.value = props.alert.info.isPCD;
       mapCenter.value = [props.alert.location.coordinates[1], props.alert.location.coordinates[0]];
       markerLatLng.value = [props.alert.location.coordinates[1], props.alert.location.coordinates[0]];
