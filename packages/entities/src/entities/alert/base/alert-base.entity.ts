@@ -18,6 +18,12 @@ export interface Location {
   coordinates: number[],
 }
 
+export enum AlertStatus {
+  Open = 'Open',
+  Closed = 'Closed',
+  Resolved = 'Resolved',
+}
+
 export interface AlertProps<T> {
   type: AlertTypeEnum,
   name: string,
@@ -27,9 +33,10 @@ export interface AlertProps<T> {
   location: Location,
   info: T,
   account: UUID | AccountEntity,
+  status: AlertStatus,
 }
 
-export type CreateAlertProps<T> = Omit<AlertProps<T>, 'birthDate' | 'disappearDate' | 'type' | 'account'> & {
+export type CreateAlertProps<T> = Omit<AlertProps<T>, 'birthDate' | 'disappearDate' | 'type' | 'account' | 'status'> & {
   birthDate: CreateDateVO,
   disappearDate: CreateDateVO,
   info: T,
@@ -73,6 +80,7 @@ export class AlertEntity<T> extends Entity<AlertProps<T>> {
         location: create.location,
         info: create.info,
         account: typeof create.account === 'string' || create.account instanceof UUID ? UUID.generate(create.account) : create.account,
+        status: AlertStatus.Open,
       },
       timestamps: true,
     });

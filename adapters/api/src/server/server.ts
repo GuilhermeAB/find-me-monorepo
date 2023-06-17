@@ -64,7 +64,7 @@ export class ApiServer {
         attachFieldsToBody: true,
         limits: {
           fieldNameSize: 100, // Max field name size in bytes
-          fieldSize: 100, // Max field value size in bytes
+          fieldSize: 1000, // Max field value size in bytes
           fields: 20, // Max number of non-file fields
           fileSize: 2100000, // For multipart forms, the max file size in bytes
           files: 1, // Max number of file fields

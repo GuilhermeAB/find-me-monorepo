@@ -5,6 +5,7 @@
       mandatory
       color='primary'
       class='ml-2'
+      :disabled='editMode'
     >
       <v-btn stacked width='150' :value='AlertType.Person'>
         <v-icon size='small' class='mb-1'>
@@ -86,7 +87,7 @@
           prepend-inner-icon='mdi-camera'
           class='mt-1'
           :label='$t("Image")'
-          :rules='[rules.required]'
+          :rules='!editMode ? [rules.required] : []'
         />
       </v-form>
     </v-sheet>
@@ -138,7 +139,7 @@
 
 <script setup lang='ts'>
   import {
-    ref, inject,
+    ref, inject, onMounted,
   } from 'vue';
   import { Composer } from 'vue-i18n';
   import {
@@ -148,14 +149,24 @@
     LIcon,
   } from '@vue-leaflet/vue-leaflet';
   import L from 'leaflet';
-  import { AlertType, PetType, AlertService } from '@/services';
+  import {
+    AlertType, PetType, AlertService, Alert,
+  } from '@/services';
+
+  const props = defineProps<{ alert?: Alert }>();
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
 
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'updated']);
   const loading = ref(false);
+  const editMode = ref(!!props.alert);
+
+  const rules = {
+    required: (value: unknown): boolean | string => !!value || $t('ValueRequired'),
+    descriptionLength: (value: string): boolean | string => value.length <= 400 || $t('DescriptionLength', { min: 20, max: 400 }),
+  };
 
   const zoom = ref(12);
   const mapCenter = ref<L.PointExpression>([-25.383585, -49.242825]);
@@ -178,10 +189,19 @@
   const petType = ref();
   const image = ref();
 
-  const rules = {
-    required: (value: unknown): boolean | string => !!value || $t('ValueRequired'),
-    descriptionLength: (value: string): boolean | string => value.length <= 400 || $t('DescriptionLength', { min: 20, max: 400 }),
-  };
+  onMounted(() => {
+    if (editMode.value && props.alert) {
+      type.value = props.alert.type;
+      petType.value = props.alert.info.petType;
+      name.value = props.alert.name;
+      description.value = props.alert.description;
+      birthDate.value = props.alert.birthDate.toString().substring(0, 10);
+      disappearDate.value = props.alert.disappearDate.toString().substring(0, 10);
+      pcd.value = props.alert.info.isPCD;
+      mapCenter.value = [props.alert.location.coordinates[1], props.alert.location.coordinates[0]];
+      markerLatLng.value = [props.alert.location.coordinates[1], props.alert.location.coordinates[0]];
+    }
+  });
 
   async function save (): Promise<void> {
     const { valid } = await form.value.validate();
@@ -190,20 +210,40 @@
       try {
         loading.value = true;
 
-        await AlertService.create(
-          {
-            type: type.value,
-            name: name.value,
-            description: description.value,
-            birthDate: birthDate.value,
-            disappearDate: disappearDate.value,
-            isPCD: pcd.value,
-            petType: petType.value,
-            latitude: (markerLatLng.value as number[])[0],
-            longitude: (markerLatLng.value as number[])[1],
-          },
-          image.value ? image.value[0] : undefined,
-        );
+        if (editMode.value && props.alert) {
+          await AlertService.update(
+            props.alert.id,
+            {
+              type: type.value,
+              name: name.value,
+              description: description.value,
+              birthDate: birthDate.value,
+              disappearDate: disappearDate.value,
+              isPCD: pcd.value,
+              petType: petType.value,
+              latitude: (markerLatLng.value as number[])[0],
+              longitude: (markerLatLng.value as number[])[1],
+            },
+            image.value ? image.value[0] : undefined,
+          );
+
+          emit('updated');
+        } else {
+          await AlertService.create(
+            {
+              type: type.value,
+              name: name.value,
+              description: description.value,
+              birthDate: birthDate.value,
+              disappearDate: disappearDate.value,
+              isPCD: pcd.value,
+              petType: petType.value,
+              latitude: (markerLatLng.value as number[])[0],
+              longitude: (markerLatLng.value as number[])[1],
+            },
+            image.value ? image.value[0] : undefined,
+          );
+        }
 
         emit('close');
       } finally {

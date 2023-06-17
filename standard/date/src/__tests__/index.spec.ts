@@ -115,6 +115,15 @@ describe('DateVO', () => {
     });
   });
 
+  describe('differenceInMilliseconds', () => {
+    it('should return the correct number of milliseconds between two dates', () => {
+      const dateLeft = new Date(2021, 0, 1, 0, 0, 1);
+      const dateRight = new Date(2021, 0, 1, 0, 0, 0);
+      const result = DateVO.differenceInMilliseconds(dateLeft, dateRight);
+      expect(result).toEqual(1000); // Validate that the returned value is correct.
+    });
+  });
+
   describe('differenceInDays', () => {
     it('should return the correct number of days between two dates', () => {
       const dateLeft = new Date(2021, 0, 11);

@@ -1,7 +1,7 @@
 import { ValidationError } from '@find-me/errors';
 import { AlertPersonEntityType } from '..';
 import { AlertPersonPolicy } from '../alert-person.policy';
-import { AlertLocationType, AlertTypeEnum } from '../../base';
+import { AlertLocationType, AlertStatus, AlertTypeEnum } from '../../base';
 import { DateVO } from '@find-me/date';
 import { UUID } from '@find-me/uuid';
 
@@ -39,6 +39,8 @@ describe('AlertPersonPolicy', () => {
         info: {
           isPCD: true,
         },
+        account: UUID.generate(),
+        status: AlertStatus.Open,
       };
 
       jest.spyOn(AlertPersonPolicy, 'validatePDC');

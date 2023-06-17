@@ -94,47 +94,67 @@
 
             <v-divider class='mt-1 mb-4' />
 
-            <div>
-              <span class='font-weight-medium'>
-                {{ $t('BirthDate') }}:
-              </span>
-              <span class='text-body-2'>
-                {{ birthDateFormatted }}
-
-                <span class='text-caption'>
-                  ({{ $t('Age', { value: age }) }})
+            <div style='height: 75%'>
+              <div>
+                <span class='font-weight-medium'>
+                  {{ $t('BirthDate') }}:
                 </span>
-              </span>
-            </div>
+                <span class='text-body-2'>
+                  {{ birthDateFormatted }}
 
-            <div>
-              <span class='font-weight-medium'>
-                {{ $t('DisappearDate') }}:
-              </span>
-              <span class='text-body-2'>
-                {{ disappearDateFormatted }}
-
-                <span class='text-caption'>
-                  ({{ disappearDateLabel }})
+                  <span class='text-caption'>
+                    ({{ $t('Age', { value: age }) }})
+                  </span>
                 </span>
-              </span>
+              </div>
+
+              <div>
+                <span class='font-weight-medium'>
+                  {{ $t('DisappearDate') }}:
+                </span>
+                <span class='text-body-2'>
+                  {{ disappearDateFormatted }}
+
+                  <span class='text-caption'>
+                    ({{ disappearDateLabel }})
+                  </span>
+                </span>
+              </div>
+
+              <div class='text-body-2 text-container mt-4'>
+                <span>
+                  {{ item.description }}
+                </span>
+              </div>
             </div>
 
-            <div class='text-body-2 text-container mt-4'>
-              <span>
-                {{ item.description }}
-              </span>
-            </div>
+            <v-row no-gutters align='center'>
+              <div class='text-caption'>
+                <span>
+                  {{ $t('AlertCreatedBy', { value: item.account.person.name }) }}
+                </span>
+              </div>
 
-            <div class='text-caption mt-4'>
-              <span>
-                {{ $t('AlertCreatedBy', { value: item.account.person.name }) }}
-              </span>
-            </div>
+              <v-spacer />
+
+              <v-btn
+                v-if='canEdit'
+                variant='outlined'
+                density='comfortable'
+                color='primary'
+                @click='newAlertDialog = true'
+              >
+                <v-icon class='mr-1'>
+                  mdi-pencil
+                </v-icon>
+
+                {{ $t('Edit') }}
+              </v-btn>
+            </v-row>
           </v-col>
         </v-row>
 
-        <v-row v-if='item'>
+        <v-row v-if='item' class='mt-10'>
           <v-col cols='12'>
             <v-card-item class='pa-0'>
               <v-card-title>
@@ -185,6 +205,43 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <v-dialog
+    v-model='newAlertDialog'
+    fullscreen
+    persistent
+    :scrim='false'
+    transition='dialog-bottom-transition'
+  >
+    <v-card>
+      <v-toolbar
+        color='primary'
+      >
+        <v-btn
+          icon
+          @click='newAlertDialog = false'
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>{{ $t('EditAlert') }}</v-toolbar-title>
+      </v-toolbar>
+
+      <v-container fluid>
+        <v-row class='align-center justify-center'>
+          <v-col
+            cols='12'
+            sm='12'
+            md='8'
+            lg='6'
+            xl='6'
+            xxl='6'
+          >
+            <AlertCreate :alert='item' @updated='getAlert' @close='newAlertDialog = false' />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -206,6 +263,8 @@
   import { Composer } from 'vue-i18n';
   import { Alert, AlertService, AlertType } from '@/services';
   import AlertComment from './AlertComment.vue';
+  import AlertCreate from '../dashboard/components/alert/AlertCreate.vue';
+  import { useAuthenticationStore } from '@/store/authentication';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -215,8 +274,11 @@
   const id = route.params.id as string;
 
   const { current } = useLocale();
+  const authentication = useAuthenticationStore();
 
   const item = ref<Alert>();
+  const newAlertDialog = ref(false);
+  const canEdit = ref(false);
 
   function getDisappearDateLabel (): string {
     if (item.value) {
@@ -237,16 +299,22 @@
   const disappearDateLabel = ref(getDisappearDateLabel());
   let age: number;
 
-  onMounted(async () => {
+  async function getAlert (): Promise<void> {
     item.value = await AlertService.getById(id);
 
     if (item.value) {
-      birthDateFormatted = format(new Date(item.value.birthDate), 'dd/MM/yyyy');
+      birthDateFormatted = format(new Date(`${item.value.birthDate.toString().substring(0, 10)} 12:00:00`), 'dd/MM/yyyy');
       disappearDateFormatted = format(new Date(item.value.disappearDate), 'dd/MM/yyyy HH:mm');
 
       disappearDateLabel.value = getDisappearDateLabel();
       age = differenceInYears(new Date(), new Date(item.value.birthDate));
+
+      canEdit.value = !!(authentication.currentUser && item.value.account.id === authentication.currentUser.id);
     }
+  }
+
+  onMounted(async () => {
+    await getAlert();
   });
 
   watch(current, () => {

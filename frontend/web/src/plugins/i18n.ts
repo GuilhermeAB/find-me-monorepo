@@ -136,6 +136,7 @@ export const i18n = createI18n({
       CurrentPassword: 'Current password',
       NewPassword: 'New password',
       NoCommentsFound: 'No comments found',
+      EditAlert: 'Edit alert',
     },
     pt: {
       // BACK
@@ -268,6 +269,7 @@ export const i18n = createI18n({
       CurrentPassword: 'Senha atual',
       NewPassword: 'Nova senha',
       NoCommentsFound: 'Nenhum comentário encontrado',
+      EditAlert: 'Editar alerta',
     },
     // Other locales and translations
   },

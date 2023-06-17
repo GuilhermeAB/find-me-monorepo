@@ -2,7 +2,7 @@ import { Policy } from '../../base';
 import { AccountProps, AccountRole, AccountStatus } from '.';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/g;
-const EMAIL_MIN_LENGTH = 5;
+const EMAIL_MIN_LENGTH = 8;
 const EMAIL_MAX_LENGTH = 90; // 254
 
 const PASSWORD_MIN_LENGTH = 10;

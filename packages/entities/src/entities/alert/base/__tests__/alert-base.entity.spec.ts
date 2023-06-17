@@ -1,6 +1,6 @@
 import { DateVO } from '@find-me/date';
 import { Entity } from '../../../../base';
-import { AlertEntity, AlertLocationType, AlertTypeEnum } from '..';
+import { AlertEntity, AlertLocationType, AlertStatus, AlertTypeEnum } from '..';
 import { UUID } from '@find-me/uuid';
 
 describe('AlertEntity', () => {
@@ -35,7 +35,8 @@ describe('AlertEntity', () => {
           coordinates: [180, 90],
         },
         info: undefined,
-        account: '503130bb-a450-40d3-a95d-e1913d33f417',
+        account: UUID.generate('503130bb-a450-40d3-a95d-e1913d33f417'),
+        status: AlertStatus.Open,
         id: expect.anything(),
         createdAt: expect.anything(),
         updatedAt: expect.anything(),
@@ -80,6 +81,7 @@ describe('AlertEntity', () => {
           },
           info: undefined,
           account: UUID.generate('503130bb-a450-40d3-a95d-e1913d33f417'),
+          status: AlertStatus.Open,
         },
       });
 
@@ -103,6 +105,7 @@ describe('AlertEntity', () => {
           },
           info: undefined,
           account: UUID.generate('503130bb-a450-40d3-a95d-e1913d33f417'),
+          status: AlertStatus.Open,
         },
       });
 

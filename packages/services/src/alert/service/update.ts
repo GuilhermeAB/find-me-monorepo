@@ -60,7 +60,7 @@ export class AlertUpdateService extends AlertService {
     }
 
     const { account } = alert.getProps();
-    const accountId = account instanceof UUID ? account.value : account.getProps().id.value;
+    const accountId = account instanceof UUID || typeof account === 'string' ? UUID.generate(account).value : account.getProps().id.value;
     if (props.account !== accountId) {
       throw new ValidationError({ key: 'AlertNotFound' });
     }

@@ -27,6 +27,7 @@ class Alert extends DTO<DTOAlertType> {
         },
         info: {},
         account: { type: String, ref: DTOAccount.name },
+        status: String,
       },
       options: {
         timestamps: true,
