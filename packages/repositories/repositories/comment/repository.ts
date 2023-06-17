@@ -39,9 +39,12 @@ export class CommentRepository extends Repository<DTOCommentType, CommentEntity>
       })
       .exec();
 
-    if (result) {
+    if (result && result.length) {
       const list = this.mapper.toEntities(result);
       const countResult = await this.Model.aggregate<{ comments: number, replies: number }>([
+        {
+          $match: { alert: { $eq: alertId } },
+        },
         {
           $project: {
             comments: { $sum: 1 },
