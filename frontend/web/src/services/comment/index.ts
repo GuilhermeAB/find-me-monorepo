@@ -22,8 +22,8 @@ export interface CommentType {
 const url = import.meta.env.VITE_APP_ALERT_REQUEST_BASE_URL as string;
 
 export class CommentService {
-  public static async list(id: string): Promise<CommentType[] | undefined> {
-    const { data } = await axios<{ value: CommentType[] }>({
+  public static async list(id: string): Promise<{ list: CommentType[], count: { comments: number, replies: number } } | undefined> {
+    const { data } = await axios<{ value: { list: CommentType[], count: { comments: number, replies: number } } }>({
       baseURL: url,
       url: `alert/comment/${id}`,
       method: 'GET',

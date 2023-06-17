@@ -144,6 +144,8 @@ export const i18n = createI18n({
       Resolved: 'Resolved',
       Closed: 'Closed',
       Open: 'Open',
+      AlertOwner: 'Owner',
+      MyComment: 'My comment',
     },
     pt: {
       // BACK
@@ -284,6 +286,8 @@ export const i18n = createI18n({
       Resolved: 'Resolvido',
       Closed: 'Fechado',
       Open: 'Aberto',
+      AlertOwner: 'Criador',
+      MyComment: 'Meu comentário',
     },
     // Other locales and translations
   },

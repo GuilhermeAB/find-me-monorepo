@@ -2,7 +2,16 @@
   <v-card-item class='pa-0'>
     <v-card-title>
       <v-row no-gutters align='center'>
-        {{ $t('Comments') }}
+        <span>
+          <v-icon size='x-small'>
+            mdi-forum
+          </v-icon>
+          {{ $t('Comments') }}
+
+          <span v-if='count' class='text-body-2'>
+            ({{ count.comments + count.replies }})
+          </span>
+        </span>
       </v-row>
     </v-card-title>
 
@@ -39,7 +48,7 @@
 
   <div v-if='list && list.length'>
     <div v-for='item in list' :key='item.id'>
-      <AlertCommentItem :item='item' />
+      <AlertCommentItem :item='item' :owner-id='ownerId' @replied='replied' />
     </div>
   </div>
 
@@ -78,11 +87,18 @@
       type: String,
       required: true,
     },
+    ownerId: {
+      type: String,
+      required: true,
+    },
   });
 
   const list = ref<CommentType[]>();
+  const count = ref<{ comments: number, replies: number }>();
   onMounted(async () => {
-    list.value = await CommentService.list(props.id);
+    const result = await CommentService.list(props.id);
+    list.value = result?.list;
+    count.value = result?.count;
   });
 
   const comment = ref();
@@ -96,12 +112,25 @@
           list.value = [];
         }
 
+        if (!count.value) {
+          count.value = {
+            comments: 0,
+            replies: 0,
+          };
+        }
+
         list.value.push(result);
+        count.value.comments += 1;
 
         comment.value = undefined;
       }
     } finally {
       sendCommentLoading.value = false;
     }
+  }
+
+  function replied (): void {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    count.value!.replies += 1;
   }
 </script>

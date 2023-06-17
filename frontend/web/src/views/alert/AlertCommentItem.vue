@@ -2,11 +2,34 @@
   <v-card class='mb-1'>
     <v-card-item class='pb-0'>
       <v-card-title class='text-caption'>
+        <v-icon size='small'>
+          mdi-account
+        </v-icon>
+
         {{ item.account.person.name }}
 
         <span class='text-caption' style='color: grey'>
           {{ getTimeLabel(item.createdAt) }}
         </span>
+
+        <v-chip
+          v-if='user?.id === item.account.id'
+          color='warning'
+          density='compact'
+          variant='outlined'
+          class='ml-2'
+        >
+          {{ $t('MyComment') }}
+        </v-chip>
+
+        <v-chip
+          v-if='ownerId === item.account.id'
+          color='primary'
+          density='compact'
+          class='ml-2'
+        >
+          {{ $t('AlertOwner') }}
+        </v-chip>
       </v-card-title>
     </v-card-item>
 
@@ -97,11 +120,34 @@
         <v-card v-for='reply in item.replies' :key='reply.id' class='mb-1'>
           <v-card-item class='pb-0'>
             <v-card-title class='text-caption'>
+              <v-icon size='small'>
+                mdi-account
+              </v-icon>
+
               {{ reply.account.person.name }}
 
               <span class='text-caption' style='color: grey'>
                 {{ getTimeLabel(reply.createdAt) }}
               </span>
+
+              <v-chip
+                v-if='user?.id === reply.account.id'
+                color='warning'
+                density='compact'
+                variant='outlined'
+                class='ml-2'
+              >
+                {{ $t('MyComment') }}
+              </v-chip>
+
+              <v-chip
+                v-if='ownerId === reply.account.id'
+                color='primary'
+                density='compact'
+                class='ml-2'
+              >
+                {{ $t('AlertOwner') }}
+              </v-chip>
             </v-card-title>
           </v-card-item>
 
@@ -122,16 +168,22 @@
   import { ref, inject } from 'vue';
   import { Composer } from 'vue-i18n';
   import { CommentService, CommentType } from '@/services/comment';
+  import { useAuthenticationStore } from '@/store/authentication';
+
+  const props = defineProps<{
+    item: CommentType,
+    ownerId: string,
+  }>();
+
+  const emit = defineEmits(['replied']);
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
 
-  const props = defineProps<{
-    item: CommentType,
-  }>();
-
   const { current } = useLocale();
+  const authentication = useAuthenticationStore();
+  const user = authentication.currentUser;
 
   const repliesIsVisible = ref(false);
   const replyCommentIsVisible = ref(false);
@@ -161,6 +213,8 @@
 
         comment.value = undefined;
         replyCommentIsVisible.value = false;
+
+        emit('replied');
       }
     } finally {
       sendCommentLoading.value = false;

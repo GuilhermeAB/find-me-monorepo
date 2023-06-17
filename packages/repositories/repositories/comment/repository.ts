@@ -14,7 +14,7 @@ export class CommentRepository extends Repository<DTOCommentType, CommentEntity>
 
   protected mapper = new CommentMapper(CommentEntity);
 
-  public async list(alertId: string): Promise<CommentEntity[] | undefined> {
+  public async list(alertId: string): Promise<{ list: CommentEntity[], count: { comments: number, replies: number } } | undefined> {
     const result = await this.Model.find(
       {
         alert: alertId,
@@ -39,7 +39,26 @@ export class CommentRepository extends Repository<DTOCommentType, CommentEntity>
       })
       .exec();
 
-    return result ? this.mapper.toEntities(result) : undefined;
+    if (result) {
+      const list = this.mapper.toEntities(result);
+      const countResult = await this.Model.aggregate<{ comments: number, replies: number }>([
+        {
+          $project: {
+            comments: { $sum: 1 },
+            replies: { $size: '$replies' },
+          },
+        },
+      ]).exec();
+
+      const count = {
+        comments: countResult.map((r) => r.comments).reduce((value, currentValue) => (value + currentValue)),
+        replies: countResult.map((r) => r.replies).reduce((value, currentValue) => (value + currentValue)),
+      };
+
+      return { list, count };
+    }
+
+    return undefined;
   }
 
   public async exists(id: string): Promise<boolean> {

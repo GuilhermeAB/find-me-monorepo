@@ -191,7 +191,13 @@
             <v-card-item class='pa-0'>
               <v-card-title>
                 <v-row no-gutters align='center'>
-                  {{ $t('LastSeenAt') }}
+                  <span>
+                    <v-icon size='x-small'>
+                      mdi-map
+                    </v-icon>
+
+                    {{ $t('LastSeenAt') }}
+                  </span>
                 </v-row>
               </v-card-title>
 
@@ -231,7 +237,7 @@
 
         <v-row v-if='item'>
           <v-col cols='12'>
-            <AlertComment :id='id' />
+            <AlertComment :id='id' :owner-id='item.account.id' />
           </v-col>
         </v-row>
       </v-col>

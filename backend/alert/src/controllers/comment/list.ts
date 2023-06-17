@@ -14,11 +14,11 @@ class CommentListController {
       id,
     } = params;
 
-    const list = await service.list(id);
+    const result = await service.list(id);
 
     return {
       status: Status.Success,
-      value: list,
+      value: result,
     };
   }
 

@@ -19,7 +19,7 @@
       <v-list-item
         v-for='(item, i) in items'
         :key='i'
-        class='pa-2'
+        class='pa-1'
         @click='changeLanguage(item.key)'
       >
         <CountryFlag :country='item.flag' size='normal' />
