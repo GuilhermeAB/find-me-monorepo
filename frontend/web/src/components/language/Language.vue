@@ -4,6 +4,7 @@
       <v-tooltip location='bottom'>
         <template #activator='{ props: tooltip }'>
           <v-btn
+            density='comfortable'
             icon='mdi-translate'
             class='mr-1'
             v-bind='mergeProps(menu, tooltip)'

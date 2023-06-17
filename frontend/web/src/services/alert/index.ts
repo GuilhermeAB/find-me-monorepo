@@ -22,6 +22,12 @@ export interface Location {
   coordinates: number[],
 }
 
+export enum AlertStatus {
+  Open = 'Open',
+  Closed = 'Closed',
+  Resolved = 'Resolved',
+}
+
 export interface Alert {
   id: string,
   type: AlertType,
@@ -35,6 +41,7 @@ export interface Alert {
     petType?: PetType,
   },
   account: User,
+  status: AlertStatus,
 }
 
 export interface CreateAlert {
@@ -160,5 +167,17 @@ export class AlertService {
     });
 
     return data?.value;
+  }
+
+  public static async updateStatus(id: string, status: string): Promise<void> {
+    await axios({
+      baseURL: url,
+      url: `alert/update/status/${id}`,
+      method: 'PATCH',
+      withCredentials: true,
+      data: {
+        status,
+      },
+    });
   }
 }

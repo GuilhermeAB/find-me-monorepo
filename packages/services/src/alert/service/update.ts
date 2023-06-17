@@ -113,4 +113,19 @@ export class AlertUpdateService extends AlertService {
       await this.updateImage(id, image);
     }
   }
+
+  public async updateStatus(alertId: string, accountIdentifier: string, status: string): Promise<void> {
+    const alert = await this.repository.findOneById(alertId);
+    if (!alert) {
+      throw new ValidationError({ key: 'AlertNotFound' });
+    }
+
+    const { account } = alert.getProps();
+    const accountId = account instanceof UUID || typeof account === 'string' ? UUID.generate(account).value : account.getProps().id.value;
+    if (accountIdentifier !== accountId) {
+      throw new ValidationError({ key: 'AlertNotFound' });
+    }
+
+    await this.repository.updateStatus(alertId, status);
+  }
 }

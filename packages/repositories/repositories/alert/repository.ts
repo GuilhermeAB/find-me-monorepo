@@ -1,4 +1,4 @@
-import { AlertEntity, AlertLocationType } from '@find-me/entities';
+import { AlertEntity, AlertLocationType, AlertStatus } from '@find-me/entities';
 import { Repository } from '@find-me/repositories/base/repository';
 import { DTOAlert, DTOAlertType } from '@find-me/repositories/schema/alert';
 import { AlertMapper } from './mapper';
@@ -31,6 +31,22 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
           disappearDate: disappearDate.value,
           location,
           info,
+        },
+      },
+      {
+        session: this.session,
+      },
+    ).exec();
+  }
+
+  public async updateStatus(id: string, status: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          status,
         },
       },
       {
@@ -100,6 +116,7 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
           $maxDistance: 15000,
         },
       },
+      status: AlertStatus.Open,
     };
 
     if (type) {

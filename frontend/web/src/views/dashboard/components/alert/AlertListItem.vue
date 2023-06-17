@@ -54,6 +54,20 @@
           />
         </v-row>
       </template>
+
+      <v-overlay
+        v-if='item.status != AlertStatus.Open'
+        :model-value='true'
+        contained
+        no-click-animation
+        persistent
+        :scrim='item.status === AlertStatus.Closed ? "error" : "success"'
+        class='align-center justify-center'
+      >
+        <v-chip :color='item.status === AlertStatus.Closed ? "error" : "primary"' variant='flat'>
+          {{ $t(item.status) }}
+        </v-chip>
+      </v-overlay>
     </v-img>
 
     <v-card-item class='py-1 px-2'>
@@ -118,7 +132,7 @@
   } from 'vue';
   import { useI18n, Composer } from 'vue-i18n';
   import { useRouter } from 'vue-router';
-  import { AlertService, AlertType } from '@/services';
+  import { AlertService, AlertStatus, AlertType } from '@/services';
   import { useAlertStore } from '../../../../store/alert';
 
   const $i18n = inject<Composer>('$i18n');
@@ -187,7 +201,7 @@
 
   .multiline-text {
     display: -webkit-box;
-    -webkit-line-clamp: 4; /* Set the maximum number of lines to display */
+    -webkit-line-clamp: 3; /* Set the maximum number of lines to display */
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

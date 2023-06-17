@@ -56,7 +56,7 @@ class AlertUpdateController {
         },
         info: {
           ...info,
-          isPCD: Boolean(data.isPCD),
+          isPCD: data.isPCD === 'true',
         },
         account: user.accountId,
       },

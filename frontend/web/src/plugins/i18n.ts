@@ -137,6 +137,13 @@ export const i18n = createI18n({
       NewPassword: 'New password',
       NoCommentsFound: 'No comments found',
       EditAlert: 'Edit alert',
+      CloseAlert: 'Close alert',
+      AlertResolvedLabel: 'Has this alert been resolved?',
+      Yes: 'Yes',
+      No: 'No',
+      Resolved: 'Resolved',
+      Closed: 'Closed',
+      Open: 'Open',
     },
     pt: {
       // BACK
@@ -270,6 +277,13 @@ export const i18n = createI18n({
       NewPassword: 'Nova senha',
       NoCommentsFound: 'Nenhum comentário encontrado',
       EditAlert: 'Editar alerta',
+      CloseAlert: 'Fechar alerta',
+      AlertResolvedLabel: 'Este alerta foi resolvido?',
+      Yes: 'Sim',
+      No: 'Não',
+      Resolved: 'Resolvido',
+      Closed: 'Fechado',
+      Open: 'Aberto',
     },
     // Other locales and translations
   },

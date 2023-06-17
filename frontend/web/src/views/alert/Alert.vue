@@ -50,6 +50,20 @@
                     />
                   </v-row>
                 </template>
+
+                <v-overlay
+                  v-if='item.status != AlertStatus.Open'
+                  :model-value='true'
+                  contained
+                  no-click-animation
+                  persistent
+                  :scrim='item.status === AlertStatus.Closed ? "error" : "success"'
+                  class='align-center justify-center'
+                >
+                  <v-chip :color='item.status === AlertStatus.Closed ? "error" : "primary"' variant='flat' class='text-h6'>
+                    {{ $t(item.status) }}
+                  </v-chip>
+                </v-overlay>
               </v-img>
             </v-card>
           </v-col>
@@ -68,6 +82,7 @@
                   {{ item.name }}
 
                   <v-spacer />
+
                   <div v-if='item.info.isPCD'>
                     <v-tooltip location='bottom'>
                       <template #activator='{ props: tooltipProps }'>
@@ -84,6 +99,39 @@
                       <span>{{ $t('PcDLabel') }}</span>
                     </v-tooltip>
                   </div>
+
+                  <v-menu location='bottom'>
+                    <template #activator='{ props }'>
+                      <v-btn
+                        icon
+                        variant='outlined'
+                        density='comfortable'
+                        color='primary'
+                        class='ml-1'
+                        v-bind='props'
+                      >
+                        <v-icon>
+                          mdi-dots-vertical
+                        </v-icon>
+                      </v-btn>
+                    </template>
+
+                    <v-list class='pa-0'>
+                      <v-list-item
+                        v-if='canEdit'
+                        @click='newAlertDialog = true'
+                      >
+                        {{ $t('Edit') }}
+                      </v-list-item>
+
+                      <v-list-item
+                        v-if='canEdit && item.status === AlertStatus.Open'
+                        @click='resolveAlertDialog = true'
+                      >
+                        {{ $t('CloseAlert') }}
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                 </v-row>
               </v-card-title>
 
@@ -134,22 +182,6 @@
                   {{ $t('AlertCreatedBy', { value: item.account.person.name }) }}
                 </span>
               </div>
-
-              <v-spacer />
-
-              <v-btn
-                v-if='canEdit'
-                variant='outlined'
-                density='comfortable'
-                color='primary'
-                @click='newAlertDialog = true'
-              >
-                <v-icon class='mr-1'>
-                  mdi-pencil
-                </v-icon>
-
-                {{ $t('Edit') }}
-              </v-btn>
             </v-row>
           </v-col>
         </v-row>
@@ -242,6 +274,32 @@
       </v-container>
     </v-card>
   </v-dialog>
+
+  <v-dialog
+    v-model='resolveAlertDialog'
+    transition='dialog-bottom-transition'
+    width='50%'
+  >
+    <v-card>
+      <v-card-title>
+        <v-row no-gutters justify='center'>
+          {{ $t('AlertResolvedLabel') }}
+        </v-row>
+      </v-card-title>
+
+      <v-card-actions>
+        <v-row no-gutters justify='center'>
+          <v-btn variant='outlined' @click='updateStatus(false)'>
+            {{ $t('No') }}
+          </v-btn>
+
+          <v-btn variant='flat' color='primary' @click='updateStatus(true)'>
+            {{ $t('Yes') }}
+          </v-btn>
+        </v-row>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -261,7 +319,9 @@
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
   import { Composer } from 'vue-i18n';
-  import { Alert, AlertService, AlertType } from '@/services';
+  import {
+    Alert, AlertService, AlertStatus, AlertType,
+  } from '@/services';
   import AlertComment from './AlertComment.vue';
   import AlertCreate from '../dashboard/components/alert/AlertCreate.vue';
   import { useAuthenticationStore } from '@/store/authentication';
@@ -278,6 +338,7 @@
 
   const item = ref<Alert>();
   const newAlertDialog = ref(false);
+  const resolveAlertDialog = ref(false);
   const canEdit = ref(false);
 
   function getDisappearDateLabel (): string {
@@ -320,6 +381,16 @@
   watch(current, () => {
     disappearDateLabel.value = getDisappearDateLabel();
   });
+
+  async function updateStatus (value: boolean): Promise<void> {
+    if (item.value) {
+      const status = value ? AlertStatus.Resolved : AlertStatus.Closed;
+      await AlertService.updateStatus(item.value.id, status);
+
+      item.value.status = status;
+      resolveAlertDialog.value = false;
+    }
+  }
 </script>
 
 <style scoped>

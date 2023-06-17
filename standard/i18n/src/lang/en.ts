@@ -71,4 +71,5 @@ export const en = {
   PasswordUpdated: 'Password updated',
   PersonUpdated: 'Person updated',
   SignOutSuccess: 'Sign out successfully',
+  AlertStatusRequired: 'Invalid alert status: {status}',
 };

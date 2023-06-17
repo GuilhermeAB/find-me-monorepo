@@ -66,7 +66,7 @@
   const alert = useAlertStore();
 
   onMounted(() => {
-    alert.getList();
+    alert.updateList();
   });
 
   const maxHeight = computed(() => height.value - 100);

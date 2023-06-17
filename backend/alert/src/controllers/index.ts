@@ -3,6 +3,7 @@ export * from './alert/list';
 export * from './alert/list-by-user';
 export * from './alert-image/get-by-alert';
 export * from './alert/update';
+export * from './alert/update-status';
 export * from './alert/list-nearby';
 export * from './alert/get-by-id';
 export * from './comment/create';
