@@ -56,15 +56,17 @@
     localStorage.setItem('language', current.value);
   });
 
-  const items = ref([
-    { key: 'pt', flag: 'br' },
-  ]);
-
-  watch(current, () => {
-    items.value = [
+  function getLanguages (): { key: string, flag: string }[] {
+    return [
       { key: 'en', flag: 'us' },
       { key: 'pt', flag: 'br' },
     ].filter((item) => item.key !== current.value);
+  }
+
+  const items = ref(getLanguages());
+
+  watch(current, () => {
+    items.value = getLanguages();
   });
 
   function changeLanguage (key: string): void {

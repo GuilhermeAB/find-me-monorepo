@@ -96,7 +96,17 @@
       </v-form>
     </v-sheet>
 
-    <v-sheet width='90%' height='300'>
+    <v-sheet width='90%'>
+      <span>
+        <v-icon size='x-small'>
+          mdi-map
+        </v-icon>
+
+        {{ $t('LastSeenAt') }}
+      </span>
+    </v-sheet>
+
+    <v-sheet width='90%' height='300' class='mt-2'>
       <l-map
         v-model='zoom'
         v-model:zoom='zoom'
@@ -105,6 +115,15 @@
         :center='mapCenter'
       >
         <l-tile-layer
+          v-if='global.current.value.dark'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          layer-type='base'
+          name='OpenStreetMap'
+          class-name='map-tiles'
+        />
+
+        <l-tile-layer
+          v-else
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           layer-type='base'
           name='OpenStreetMap'
@@ -154,6 +173,7 @@
   } from '@vue-leaflet/vue-leaflet';
   import L from 'leaflet';
   import { vMaska } from 'maska';
+  import { useTheme } from 'vuetify';
   import {
     AlertType, PetType, AlertService, Alert,
   } from '@/services';
@@ -165,6 +185,9 @@
   const $t = $i18n!.t;
 
   const emit = defineEmits(['close', 'updated']);
+
+  const { global } = useTheme();
+
   const loading = ref(false);
   const editMode = ref(!!props.alert);
 

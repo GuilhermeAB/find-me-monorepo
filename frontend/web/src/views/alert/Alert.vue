@@ -130,6 +130,10 @@
                       >
                         {{ $t('CloseAlert') }}
                       </v-list-item>
+
+                      <v-list-item @click='printPoster'>
+                        {{ $t('PrintPoster') }}
+                      </v-list-item>
                     </v-list>
                   </v-menu>
                 </v-row>
@@ -212,6 +216,15 @@
                 :center='[item.location.coordinates[1], item.location.coordinates[0]]'
               >
                 <l-tile-layer
+                  v-if='global.current.value.dark'
+                  url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                  layer-type='base'
+                  name='OpenStreetMap'
+                  class-name='map-tiles'
+                />
+
+                <l-tile-layer
+                  v-else
                   url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                   layer-type='base'
                   name='OpenStreetMap'
@@ -306,6 +319,157 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <v-dialog
+    v-model='printDialog'
+    fullscreen
+    persistent
+    :scrim='false'
+    transition='dialog-bottom-transition'
+  >
+    <v-card v-if='item'>
+      <v-toolbar
+        class='d-print-none'
+        color='primary'
+      >
+        <v-btn
+          icon
+          @click='printDialog = false'
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>{{ $t('PrintPoster') }}</v-toolbar-title>
+
+        <v-spacer />
+
+        <v-btn icon @click='printPage'>
+          <v-icon>
+            mdi-printer
+          </v-icon>
+        </v-btn>
+      </v-toolbar>
+
+      <v-container fluid>
+        <v-row class='align-center justify-center'>
+          <v-col
+            cols='12'
+            sm='12'
+            md='8'
+            lg='6'
+            xl='6'
+            xxl='6'
+          >
+            <v-row justify='center'>
+              <span class='text-h3 mt-2 mb-4'>
+                {{ $t('Missing') }}
+              </span>
+            </v-row>
+
+            <v-row justify='center'>
+              <v-card variant='flat'>
+                <v-img
+                  cover
+                  aspect-ratio='1'
+                  :src='AlertService.image(id)'
+                  height='24rem'
+                />
+              </v-card>
+            </v-row>
+
+            <v-row justify='center'>
+              <span class='text-h4 my-2'>
+                {{ item.name }}
+                <span class='text-h5'>
+                  ({{ $t('Age', { value: age }) }})
+                </span>
+              </span>
+            </v-row>
+
+            <v-row justify='center' class='mt-2'>
+              <span>
+                <span class='font-weight-medium'>
+                  {{ $t('DisappearDate') }}:
+                </span>
+                <span class='text-body-2'>
+                  {{ disappearDateFormatted }}
+
+                  <span class='text-caption'>
+                    ({{ disappearDateLabel }})
+                  </span>
+                </span>
+              </span>
+            </v-row>
+
+            <v-row justify='center'>
+              <v-card flat width='80%' min-width='350'>
+                <v-card-text class='text-body-1'>
+                  {{ item.description }}
+                </v-card-text>
+              </v-card>
+            </v-row>
+
+            <v-row>
+              <v-col cols='12'>
+                <v-card-item class='pa-0'>
+                  <v-card-title>
+                    <v-row no-gutters align='center'>
+                      <span>
+                        <v-icon size='x-small'>
+                          mdi-map
+                        </v-icon>
+
+                        {{ $t('LastSeenAt') }}
+                      </span>
+                    </v-row>
+                  </v-card-title>
+
+                  <v-divider class='mb-3' />
+                </v-card-item>
+
+                <v-sheet width='100%' height='150'>
+                  <l-map
+                    :zoom='16'
+                    :min-zoom='10'
+                    :use-global-leaflet='false'
+                    :center='[item.location.coordinates[1], item.location.coordinates[0]]'
+                  >
+                    <l-tile-layer
+                      v-if='global.current.value.dark'
+                      url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                      layer-type='base'
+                      name='OpenStreetMap'
+                      class-name='map-tiles'
+                    />
+
+                    <l-tile-layer
+                      v-else
+                      url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                      layer-type='base'
+                      name='OpenStreetMap'
+                    />
+
+                    <l-marker
+                      :lat-lng='[item.location.coordinates[1], item.location.coordinates[0]]'
+                    >
+                      <l-icon class-name='map-icon-custom-class'>
+                        <v-icon
+                          size='36'
+                          color='error'
+                          class='pr-3 pb-3'
+                        >
+                          mdi-map-marker
+                        </v-icon>
+                      </l-icon>
+                    </l-marker>
+                  </l-map>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -320,7 +484,7 @@
     LIcon,
   } from '@vue-leaflet/vue-leaflet';
   import L from 'leaflet';
-  import { useLocale } from 'vuetify';
+  import { useLocale, useTheme } from 'vuetify';
   import { formatDistance, format, differenceInYears } from 'date-fns';
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
@@ -336,6 +500,7 @@
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
 
+  const { global } = useTheme();
   const route = useRoute();
   const id = route.params.id as string;
 
@@ -345,6 +510,7 @@
   const item = ref<Alert>();
   const newAlertDialog = ref(false);
   const resolveAlertDialog = ref(false);
+  const printDialog = ref(false);
   const canEdit = ref(false);
 
   function getDisappearDateLabel (): string {
@@ -396,6 +562,18 @@
       item.value.status = status;
       resolveAlertDialog.value = false;
     }
+  }
+
+  function printPage (): void {
+    window.print();
+  }
+
+  function printPoster (): void {
+    printDialog.value = true;
+
+    setTimeout(() => {
+      printPage();
+    }, 1500);
   }
 </script>
 

@@ -2,8 +2,8 @@ import { createI18n } from 'vue-i18n';
 
 export const i18n = createI18n({
   legacy: false,
-  locale: 'en',
-  fallbackLocale: 'en',
+  locale: 'pt',
+  fallbackLocale: 'pt',
   messages: {
     en: {
       // BACK
@@ -183,6 +183,9 @@ export const i18n = createI18n({
       Online: 'Online',
       Offline: 'Offline',
       CheckAgain: 'Check again',
+      PrintPoster: 'Print poster',
+      Missing: 'Missing',
+      BetaWarningText: 'Website in beta! The data displayed is fictitious',
     },
     pt: {
       // BACK
@@ -353,8 +356,8 @@ export const i18n = createI18n({
       Code: 'Código',
       RequestNewCode: 'Solicitar novo código',
       RequestRecoverPassword: 'Solicitar código de recuperação',
-      RecoverPassword: 'Recover password',
-      Recover: 'Recover',
+      RecoverPassword: 'Recuperar senha',
+      Recover: 'Recuperar',
       AuthenticationInvalidStatus: 'Sua conta deve ser {status} para continuar',
       ServicesStatusTitle: 'Status dos serviços',
       AuthAPI: 'Serviço de autenticação',
@@ -362,6 +365,9 @@ export const i18n = createI18n({
       Online: 'Disponível',
       Offline: 'Desconectado',
       CheckAgain: 'Verificar novamente',
+      PrintPoster: 'Imprimir cartaz',
+      Missing: 'Desaparecido',
+      BetaWarningText: 'Plataforma em testes. Dados exibidos são fictícios',
     },
     // Other locales and translations
   },

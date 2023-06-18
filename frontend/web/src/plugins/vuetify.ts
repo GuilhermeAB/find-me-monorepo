@@ -38,8 +38,8 @@ export default createVuetify({
     },
   },
   locale: {
-    locale: 'en',
-    fallback: 'en',
+    locale: 'pt',
+    fallback: 'pt',
     messages: {
       en,
       pt,

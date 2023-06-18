@@ -11,6 +11,15 @@
     @ready='mapReady'
   >
     <l-tile-layer
+      v-if='global.current.value.dark'
+      url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      layer-type='base'
+      name='OpenStreetMap'
+      class-name='map-tiles'
+    />
+
+    <l-tile-layer
+      v-else
       url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       layer-type='base'
       name='OpenStreetMap'
@@ -57,9 +66,11 @@
   import { ref, computed, watch } from 'vue';
   import L from 'leaflet';
   import { debounce } from 'lodash';
+  import { useTheme } from 'vuetify';
   import { useAlertStore } from '../../../../store/alert';
   import { AlertService } from '@/services';
 
+  const { global } = useTheme();
   const alert = useAlertStore();
 
   const zoom = ref(12);
@@ -130,4 +141,11 @@
   .marker-image {
     border-radius: 50%;
   }
+
+  /* .leaflet-layer,
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out,
+  .leaflet-control-attribution {
+    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+  } */
 </style>
