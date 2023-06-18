@@ -52,6 +52,11 @@
             v-else-if='step === Steps.SignUp'
             @sign-in='setStep(Steps.SignIn)'
           />
+
+          <RecoverPassword
+            v-else
+            @sign-in='setStep(Steps.SignIn)'
+          />
         </v-row>
       </v-col>
     </v-row>
@@ -67,6 +72,7 @@
   import { Composer } from 'vue-i18n';
   import SignIn from './components/sign-in/SignIn.vue';
   import SignUp from './components/sign-up/SignUp.vue';
+  import RecoverPassword from './components/recover-password/RecoverPassword.vue';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

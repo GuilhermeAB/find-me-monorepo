@@ -1,4 +1,4 @@
-import { AccountEntity } from '@find-me/entities';
+import { AccountEntity, AccountStatus } from '@find-me/entities';
 import { Repository } from '@find-me/repositories/base/repository';
 import { DTOAccount, DTOAccountType } from '@find-me/repositories/schema/account';
 import { AccountMapper } from './mapper';
@@ -26,14 +26,18 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
         session: this.session,
         lean: true,
       },
-    ).exec();
+    )
+      .populate('person')
+      .exec();
 
     return result ? this.mapper.toEntity(result) : undefined;
   }
 
   public async findByAccount(id: string): Promise<AccountEntity | undefined> {
     const result = await this.Model.findById(
-      id,
+      {
+        _id: id,
+      },
       undefined,
       {
         lean: true,
@@ -45,7 +49,7 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
     return result ? this.mapper.toEntity(result) : undefined;
   }
 
-  public async updateOne(entity: AccountEntity): Promise<void> {
+  public async updatePassword(entity: AccountEntity): Promise<void> {
     const {
       id,
       password,
@@ -58,6 +62,22 @@ export class AccountRepository extends Repository<DTOAccountType, AccountEntity>
       {
         $set: {
           password,
+        },
+      },
+      {
+        session: this.session,
+      },
+    ).exec();
+  }
+
+  public async updateStatus(id: string, status: AccountStatus): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          status,
         },
       },
       {

@@ -89,7 +89,7 @@ export class Authentication {
     }
   }
 
-  public static async authenticate(value?: Record<string, string | string[] | undefined>): Promise<TokenBody> {
+  public static async authenticate(value?: Record<string, string | string[] | undefined>, status?: AccountStatus): Promise<TokenBody> {
     if (!value?.authentication) {
       throw new ValidationError({
         key: 'AuthenticationRequired',
@@ -98,6 +98,13 @@ export class Authentication {
     }
 
     const token = Authentication.parseToken(value.authentication as string);
+    if (status && token.status !== status) {
+      throw new ValidationError({
+        key: 'AuthenticationInvalidStatus',
+        params: { status },
+      });
+    }
+
     const cache = new CacheService();
 
     const exists = await cache.exists(`${BLOCKLIST_CACHE_FOLDER}:${token.tokenId}`);

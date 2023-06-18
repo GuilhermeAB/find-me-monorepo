@@ -4,6 +4,7 @@
       <AppBar />
       <Notification />
       <RouterView />
+      <Health />
     </v-main>
   </v-app>
 </template>
@@ -14,6 +15,7 @@
   import { provide } from 'vue';
   import AppBar from './components/app-bar/AppBar.vue';
   import Notification from './components/notification/Notification.vue';
+  import Health from './components/health/Health.vue';
   import { i18n } from './plugins/i18n';
   import './standard/request-interceptors';
 

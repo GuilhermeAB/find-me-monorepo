@@ -8,7 +8,12 @@
     {{ $t('SignIn') }}
   </v-btn>
 
-  <v-menu v-else location='bottom'>
+  <v-menu
+    v-else
+    v-model='menu'
+    location='bottom'
+    :close-on-content-click='false'
+  >
     <template #activator='{ props }'>
       <v-btn
         icon
@@ -22,15 +27,27 @@
       </v-btn>
     </template>
 
-    <v-list class='pa-0'>
-      <v-list-item @click='goToProfile'>
-        {{ $t('Profile') }}
-      </v-list-item>
+    <v-card min-width='200'>
+      <v-card-title class='text-body-2 pb-0'>
+        {{ user.person.name }}
+      </v-card-title>
 
-      <v-list-item @click='signOut'>
-        {{ $t('SignOut') }}
-      </v-list-item>
-    </v-list>
+      <v-card-subtitle class='text-caption mt-n2'>
+        {{ user.email }}
+      </v-card-subtitle>
+
+      <v-divider class='mt-3' />
+
+      <v-list class='pa-0'>
+        <v-list-item @click='goToProfile'>
+          {{ $t('Profile') }}
+        </v-list-item>
+
+        <v-list-item @click='signOut'>
+          {{ $t('SignOut') }}
+        </v-list-item>
+      </v-list>
+    </v-card>
   </v-menu>
 </template>
 
@@ -39,7 +56,7 @@
   import { onMounted, inject, ref } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useAuthenticationStore } from '@/store/authentication';
-  import { AuthenticationService } from '@/services';
+  import { AuthenticationService, User } from '@/services';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -48,7 +65,8 @@
   const router = useRouter();
   const authentication = useAuthenticationStore();
 
-  const user = ref<unknown>(undefined);
+  const menu = ref(false);
+  const user = ref<User | undefined>(undefined);
   onMounted(async () => {
     await authentication.loggedUser();
     user.value = authentication.currentUser;
@@ -59,10 +77,12 @@
   }
 
   function goToProfile (): void {
+    menu.value = false;
     router.push({ name: 'Profile' });
   }
 
   async function signOut (): Promise<void> {
+    menu.value = false;
     await AuthenticationService.signOut();
     await authentication.loggedUser();
     user.value = authentication.currentUser;

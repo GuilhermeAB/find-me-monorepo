@@ -1,8 +1,4 @@
 import {
-  AccountDetailsEntity,
-  AccountEntity,
-  CreateAccountProps,
-  CreatePersonProps,
   PersonEntity,
 } from '@find-me/entities';
 import { ValidationError } from '@find-me/errors';
@@ -56,6 +52,6 @@ export class AccountUpdate extends AccountService {
 
     entity.password = AccountUpdate.encryptPassword(entity.getProps().password);
 
-    await this.repository.updateOne(entity);
+    await this.repository.updatePassword(entity);
   }
 }

@@ -3,12 +3,13 @@ import {
 } from '@find-me/api';
 import { Status } from '@find-me/errors';
 import { Authentication, CommentCreateService } from '@find-me/services';
+import { AccountStatus } from '@find-me/entities';
 
 class CommentCreateController {
   private async method({
     data, params, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = await Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers }, AccountStatus.verified);
     const service = new CommentCreateService(session);
 
     const {

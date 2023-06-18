@@ -5,3 +5,7 @@ export * from './health/health';
 export * from './account/update-password';
 export * from './account/update-person';
 export * from './account/sign-out';
+export * from './account/activation';
+export * from './account/activation-request';
+export * from './account/password-recover';
+export * from './account/password-recover-request';

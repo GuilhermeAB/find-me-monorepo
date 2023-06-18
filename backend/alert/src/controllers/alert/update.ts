@@ -1,4 +1,4 @@
-import { AlertLocationType, AlertTypeEnum } from '@find-me/entities';
+import { AlertLocationType, AlertTypeEnum, AccountStatus } from '@find-me/entities';
 import {
   Guard,
   MethodParams, MethodResponse, MethodType, RouteFileController, Session,
@@ -27,7 +27,7 @@ class AlertUpdateController {
   private async method({
     data, params, file, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = await Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers }, AccountStatus.verified);
     const service = new AlertUpdateService(session);
 
     const {

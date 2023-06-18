@@ -7,6 +7,10 @@ import {
   accountUpdatePassword,
   accountUpdatePerson,
   accountSignOut,
+  accountActivation,
+  accountActivationRequest,
+  accountPasswordRecover,
+  accountPasswordRecoverRequest,
 } from './controllers';
 
 class AuthAPI {
@@ -19,6 +23,10 @@ class AuthAPI {
       accountLoggedUser.create(),
       accountUpdatePassword.create(),
       accountUpdatePerson.create(),
+      accountActivation.create(),
+      accountActivationRequest.create(),
+      accountPasswordRecover.create(),
+      accountPasswordRecoverRequest.create(),
     ];
   }
 

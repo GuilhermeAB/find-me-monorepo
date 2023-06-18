@@ -1,4 +1,4 @@
-import { AlertStatus } from '@find-me/entities';
+import { AlertStatus, AccountStatus } from '@find-me/entities';
 import {
   Guard,
   MethodParams, MethodResponse, MethodType, RouteJsonController, Session,
@@ -17,7 +17,7 @@ class AlertUpdateStatusController {
   private async method({
     data, params, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = await Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers }, AccountStatus.verified);
     const service = new AlertUpdateService(session);
 
     const {

@@ -24,6 +24,11 @@ const routes = [
     name: 'Profile',
     component: () => import('@/views/profile/Profile.vue'),
   },
+  {
+    path: '/verification/:code?',
+    name: 'Verification',
+    component: () => import('@/views/account-verification/AccountVerification.vue'),
+  },
 ];
 
 const router = createRouter({

@@ -13,6 +13,10 @@ export class AccountDetailsRepository extends Repository<DTOAccountDetailsType, 
       {
         account: id,
       },
+      undefined,
+      {
+        lean: true,
+      },
     ).exec();
 
     return result ? this.mapper.toEntity(result) : undefined;
@@ -46,6 +50,104 @@ export class AccountDetailsRepository extends Repository<DTOAccountDetailsType, 
         $unset: {
           failedSignInAttempts: 0,
           lastFailedSignInAttempt: null,
+        },
+      },
+      {
+        session: this.session,
+      },
+    ).exec();
+  }
+
+  public async increaseFailedActivationAttempts(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $inc: {
+          failedActivationAttempts: 1,
+        },
+      },
+    ).exec();
+  }
+
+  public async activate(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $unset: {
+          failedActivationAttempts: 0,
+          activationCode: null,
+          activationCodeCreatedAt: null,
+        },
+      },
+      {
+        session: this.session,
+      },
+    );
+  }
+
+  public async changeActivationCode(id: string, code: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          failedActivationAttempts: 0,
+          activationCode: code,
+          activationCodeCreatedAt: new Date(),
+        },
+      },
+      {
+        session: this.session,
+      },
+    );
+  }
+
+  public async changePasswordRecoverCode(id: string, code: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          recoverCode: code,
+          recoverCodeCreatedAt: new Date(),
+          failedRecoverAttempts: 0,
+        },
+      },
+      {
+        session: this.session,
+      },
+    );
+  }
+
+  public async increaseFailedPasswordRecover(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $inc: {
+          failedRecoverAttempts: 1,
+        },
+      },
+    ).exec();
+  }
+
+  public async resetFailedPasswordRecover(id: string): Promise<void> {
+    await this.Model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $unset: {
+          failedRecoverAttempts: 0,
+          recoverCode: null,
+          recoverCodeCreatedAt: null,
         },
       },
       {

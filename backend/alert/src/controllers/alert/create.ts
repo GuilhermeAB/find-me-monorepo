@@ -4,7 +4,7 @@ import {
 } from '@find-me/api';
 import { Status } from '@find-me/errors';
 import { AlertCreateService, Authentication } from '@find-me/services';
-import { AlertLocationType, AlertTypeEnum } from '@find-me/entities';
+import { AlertLocationType, AlertTypeEnum, AccountStatus } from '@find-me/entities';
 
 class AlertCreateController {
   private static validation({ data }: MethodParams): void {
@@ -25,7 +25,7 @@ class AlertCreateController {
   private async method({
     data, file, cookies, headers,
   }: MethodParams, session?: Session): Promise<MethodResponse> {
-    const user = await Authentication.authenticate({ ...cookies, ...headers });
+    const user = await Authentication.authenticate({ ...cookies, ...headers }, AccountStatus.verified);
     const service = new AlertCreateService(session);
 
     const {

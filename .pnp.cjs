@@ -336,6 +336,53 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@aws-sdk/client-ses", [\
+        ["npm:3.354.0", {\
+          "packageLocation": "./.yarn/cache/@aws-sdk-client-ses-npm-3.354.0-18d0abb0d8-552f1a0aab.zip/node_modules/@aws-sdk/client-ses/",\
+          "packageDependencies": [\
+            ["@aws-sdk/client-ses", "npm:3.354.0"],\
+            ["@aws-crypto/sha256-browser", "npm:3.0.0"],\
+            ["@aws-crypto/sha256-js", "npm:3.0.0"],\
+            ["@aws-sdk/client-sts", "npm:3.354.0"],\
+            ["@aws-sdk/config-resolver", "npm:3.354.0"],\
+            ["@aws-sdk/credential-provider-node", "npm:3.354.0"],\
+            ["@aws-sdk/fetch-http-handler", "npm:3.353.0"],\
+            ["@aws-sdk/hash-node", "npm:3.347.0"],\
+            ["@aws-sdk/invalid-dependency", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-content-length", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-endpoint", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-host-header", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-logger", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-recursion-detection", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-retry", "npm:3.354.0"],\
+            ["@aws-sdk/middleware-serde", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-signing", "npm:3.354.0"],\
+            ["@aws-sdk/middleware-stack", "npm:3.347.0"],\
+            ["@aws-sdk/middleware-user-agent", "npm:3.352.0"],\
+            ["@aws-sdk/node-config-provider", "npm:3.354.0"],\
+            ["@aws-sdk/node-http-handler", "npm:3.350.0"],\
+            ["@aws-sdk/smithy-client", "npm:3.347.0"],\
+            ["@aws-sdk/types", "npm:3.347.0"],\
+            ["@aws-sdk/url-parser", "npm:3.347.0"],\
+            ["@aws-sdk/util-base64", "npm:3.310.0"],\
+            ["@aws-sdk/util-body-length-browser", "npm:3.310.0"],\
+            ["@aws-sdk/util-body-length-node", "npm:3.310.0"],\
+            ["@aws-sdk/util-defaults-mode-browser", "npm:3.353.0"],\
+            ["@aws-sdk/util-defaults-mode-node", "npm:3.354.0"],\
+            ["@aws-sdk/util-endpoints", "npm:3.352.0"],\
+            ["@aws-sdk/util-retry", "npm:3.347.0"],\
+            ["@aws-sdk/util-user-agent-browser", "npm:3.347.0"],\
+            ["@aws-sdk/util-user-agent-node", "virtual:89a7e86c07451e082c153531d267ea14b362ae59ce637f28d1bc99d981034a3ccd0a0cd57d0a1316a1df542571b89da8ea83c92238cb2340e3492bcb968cf47d#npm:3.354.0"],\
+            ["@aws-sdk/util-utf8", "npm:3.310.0"],\
+            ["@aws-sdk/util-waiter", "npm:3.347.0"],\
+            ["@smithy/protocol-http", "npm:1.0.1"],\
+            ["@smithy/types", "npm:1.0.0"],\
+            ["fast-xml-parser", "npm:4.2.4"],\
+            ["tslib", "npm:2.5.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@aws-sdk/client-sso", [\
         ["npm:3.354.0", {\
           "packageLocation": "./.yarn/cache/@aws-sdk-client-sso-npm-3.354.0-89a7e86c07-8b55e1ed5d.zip/node_modules/@aws-sdk/client-sso/",\
@@ -4771,6 +4818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@find-me/cloud", "workspace:adapters/cloud"],\
             ["@aws-sdk/client-s3", "npm:3.354.0"],\
+            ["@aws-sdk/client-ses", "npm:3.354.0"],\
             ["@aws-sdk/s3-request-presigner", "npm:3.354.0"],\
             ["@find-me/errors", "workspace:standard/errors"],\
             ["dotenv", "npm:16.3.0"]\

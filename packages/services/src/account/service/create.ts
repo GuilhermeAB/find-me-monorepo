@@ -8,6 +8,7 @@ import {
 import { ValidationError } from '@find-me/errors';
 import { randomBytes, scryptSync } from 'crypto';
 import { AccountService } from '../base';
+import { AccountMailer } from '../mailer';
 
 const PASSWORD_SALT = 32;
 
@@ -40,7 +41,15 @@ export class AccountCreateService extends AccountService {
 
     account.validate();
 
-    await this.validateEmail(account.getProps().email);
+    const {
+      email,
+    } = account.getProps();
+
+    const {
+      activationCode,
+    } = details.getProps();
+
+    await this.validateEmail(email);
 
     account.password = AccountCreateService.encryptPassword(account.getProps().password);
 
@@ -48,6 +57,6 @@ export class AccountCreateService extends AccountService {
     await this.detailsRepository.create(details);
     await this.repository.create(account);
 
-    // TODO: send verification email
+    await AccountMailer.sendVerificationEmail(email, person.getProps().name, activationCode!);
   }
 }

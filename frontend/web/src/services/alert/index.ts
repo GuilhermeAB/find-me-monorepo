@@ -63,6 +63,14 @@ export class AlertService {
     return `${url}alert/image/${id}`;
   }
 
+  public static async health(): Promise<void> {
+    await axios({
+      baseURL: url,
+      url: 'alert/health',
+      method: 'GET',
+    });
+  }
+
   public static async list(): Promise<Alert[] | undefined> {
     const { data } = await axios<{ value?: { list?: Alert[] } }>({
       baseURL: url,

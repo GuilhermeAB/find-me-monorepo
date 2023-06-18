@@ -237,11 +237,9 @@
     if (xl.value) {
       return 4;
     }
-
     if (lg.value) {
       return 4;
     }
-
     if (md.value) {
       return 2;
     }
@@ -252,11 +250,9 @@
     if (xl.value) {
       return '10rem';
     }
-
     if (lg.value) {
       return '10rem';
     }
-
     if (md.value) {
       return '12rem';
     }
