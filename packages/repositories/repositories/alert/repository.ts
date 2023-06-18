@@ -182,4 +182,21 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
 
     return undefined;
   }
+
+  public async countByAccount(accountId: string): Promise<{ total: number, open: number }> {
+    const total = await this.Model.count(
+      {
+        account: accountId,
+      },
+    ).exec();
+
+    const open = await this.Model.count(
+      {
+        account: accountId,
+        status: AlertStatus.Open,
+      },
+    ).exec();
+
+    return { total, open };
+  }
 }

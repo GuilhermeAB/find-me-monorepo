@@ -11,6 +11,9 @@ import { ImageHandler } from '@find-me/images';
 import { ValidationError } from '@find-me/errors';
 import { AlertService } from '../base';
 
+const MAX_ALERTS_PER_USER = 6;
+const MAX_ALERTS_OPEN_PER_USER = 3;
+
 export class AlertCreateService extends AlertService {
   private async createImage(alertId: UUID, image: Buffer): Promise<void> {
     const {
@@ -49,6 +52,18 @@ export class AlertCreateService extends AlertService {
     }
 
     entity.validate();
+    const {
+      account,
+    } = entity.getProps();
+
+    const { total, open } = await this.repository.countByAccount(account instanceof UUID ? account.value : account.getProps().id.value);
+    if (total >= MAX_ALERTS_PER_USER) {
+      throw new ValidationError({ key: 'MaxAlertsCreated', params: { value: MAX_ALERTS_PER_USER } });
+    }
+    if (open >= MAX_ALERTS_OPEN_PER_USER) {
+      throw new ValidationError({ key: 'MaxAlertsOpen', params: { value: MAX_ALERTS_OPEN_PER_USER } });
+    }
+
     await this.repository.create(entity);
 
     await this.createImage(entity.getProps().id, image);

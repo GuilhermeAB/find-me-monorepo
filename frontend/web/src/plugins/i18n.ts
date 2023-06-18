@@ -98,6 +98,8 @@ export const i18n = createI18n({
       PasswordChangeSuccess: 'Password changed successfully',
       PasswordRecoverSent: 'Password recover code sent',
       AuthenticationInvalidStatus: 'Your account must be {status} to proceed',
+      MaxAlertsCreated: 'You have reached the maximum amount of alerts: {value}',
+      MaxAlertsOpen: 'You have reached the maximum amount of open alerts: {value}',
 
       // WEB
       SignIn: 'Sign in',
@@ -274,6 +276,8 @@ export const i18n = createI18n({
       PasswordChangeSamePasswords: 'Sua nova senha deve ser diferente da senha atual',
       PasswordChangeSuccess: 'Senha alterada com sucesso',
       PasswordRecoverSent: 'Código de recuperação de senha enviado',
+      MaxAlertsCreated: 'Você atingiu a quantidade máxima de alertas: {value}',
+      MaxAlertsOpen: 'Você atingiu a quantidade máxima de alertas abertos: {value}',
 
       // WEB
       SignIn: 'Entrar',

@@ -91,4 +91,6 @@ export const en = {
   PasswordChangeSuccess: 'Password changed successfully',
   PasswordRecoverSent: 'Password recover code sent',
   AuthenticationInvalidStatus: 'Your account must be {status} to proceed',
+  MaxAlertsCreated: 'You have reached the maximum amount of alerts: {value}',
+  MaxAlertsOpen: 'You have reached the maximum amount of open alerts: {value}',
 };
