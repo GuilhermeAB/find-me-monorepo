@@ -27,6 +27,17 @@
     </v-app-bar-title>
 
     <template #append>
+      <v-btn
+        variant='outlined'
+        color='primary'
+        class='mr-2 hidden-sm-and-down'
+        @click='goToAbout'
+      >
+        {{ $t('About') }}
+      </v-btn>
+
+      <v-divider vertical inset class='mx-3 hidden-sm-and-down' />
+
       <Theme />
       <Language />
 
@@ -96,5 +107,9 @@
 
   function goToActivation (): void {
     router.push({ name: 'Verification' });
+  }
+
+  function goToAbout (): void {
+    router.push({ name: 'About' });
   }
 </script>

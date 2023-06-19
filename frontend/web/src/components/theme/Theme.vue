@@ -4,7 +4,6 @@
       <v-btn
         :icon='global.current.value.dark ? "mdi-weather-sunny" : "mdi-weather-night"'
         class='mr-1'
-        density='comfortable'
         v-bind='props'
         @click='toggleTheme'
       />
