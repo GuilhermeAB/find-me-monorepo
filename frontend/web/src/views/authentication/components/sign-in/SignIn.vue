@@ -91,7 +91,7 @@
   const form = ref();
   const email = ref<string>('');
   const password = ref<string>('');
-  const rememberMe = ref(false);
+  const rememberMe = ref(true);
   const loading = ref(false);
 
   const authentication = useAuthenticationStore();
