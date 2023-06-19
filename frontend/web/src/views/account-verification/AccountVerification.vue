@@ -68,7 +68,6 @@
   import { Composer } from 'vue-i18n';
   import { useRoute, useRouter } from 'vue-router';
   import { AuthenticationService } from '@/services';
-  import { useAuthenticationStore } from '@/store/authentication';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -79,15 +78,14 @@
 
   const router = useRouter();
   const route = useRoute();
-  const authentication = useAuthenticationStore();
 
   async function send (): Promise<void> {
     try {
       isLoading.value = true;
       await AuthenticationService.activateAccount(activationCode.value);
-      await authentication.loggedUser();
+      await AuthenticationService.signOut();
 
-      await router.replace({ name: 'Home' });
+      await router.replace({ name: 'SignIn' });
     } finally {
       isLoading.value = false;
     }
