@@ -6,6 +6,7 @@ import {
   differenceInDays,
   formatDistance,
   lastDayOfMonth,
+  subYears,
   addYears,
   isFuture,
   differenceInMilliseconds,
@@ -68,6 +69,12 @@ export class DateVO {
 
   public addYears(value: number): DateVO {
     this.props.value = addYears(this.props.value, value);
+
+    return this;
+  }
+
+  public subYears(value: number): DateVO {
+    this.props.value = subYears(this.props.value, value);
 
     return this;
   }

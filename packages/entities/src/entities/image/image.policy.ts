@@ -2,7 +2,7 @@ import { ImageEntityType, ImageType } from '.';
 import { Policy } from '../../base';
 
 export class ImagePolicy extends Policy {
-  protected static validateType(type: ImageType): void {
+  public static validateType(type: ImageType): void {
     if (!type) {
       Policy.error({ key: 'ImageTypeRequired' });
     }
@@ -12,7 +12,7 @@ export class ImagePolicy extends Policy {
     }
   }
 
-  protected static validateWidth(value: unknown): void {
+  public static validateWidth(value: unknown): void {
     if (!value) {
       Policy.error({ key: 'WidthRequired' });
     }
@@ -22,7 +22,7 @@ export class ImagePolicy extends Policy {
     }
   }
 
-  protected static validateHeight(value: unknown): void {
+  public static validateHeight(value: unknown): void {
     if (!value) {
       Policy.error({ key: 'HeightRequired' });
     }
@@ -32,7 +32,7 @@ export class ImagePolicy extends Policy {
     }
   }
 
-  protected static validateSize(value: unknown, maxSize?: number): void {
+  public static validateSize(value: unknown, maxSize?: number): void {
     if (!value) {
       Policy.error({ key: 'SizeRequired' });
     }

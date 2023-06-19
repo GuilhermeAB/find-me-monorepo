@@ -1,24 +1,20 @@
 import { UUID } from '@find-me/uuid';
-import { CommentEntity, CreateCommentProps } from '../comment.entity';
+import { CommentReplyEntity, CreateCommentReplyProps } from '../comment-reply.entity';
 
-describe('CommentEntity', () => {
+describe('CommentReplyEntity', () => {
   describe('create', () => {
-    it('should create a new comment entity', () => {
-      const create: CreateCommentProps = {
+    it('should create a new comment reply entity', () => {
+      const create: CreateCommentReplyProps = {
         content: 'valid content',
-        alert: UUID.generate(),
         account: UUID.generate(),
-        replies: [],
       };
-      const comment = CommentEntity.create(create);
+      const comment = CommentReplyEntity.create(create);
 
-      expect(comment).toBeInstanceOf(CommentEntity);
+      expect(comment).toBeInstanceOf(CommentReplyEntity);
       expect(comment.getProps()).toEqual({
         id: expect.anything(),
         content: create.content.trim(),
-        alert: create.alert,
         account: create.account,
-        replies: create.replies || [],
         createdAt: expect.anything(),
         updatedAt: expect.anything(),
       });
@@ -30,40 +26,34 @@ describe('CommentEntity', () => {
       const accountString = UUID.generate();
       const alertString = UUID.generate();
 
-      const create: CreateCommentProps = {
+      const create: CreateCommentReplyProps = {
         content: 'content'.repeat(5),
         account: accountString.value,
-        alert: alertString.value,
       };
-      const comment = CommentEntity.create(create);
+      const comment = CommentReplyEntity.create(create);
 
       expect(comment.getProps().account).toEqual(UUID.generate(accountString));
-      expect(comment.getProps().alert).toEqual(UUID.generate(alertString));
     });
 
     it('should trim content before creating comment entity', () => {
-      const create: CreateCommentProps = {
+      const create: CreateCommentReplyProps = {
         content: '     valid content    ',
-        alert: UUID.generate(),
         account: UUID.generate(),
-        replies: [],
       };
-      const comment = CommentEntity.create(create);
+      const comment = CommentReplyEntity.create(create);
 
       expect(comment.getProps().content).toEqual('valid content');
     });
   });
 
   describe('validate', () => {
-    it('should call validate of CommentPolicy with props', () => {
-      const validateSpy = jest.spyOn(CommentEntity.prototype, 'validate');
+    it('should call validate of CommentReplyPolicy with props', () => {
+      const validateSpy = jest.spyOn(CommentReplyEntity.prototype, 'validate');
       
-      const comment = new CommentEntity({
+      const comment = new CommentReplyEntity({
         props: {
           content: 'valid content'.repeat(2),
-          alert: UUID.generate(),
           account: UUID.generate(),
-          replies: [],
         }
       });
       comment.validate();

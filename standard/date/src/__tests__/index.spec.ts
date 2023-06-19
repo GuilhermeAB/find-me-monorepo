@@ -77,6 +77,17 @@ describe('DateVO', () => {
     });
   });
 
+  describe('subYears', () => {
+    it('should return a new DateVO instance with the value decreased by given number of years', () => {
+      const date = new Date('1990-01-01T00:00:00.000Z');
+      const dateVO = new DateVO(date);
+      const subYears = 5;
+      const result = dateVO.subYears(subYears);
+      expect(result).toBeInstanceOf(DateVO);
+      expect(result.value).toEqual(new Date('1985-01-01T01:00:00.000Z'));
+    });
+  });
+
   describe('isFuture', () => {
     it('should return true if the date is in the future', () => {
       const futureDate = new Date(Date.now() + 86400000);
