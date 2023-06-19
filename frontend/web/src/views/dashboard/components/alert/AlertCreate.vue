@@ -208,7 +208,7 @@
   const dateMask = { mask: '##/##/####' };
   const dateTimeMask = { mask: '##/##/#### ##:##' };
   const type = ref(AlertType.Person);
-  const petTypeList = Object.values(PetType).map((i) => $t(i));
+  const petTypeList = Object.values(PetType).map((i) => ({ value: i, title: $t(i) }));
 
   const form = ref();
   const name = ref();
