@@ -12,6 +12,7 @@ import {
   commentCreateReply,
   commentList,
   health,
+  alertSearch,
 } from './controllers';
 
 class AlertAPI {
@@ -29,6 +30,7 @@ class AlertAPI {
       commentCreate.create(),
       commentCreateReply.create(),
       commentList.create(),
+      alertSearch.create(),
     ];
   }
 

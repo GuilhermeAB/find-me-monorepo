@@ -94,8 +94,8 @@
                 <span class='text-h6'>
                   {{ $t('MyAlerts') }}
 
-                  <span class='text-body-2'>
-                    ({{ alertList?.length }})
+                  <span v-if='alertList' class='text-body-2'>
+                    ({{ alertList.length }})
                   </span>
                 </span>
                 <v-divider class='mt-1 mb-2' />
@@ -251,7 +251,7 @@
       return '10rem';
     }
     if (lg.value) {
-      return '10rem';
+      return '12rem';
     }
     if (md.value) {
       return '12rem';

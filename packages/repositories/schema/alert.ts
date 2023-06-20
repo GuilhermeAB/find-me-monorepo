@@ -32,9 +32,13 @@ class Alert extends DTO<DTOAlertType> {
       options: {
         timestamps: true,
       },
-    }, [{
-      location: '2dsphere',
-    }]);
+    }, [
+      { location: '2dsphere' },
+      {
+        name: 'text',
+        description: 'text',
+      },
+    ]);
 
     return schema;
   }

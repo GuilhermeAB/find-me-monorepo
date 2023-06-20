@@ -13,7 +13,7 @@
       <v-row no-gutters>
         <v-avatar
           density='comfortable'
-          variant='tonal'
+          variant='outlined'
           color='primary'
           class='ma-1'
         >
@@ -40,6 +40,16 @@
             <span>{{ $t('PcDLabel') }}</span>
           </v-tooltip>
         </div>
+      </v-row>
+
+      <v-row
+        no-gutters
+        align-content='end'
+        style='height: 80%'
+      >
+        <v-chip variant='outlined' color='primary' class='ma-1'>
+          {{ $t('Age', { value: differenceInYears(new Date(), new Date(item.birthDate)) }) }}
+        </v-chip>
       </v-row>
 
       <template #placeholder>
@@ -123,7 +133,7 @@
 </template>
 
 <script setup lang='ts'>
-  import { formatDistance, format } from 'date-fns';
+  import { formatDistance, format, differenceInYears } from 'date-fns';
   import ptBR from 'date-fns/locale/pt-BR';
   import enUS from 'date-fns/locale/en-US';
   import { useLocale, useTheme } from 'vuetify';

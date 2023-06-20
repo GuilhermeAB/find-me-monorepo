@@ -6,6 +6,17 @@
 
     <v-spacer />
 
+    <v-btn
+      color='primary'
+      variant='outlined'
+      height='40'
+      @click='goToSearch'
+    >
+      <v-icon size='x-large'>
+        mdi-magnify
+      </v-icon>
+    </v-btn>
+
     <v-btn-toggle
       v-model='type'
       multiple
@@ -30,6 +41,7 @@
   import { ref, watch, inject } from 'vue';
   import { debounce } from 'lodash';
   import { Composer } from 'vue-i18n';
+  import { useRouter } from 'vue-router';
   import { AlertType } from '@/services';
   import { useAlertStore } from '../../../../store/alert';
 
@@ -38,6 +50,7 @@
   const $t = $i18n!.t;
 
   const alert = useAlertStore();
+  const router = useRouter();
 
   const type = ref([AlertType.Person, AlertType.Pet]);
   watch(type, debounce(() => {
@@ -47,4 +60,8 @@
       alert.updateList(type.value[0]);
     }
   }, 900));
+
+  function goToSearch (): void {
+    router.push({ name: 'Search' });
+  }
 </script>

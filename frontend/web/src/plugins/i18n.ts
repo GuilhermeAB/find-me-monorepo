@@ -100,6 +100,12 @@ export const i18n = createI18n({
       AuthenticationInvalidStatus: 'Your account must be {status} to proceed',
       MaxAlertsCreated: 'You have reached the maximum amount of alerts: {value}',
       MaxAlertsOpen: 'You have reached the maximum amount of open alerts: {value}',
+      SearchTextInvalid: 'Search text invalid',
+      InvalidAlertStatus: 'Invalid alert status: {type}',
+      StartDateInvalid: 'Start date invalid',
+      EndDateInvalid: 'End date invalid',
+      MissingDateStartInvalid: 'Missing start date invalid',
+      MissingDateEndInvalid: 'Missing end date invalid',
 
       // WEB
       SignIn: 'Sign in',
@@ -235,6 +241,14 @@ export const i18n = createI18n({
       DockerSubtitle: 'Docker',
       Yarn: 'Yarn 3.x',
       YarnSubtitle: 'Yarn plug and play',
+      Type: 'Type',
+      Status: 'Status',
+      BirthDateAge: 'Age',
+      LessThanAge: 'Less than {value} years',
+      MoreThanAge: 'More than {value} years',
+      Custom: 'Custom',
+      Filters: 'Filters',
+      SearchEmptyAlertList: 'No alerts found. Change the filters and try again',
     },
     pt: {
       // BACK
@@ -330,6 +344,12 @@ export const i18n = createI18n({
       PasswordRecoverSent: 'Código de recuperação de senha enviado',
       MaxAlertsCreated: 'Você atingiu a quantidade máxima de alertas: {value}',
       MaxAlertsOpen: 'Você atingiu a quantidade máxima de alertas abertos: {value}',
+      SearchTextInvalid: 'Texto de pesquisa invalido',
+      InvalidAlertStatus: 'Estado do alerta invalido: {type}',
+      StartDateInvalid: 'Data de início invalida',
+      EndDateInvalid: 'Data de termino invalida',
+      MissingDateStartInvalid: 'Data de desaparecimento inicial invalida',
+      MissingDateEndInvalid: 'Data de desaparecimento final invalida',
 
       // WEB
       SignIn: 'Entrar',
@@ -466,6 +486,14 @@ export const i18n = createI18n({
       DockerSubtitle: 'Docker',
       Yarn: 'Yarn 3.x',
       YarnSubtitle: 'Yarn plug and play',
+      Type: 'Tipo',
+      Status: 'Estado',
+      BirthDateAge: 'Idade',
+      LessThanAge: 'Menor que {value} anos',
+      MoreThanAge: 'Maior que {value} anos',
+      Custom: 'Customizado',
+      Filters: 'Filtros',
+      SearchEmptyAlertList: 'Nenhum alerta encontrado. Altere os filtros e tente novamente',
     },
     // Other locales and translations
   },

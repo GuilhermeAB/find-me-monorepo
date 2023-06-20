@@ -10,3 +10,4 @@ export * from './comment/create';
 export * from './comment/create-reply';
 export * from './comment/list';
 export * from './health/health';
+export * from './alert/search';

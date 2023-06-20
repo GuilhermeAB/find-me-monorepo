@@ -33,12 +33,11 @@
         <Search />
 
         <!-- :max-height='maxHeight - 105' -->
-
         <v-sheet
           color='transparent'
           width='100%'
           height='100%'
-          :max-height='!smAndDown ? maxHeight - 63 : ""'
+          :max-height='width > 700 ? maxHeight - 63 : ""'
           style='overflow: auto;'
         >
           <AlertList />
@@ -62,7 +61,7 @@
   import Search from './components/search/Search.vue';
   import { useAlertStore } from '../../store/alert';
 
-  const { height, smAndDown } = useDisplay();
+  const { height, width } = useDisplay();
   const alert = useAlertStore();
 
   onMounted(() => {

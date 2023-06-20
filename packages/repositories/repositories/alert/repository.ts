@@ -1,7 +1,18 @@
 import { AlertEntity, AlertLocationType, AlertStatus } from '@find-me/entities';
 import { Repository } from '@find-me/repositories/base/repository';
 import { DTOAlert, DTOAlertType } from '@find-me/repositories/schema/alert';
+import { FilterQuery } from '@find-me/database';
+import { DateVO } from '@find-me/date';
 import { AlertMapper } from './mapper';
+
+export interface SearchFilter {
+  status: string,
+  type?: string,
+  startAge?: number,
+  endAge?: number,
+  missingAgeStart?: number,
+  missingAgeEnd?: number,
+}
 
 export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknown>> {
   protected Model = DTOAlert.model;
@@ -198,5 +209,67 @@ export class AlertRepository extends Repository<DTOAlertType, AlertEntity<unknow
     ).exec();
 
     return { total, open };
+  }
+
+  public async search(filters: SearchFilter, text?: string): Promise<unknown[] | undefined> {
+    const filter: FilterQuery<DTOAlertType> = {
+      $and: [
+        { status: filters.status },
+      ],
+    };
+
+    if (filters.type) {
+      filter.$and?.push({
+        type: filters.type,
+      });
+    }
+
+    if (filters.startAge !== undefined && filters.endAge !== undefined) {
+      filter.$and?.push({
+        birthDate: {
+          $gte: DateVO.now().subYears(filters.endAge).value,
+          $lt: DateVO.now().subYears(filters.startAge).value,
+        },
+      });
+    }
+
+    if (filters.missingAgeStart !== undefined && filters.missingAgeEnd !== undefined) {
+      filter.$and?.push({
+        disappearDate: {
+          $gte: DateVO.now().subYears(filters.missingAgeEnd).value,
+          $lt: DateVO.now().subYears(filters.missingAgeStart).value,
+        },
+      });
+    }
+
+    if (text) {
+      filter.$and?.push({
+        $text: { $search: text },
+      });
+    }
+
+    const result = await this.Model.find(
+      filter,
+      undefined,
+      {
+        lean: true,
+      },
+    )
+      .populate({
+        path: 'account',
+        populate: [
+          { path: 'person' },
+        ],
+      })
+      .limit(100)
+      .exec();
+
+    const list = result && result.length ? this.mapper.toEntities(result) : undefined;
+
+    if (list) {
+      return list.map((item) => item.getFlatProps(['password']));
+    }
+
+    return undefined;
   }
 }

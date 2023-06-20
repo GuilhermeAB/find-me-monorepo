@@ -93,4 +93,10 @@ export const en = {
   AuthenticationInvalidStatus: 'Your account must be {status} to proceed',
   MaxAlertsCreated: 'You have reached the maximum amount of alerts: {value}',
   MaxAlertsOpen: 'You have reached the maximum amount of open alerts: {value}',
+  SearchTextInvalid: 'Search text invalid',
+  InvalidAlertStatus: 'Invalid alert status: {type}',
+  StartDateInvalid: 'Start date invalid',
+  EndDateInvalid: 'End date invalid',
+  MissingDateStartInvalid: 'Missing start date invalid',
+  MissingDateEndInvalid: 'Missing end date invalid',
 };

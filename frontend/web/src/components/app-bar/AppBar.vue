@@ -30,15 +30,15 @@
       <v-btn
         variant='outlined'
         color='primary'
-        class='mr-2 hidden-sm-and-down'
+        :class='{ "mr-2": true, "d-none": width < 500 }'
         @click='goToAbout'
       >
         {{ $t('About') }}
       </v-btn>
 
-      <v-divider vertical inset class='mx-3 hidden-sm-and-down' />
+      <v-divider vertical inset :class='{ "mx-3": true, "d-none": width < 500 }' />
 
-      <Theme />
+      <Theme :class='{ "d-none": width < 400 }' />
       <Language />
 
       <AppBarUser />
@@ -83,6 +83,7 @@
   import { useRouter } from 'vue-router';
   import { ref, watch, inject } from 'vue';
   import { Composer } from 'vue-i18n';
+  import { useDisplay } from 'vuetify';
   import Language from '../language/Language.vue';
   import Theme from '../theme/Theme.vue';
   import AppBarUser from './AbbBarUser.vue';
@@ -93,6 +94,7 @@
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
 
+  const { width } = useDisplay();
   const router = useRouter();
   const authentication = useAuthenticationStore();
 

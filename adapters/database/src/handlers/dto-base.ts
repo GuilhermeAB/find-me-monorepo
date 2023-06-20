@@ -1,7 +1,13 @@
 import {
   IndexDefinition,
-  model, Model, Schema, SchemaDefinition, SchemaOptions,
+  model,
+  Model,
+  Schema,
+  SchemaDefinition,
+  SchemaOptions,
 } from 'mongoose';
+
+export { FilterQuery } from 'mongoose';
 
 export type DTOModel<T> = Model<T>;
 

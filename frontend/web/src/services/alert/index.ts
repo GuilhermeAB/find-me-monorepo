@@ -56,6 +56,15 @@ export interface CreateAlert {
   petType?: PetType | string,
 }
 
+export interface SearchFilter {
+  status: string,
+  type?: string,
+  startAge?: number,
+  endAge?: number,
+  missingAgeStart?: number,
+  missingAgeEnd?: number,
+}
+
 const url = import.meta.env.VITE_APP_ALERT_REQUEST_BASE_URL as string;
 
 export class AlertService {
@@ -76,6 +85,25 @@ export class AlertService {
       baseURL: url,
       url: 'alert/list',
       method: 'GET',
+    });
+
+    return data?.value?.list;
+  }
+
+  public static async search(filters: SearchFilter, text?: string): Promise<Alert[] | undefined> {
+    const { data } = await axios<{ value?: { list?: Alert[] } }>({
+      baseURL: url,
+      url: 'alert/search',
+      method: 'POST',
+      data: {
+        search: text,
+        status: filters.status,
+        type: filters.type,
+        startAge: filters.startAge,
+        endAge: filters.endAge,
+        missingAgeStart: filters.missingAgeStart,
+        missingAgeEnd: filters.missingAgeEnd,
+      },
     });
 
     return data?.value?.list;

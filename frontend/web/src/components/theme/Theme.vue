@@ -3,7 +3,7 @@
     <template #activator='{ props }'>
       <v-btn
         :icon='global.current.value.dark ? "mdi-weather-sunny" : "mdi-weather-night"'
-        class='mr-1'
+        :class='{ "mr-1": true, "d-none": width < 400 }'
         v-bind='props'
         @click='toggleTheme'
       />
@@ -15,7 +15,7 @@
 
 <script setup lang='ts'>
   import { onBeforeMount, inject } from 'vue';
-  import { useTheme } from 'vuetify';
+  import { useTheme, useDisplay } from 'vuetify';
 
   import { Composer } from 'vue-i18n';
 
@@ -24,6 +24,7 @@
   const $t = $i18n!.t;
 
   const { global } = useTheme();
+  const { width } = useDisplay();
 
   onBeforeMount(() => {
     const theme = localStorage.getItem('theme');
