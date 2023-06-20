@@ -18,7 +18,7 @@ class AccountDetails extends DTO<DTOAccountDetailsType> {
         failedRecoverAttempts: Number,
         lastSignInAt: Date,
         failedSignInAttempts: Number,
-        lastFailedSignInAttempt: Number,
+        lastFailedSignInAttempt: Date,
         lastFailedPasswordChangeAttempt: Date,
         failedPasswordChangeAttempts: String,
         account: { type: String, ref: DTOAccount.name },

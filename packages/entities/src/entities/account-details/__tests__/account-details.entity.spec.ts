@@ -17,7 +17,7 @@ describe('AccountDetailsEntity', () => {
       recoverCodeCreatedAt: DateVO.now(),
       lastSignInAt: DateVO.now(),
       failedSignInAttempts: 0,
-      lastFailedSignInAttempt: 0,
+      lastFailedSignInAttempt: undefined,
       lastFailedPasswordChangeAttempt: undefined,
       failedPasswordChangeAttempts: 0,
     };

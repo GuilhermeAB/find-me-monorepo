@@ -8,6 +8,7 @@ import {
   lastDayOfMonth,
   subYears,
   addYears,
+  subMinutes,
   isFuture,
   differenceInMilliseconds,
 } from 'date-fns';
@@ -63,6 +64,12 @@ export class DateVO {
 
   public addHours(value: number): DateVO {
     this.props.value = addHours(this.props.value, value);
+
+    return this;
+  }
+
+  public subMinutes(value: number): DateVO {
+    this.props.value = subMinutes(this.props.value, value);
 
     return this;
   }

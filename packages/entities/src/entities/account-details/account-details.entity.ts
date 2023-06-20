@@ -27,7 +27,7 @@ export interface RecoverData {
 export interface SignInData {
   lastSignInAt?: DateVO,
   failedSignInAttempts?: number,
-  lastFailedSignInAttempt?: number,
+  lastFailedSignInAttempt?: DateVO,
 }
 
 export interface PasswordChangeData {
