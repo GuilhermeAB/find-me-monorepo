@@ -438,7 +438,7 @@ export const i18n = createI18n({
       Missing: 'Desaparecido',
       BetaWarningText: 'Plataforma em testes. Dados exibidos são fictícios',
       About: 'Sobre',
-      AboutDescription: 'Find Me é um aplicativo da web projetado para ajudar a encontrar pessoas e animais de estimação desaparecidos. Ele fornece uma plataforma onde os usuários podem criar e pesquisar relatórios de pessoas desaparecidas ou animais de estimação e colaborar com outras pessoas para aumentar as chances de encontrá-los.',
+      AboutDescription: 'Find Me é uma aplicação projetada para ajudar a encontrar pessoas e animais de estimação desaparecidos. Ele fornece uma plataforma onde os usuários podem criar e pesquisar alertas de pessoas desaparecidas ou animais de estimação e colaborar com outras pessoas para aumentar as chances de encontrá-los.',
       FrontEnd: 'Front end',
       BackEnd: 'Back end',
       Database: 'Base de dados',
