@@ -28,7 +28,7 @@ Online demo: [click here](https://find-me-project.com/)
 1. Vue Router 4
 1. Axios
 
-# Project setup
+## Project setup
 
 Required:
 1. Node.js LTS
