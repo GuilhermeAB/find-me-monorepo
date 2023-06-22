@@ -252,6 +252,10 @@ export const i18n = createI18n({
       Filters: 'Filters',
       SearchEmptyAlertList: 'No alerts found. Change the filters and try again',
       Close: 'Close',
+      Warning: 'Warning',
+      AlertCreateWarning: 'First check if there is a record of the missing person in the services:',
+      AlertCreateWarningServices: '- 192 SAMU (Serviço de atendimento móvel de urgência)\n- 193 Corpo de bombeiros\n- 190 Polícia militar',
+      AlertCreateWarningText: 'Create a missing person report for the police and provide as much detail as possible to help with identification',
     },
     pt: {
       // BACK
@@ -500,6 +504,10 @@ export const i18n = createI18n({
       Filters: 'Filtros',
       SearchEmptyAlertList: 'Nenhum alerta encontrado. Altere os filtros e tente novamente',
       Close: 'Fechar',
+      Warning: 'Aviso',
+      AlertCreateWarning: 'Em caso de desaparecimento primeiramente verifique se há registro da pessoa desaparecida nos serviços responsáveis:',
+      AlertCreateWarningServices: '- 192 SAMU (Serviço de atendimento móvel de urgência)\n- 193 Corpo de bombeiros\n- 190 Polícia militar',
+      AlertCreateWarningText: 'Registre um boletim de ocorrência do desaparecimento na polícia e informe o máximo de detalhes possíveis para auxiliar na identificação',
     },
     // Other locales and translations
   },

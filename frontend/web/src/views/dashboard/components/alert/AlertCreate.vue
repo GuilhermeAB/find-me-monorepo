@@ -1,4 +1,31 @@
 <template>
+  <v-row no-gutters justify='center' class='mb-4'>
+    <v-sheet width='90%'>
+      <v-alert
+        :title='$t("Warning")'
+        type='warning'
+        variant='tonal'
+        border='top'
+        border-color='warning'
+      >
+        <v-row no-gutters>
+          <span>
+            {{ $t('AlertCreateWarning') }}
+          </span>
+        </v-row>
+
+        <v-row no-gutters>
+          <pre class='text-body-1'>{{ $t('AlertCreateWarningServices') }}</pre>
+        </v-row>
+        <v-row no-gutters>
+          <span>
+            {{ $t('AlertCreateWarningText') }}
+          </span>
+        </v-row>
+      </v-alert>
+    </v-sheet>
+  </v-row>
+
   <v-row no-gutters justify='center'>
     <v-btn-toggle
       v-model='type'
