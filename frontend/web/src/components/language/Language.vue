@@ -34,6 +34,7 @@
     watch,
     onBeforeMount,
     inject,
+    onMounted,
   } from 'vue';
   import { Composer } from 'vue-i18n';
   import { useLocale } from 'vuetify';
@@ -68,6 +69,14 @@
     items.value = getLanguages();
   });
 
+  function changeDocumentTitle (): void {
+    document.title = $t('ApplicationTitle');
+  }
+
+  onMounted(() => {
+    changeDocumentTitle();
+  });
+
   function changeLanguage (key: string): void {
     if ($i18n) {
       $i18n.locale.value = key;
@@ -75,5 +84,6 @@
 
     current.value = key;
     localStorage.setItem('language', key);
+    changeDocumentTitle();
   }
 </script>

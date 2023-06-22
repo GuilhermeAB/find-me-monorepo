@@ -9,6 +9,7 @@
       aspect-ratio='1'
       :src='AlertService.image(item.id)'
       :height='imageHeight'
+      :alt='item.name'
     >
       <v-row no-gutters>
         <v-avatar

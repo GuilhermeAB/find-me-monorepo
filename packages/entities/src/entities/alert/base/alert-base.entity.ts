@@ -1,5 +1,6 @@
 import { CreateDateVO, DateVO } from '@find-me/date';
 import { UUID } from '@find-me/uuid';
+import startCase from 'lodash.startcase';
 import { Entity } from '../../../base';
 import { AlertPolicy } from './alert-base.policy';
 import { AccountEntity } from '../../account';
@@ -73,7 +74,7 @@ export class AlertEntity<T> extends Entity<AlertProps<T>> {
     const alert = new AlertEntity({
       props: {
         type: create.type as AlertTypeEnum,
-        name: create.name.trim(),
+        name: startCase(create.name.trim()),
         description: create.description.trim(),
         birthDate: new DateVO(create.birthDate),
         disappearDate: new DateVO(create.disappearDate),

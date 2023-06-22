@@ -1,4 +1,5 @@
 import { CreateDateVO, DateVO } from '@find-me/date';
+import startCase from 'lodash.startcase';
 import { Entity } from '../../base';
 import { PersonPolicy } from './person.policy';
 
@@ -15,7 +16,7 @@ export class PersonEntity extends Entity<PersonProps> {
   public static create(create: CreatePersonProps): PersonEntity {
     const person = new PersonEntity({
       props: {
-        name: create.name.trim(),
+        name: startCase(create.name.trim()),
         birthDate: new DateVO(create.birthDate),
       },
     });

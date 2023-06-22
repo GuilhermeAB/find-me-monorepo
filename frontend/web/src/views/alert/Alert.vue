@@ -24,6 +24,7 @@
                 aspect-ratio='1'
                 :src='AlertService.image(id)'
                 height='24rem'
+                :alt='item.name'
               >
                 <v-row no-gutters>
                   <v-avatar
@@ -434,15 +435,6 @@
                     :center='[item.location.coordinates[1], item.location.coordinates[0]]'
                   >
                     <l-tile-layer
-                      v-if='global.current.value.dark'
-                      url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                      layer-type='base'
-                      name='OpenStreetMap'
-                      class-name='map-tiles'
-                    />
-
-                    <l-tile-layer
-                      v-else
                       url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                       layer-type='base'
                       name='OpenStreetMap'

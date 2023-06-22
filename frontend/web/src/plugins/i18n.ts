@@ -108,6 +108,8 @@ export const i18n = createI18n({
       MissingDateEndInvalid: 'Missing end date invalid',
 
       // WEB
+      ApplicationTitle: 'Find me - Help find missing people and pets',
+      AboutContentHead: 'Application designed to help find missing people and pets. It provides a platform where users can create and search for missing person or pet reports',
       SignIn: 'Sign in',
       Languages: 'Languages',
       LightTheme: 'Light theme',
@@ -193,7 +195,7 @@ export const i18n = createI18n({
       Missing: 'Missing',
       BetaWarningText: 'Website in beta! The data displayed is fictitious',
       About: 'About',
-      AboutDescription: 'Find Me is a web application designed to help find missing people and pets. It provides a platform where users can create and search for missing person or pet reports, and collaborate with others to increase the chances of finding them.',
+      AboutDescription: 'Find Me is a application designed to help find missing people and pets. It provides a platform where users can create and search for missing person or pet reports, and collaborate with others to increase the chances of finding them.',
       FrontEnd: 'Front end',
       BackEnd: 'Back end',
       Database: 'Database',
@@ -352,6 +354,8 @@ export const i18n = createI18n({
       MissingDateEndInvalid: 'Data de desaparecimento final invalida',
 
       // WEB
+      ApplicationTitle: 'Find me - Ajude a encontrar pessoas e animais de estimação perdidos',
+      AboutContentHead: 'Aplicação projetada para ajudar a encontrar pessoas e animais de estimação desaparecidos. Plataforma onde os usuários podem criar e pesquisar alertas',
       SignIn: 'Entrar',
       Languages: 'Linguagens',
       LightTheme: 'Tema claro',
