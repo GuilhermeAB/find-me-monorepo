@@ -251,6 +251,7 @@ export const i18n = createI18n({
       Custom: 'Custom',
       Filters: 'Filters',
       SearchEmptyAlertList: 'No alerts found. Change the filters and try again',
+      Close: 'Close',
     },
     pt: {
       // BACK
@@ -498,6 +499,7 @@ export const i18n = createI18n({
       Custom: 'Customizado',
       Filters: 'Filtros',
       SearchEmptyAlertList: 'Nenhum alerta encontrado. Altere os filtros e tente novamente',
+      Close: 'Fechar',
     },
     // Other locales and translations
   },
