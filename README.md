@@ -28,6 +28,29 @@ Online demo: [click here](https://find-me-project.com/)
 1. Vue Router 4
 1. Axios
 
+# Project setup
+
+Required:
+1. Node.js LTS
+1. Yarn
+
+Create and update the environment files (ex: backend/auth/.env, backend/alert/.env, frontend/web/.env)
+
+```
+# Run auth project
+yarn auth
+```
+
+```
+# Run alert project
+yarn alert
+```
+
+```
+# Run web project
+yarn web
+```
+
 # Contributing
 
 Contributions are welcome! If you want to contribute to Find-Me, please follow these steps:
