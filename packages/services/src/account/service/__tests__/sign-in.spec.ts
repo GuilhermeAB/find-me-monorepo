@@ -114,8 +114,7 @@ describe('AccountSignInService', () => {
     });
 
     it('should throw ValidationError when failed sign-in attempts limit was reached and not enough time passed', async () => {
-      const delay = 2;
-      const lastFailedSignInAttempt = DateVO.now().subMinutes(delay);
+      const lastFailedSignInAttempt = DateVO.now();
       const details = new AccountDetailsEntity({
         id: accountId,
         props: {
@@ -134,6 +133,51 @@ describe('AccountSignInService', () => {
       expect(detailsRepositoryIncreaseFailedSignInMock).not.toHaveBeenCalled();
       expect(detailsRepositorySaveLastSignInMock).not.toHaveBeenCalled();
       expect(authenticationGenerateTokenMock).not.toHaveBeenCalled();
+    });
+
+    it('should throw ValidationError when failed sign-in attempts limit was reached and not enough time passed -2 minutes', async () => {
+      const lastFailedSignInAttempt = DateVO.now().subMinutes(2);
+      const details = new AccountDetailsEntity({
+        id: accountId,
+        props: {
+          lastSignInAt: undefined,
+          lastFailedSignInAttempt,
+          failedSignInAttempts: MAX_FAILED_SIGN_IN_ATTEMPTS + 1,
+          account: new UUID('b578040f-34d4-43cf-9105-efb0be3d813e'),
+        },
+      });
+
+      detailsRepositoryGetByAccountMock.mockResolvedValueOnce(details);
+
+      await expect(AccountSignInService.prototype.signIn.call(new AccountSignInService(), email, password)).rejects.toThrowError(ValidationError);
+      expect(accountRepositoryFindByEmailMock).toHaveBeenCalledTimes(1);
+      expect(detailsRepositoryGetByAccountMock).toHaveBeenCalledTimes(1);
+      expect(detailsRepositoryIncreaseFailedSignInMock).not.toHaveBeenCalled();
+      expect(detailsRepositorySaveLastSignInMock).not.toHaveBeenCalled();
+      expect(authenticationGenerateTokenMock).not.toHaveBeenCalled();
+    });
+
+    it('should not throw ValidationError when failed sign-in attempts limit was reached and not enough time passed -20 minutes', async () => {
+      const lastFailedSignInAttempt = DateVO.now().subMinutes(20);
+      const details = new AccountDetailsEntity({
+        id: accountId,
+        props: {
+          lastSignInAt: undefined,
+          lastFailedSignInAttempt,
+          failedSignInAttempts: MAX_FAILED_SIGN_IN_ATTEMPTS + 1,
+          account: new UUID('b578040f-34d4-43cf-9105-efb0be3d813e'),
+        },
+      });
+
+      detailsRepositoryGetByAccountMock.mockResolvedValueOnce(details);
+      (scryptSync as jest.MockedFunction<typeof scryptSync>).mockReturnValueOnce(Buffer.from(currentPasswordEncrypted, 'hex'));
+
+      await expect(AccountSignInService.prototype.signIn.call(new AccountSignInService(), email, password)).resolves.toBeTruthy();
+      expect(accountRepositoryFindByEmailMock).toHaveBeenCalledTimes(1);
+      expect(detailsRepositoryGetByAccountMock).toHaveBeenCalledTimes(1);
+      expect(detailsRepositoryIncreaseFailedSignInMock).not.toHaveBeenCalled();
+      expect(detailsRepositorySaveLastSignInMock).toHaveBeenCalledTimes(1);
+      expect(authenticationGenerateTokenMock).toHaveBeenCalledTimes(1);
     });
 
     it('should increase failed sign-in attempts and throw ValidationError when password is invalid', async () => {

@@ -14,7 +14,7 @@ export class ImageHandler {
   public async metadata(): Promise<Metadata> {
     const metadata = await sharp(this.buffer).metadata();
 
-    const size = metadata.size ? metadata.size / 1024 : undefined;
+    const size = metadata.size! / 1024;
 
     return {
       ...metadata,

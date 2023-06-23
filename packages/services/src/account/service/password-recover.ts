@@ -117,7 +117,12 @@ export class AccountPasswordRecoverService extends AccountService {
     const {
       id,
       password: currentPassword,
+      status,
     } = account.getProps();
+
+    if (status === AccountStatus.disabled) {
+      throw new ValidationError({ key: 'AccountDisabled' });
+    }
 
     const details = await this.detailsRepository.getByAccount(id.value);
     if (!details) {

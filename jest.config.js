@@ -37,4 +37,12 @@ module.exports = {
   // moduleNameMapper: {},
   // Optional: You can specify custom test environment configuration
   // testEnvironmentOptions: {}
+  collectCoverageFrom: [
+    '**/*.ts',
+    '!**/node_modules/**',
+    '!**/*.d.ts',
+    '!**/__tests__/**',
+    '!frontend/**',
+    '!packages/repositories/**',
+  ],
 };

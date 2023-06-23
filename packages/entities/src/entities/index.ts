@@ -1,6 +1,7 @@
 export * from './alert/base';
 export * from './alert/person';
 export * from './alert/pet';
+export * from './image';
 export * from './alert-image';
 export * from './account';
 export * from './account-details';

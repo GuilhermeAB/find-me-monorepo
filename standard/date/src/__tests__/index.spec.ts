@@ -106,6 +106,12 @@ describe('DateVO', () => {
 
       expect(result).toBe(false);
     });
+
+    it('should return false if the date is in the past and value is date', () => {
+      const result = DateVO.isFuture(new Date('2000-01-01'));
+
+      expect(result).toBe(false);
+    });
   });
 
   describe('differenceInYears', () => {
