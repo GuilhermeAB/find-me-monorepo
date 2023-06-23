@@ -10,6 +10,6 @@
     "lodash.startcase": "^4.4.0"
   },
   "devDependencies": {
-    "@types/lodash.startcase": "^4"
+    "@types/lodash.startcase": "^4.4.7"
   }
 }

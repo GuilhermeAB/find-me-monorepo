@@ -1,0 +1,29 @@
+{
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": false,
+  "cSpell.words": [
+    "AWSECR",
+    "AWSECS",
+    "AWSS",
+    "AWSSES",
+    "Composables",
+    "crosshairs",
+    "fastify",
+    "github",
+    "Github",
+    "kyvg",
+    "linkedin",
+    "Linkedin",
+    "maska",
+    "pinia",
+    "presigner",
+    "startcase",
+    "unhead"
+  ]
+}

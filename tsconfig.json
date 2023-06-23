@@ -7,6 +7,8 @@
     "outDir": "./dist",
     "rootDir": "./",
 
+    "composite": true,
+
     "noEmit": true,
 
     "strict": true,
@@ -27,7 +29,6 @@
       "@find-me/*": [
         "./packages/*",
         "./backend/*",
-        "./crawler/*",
         "./frontend/*",
         "./standard/*",
         "./adapters/*"
