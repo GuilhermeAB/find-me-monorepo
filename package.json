@@ -10,7 +10,7 @@
   "scripts": {
     "build": "turbo run build",
     "lint": "eslint . --max-warnings 0",
-    "test": "jest",
+    "test": "jest --runInBand",
     "web": "yarn workspace @find-me/web run dev",
     "web:build": "yarn workspace @find-me/web run build",
     "alert": "yarn workspace @find-me/alert run build && yarn workspace @find-me/alert run serve",

@@ -15,12 +15,6 @@ module.exports = {
       displayName: 'packages',
       testMatch: ['<rootDir>/packages/**/*.spec.ts'],
     },
-    // {
-    //   displayName: 'app2',
-    //   testMatch: ['<rootDir>/apps/app2/tests/**/*.spec.ts'],
-    //   // Add any other Jest configuration options specific to app2
-    // },
-    // Add more configurations for other apps or packages as needed
   ],
   // Optional: If you have any setup files or global configuration, you can specify them here
   // setupFiles: [],
@@ -31,11 +25,11 @@ module.exports = {
   // Optional: You can specify specific coverage thresholds
   // coverageThreshold: {
   //   global: {
-  //     branches: 80,
-  //     functions: 80,
-  //     lines: 80,
-  //     statements: -10
-  //   }
+  //     branches: 10,
+  //     functions: 10,
+  //     lines: 10,
+  //     statements: -10,
+  //   },
   // },
   // Optional: You can specify additional reporters for test results
   // reporters: [],

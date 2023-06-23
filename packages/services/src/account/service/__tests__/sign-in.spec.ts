@@ -171,15 +171,6 @@ describe('AccountSignInService', () => {
           account: new UUID('b578040f-34d4-43cf-9105-efb0be3d813e'),
         },
       });
-      const newDetails = new AccountDetailsEntity({
-        id: accountId,
-        props: {
-          lastSignInAt: DateVO.now(),
-          lastFailedSignInAttempt: undefined,
-          failedSignInAttempts: 0,
-          account: new UUID('b578040f-34d4-43cf-9105-efb0be3d813e'),
-        },
-      });
 
       detailsRepositoryGetByAccountMock.mockResolvedValueOnce(oldDetails);
       (scryptSync as jest.MockedFunction<typeof scryptSync>).mockReturnValueOnce(Buffer.from(currentPasswordEncrypted, 'hex'));
