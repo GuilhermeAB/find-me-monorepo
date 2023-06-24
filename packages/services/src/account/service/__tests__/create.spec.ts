@@ -17,23 +17,23 @@ let mailerSendVerificationEmailMock: jest.Mock;
 describe('AccountCreateService', () => {
   beforeEach(() => {
     repositoryCreateMock = jest.fn();
-    repositoryEmailExistsMock = jest.fn().mockResolvedValueOnce(false);
+    repositoryEmailExistsMock = jest.fn().mockResolvedValue(false);
     detailsRepositoryCreateMock = jest.fn();
     personRepositoryCreateMock = jest.fn();
 
     mailerSendVerificationEmailMock = jest.fn();
 
     // @ts-ignore
-    AccountService.prototype.repository = {
+    AccountCreateService.prototype.repository = {
       create: repositoryCreateMock,
       emailExists: repositoryEmailExistsMock,
     };
     // @ts-ignore
-    AccountService.prototype.detailsRepository = {
+    AccountCreateService.prototype.detailsRepository = {
       create: detailsRepositoryCreateMock,
     };
     // @ts-ignore
-    AccountService.prototype.personRepository = {
+    AccountCreateService.prototype.personRepository = {
       create: personRepositoryCreateMock,
     };
 
@@ -66,6 +66,30 @@ describe('AccountCreateService', () => {
       expect(detailsRepositoryCreateMock).toHaveBeenCalledWith(expect.any(AccountDetailsEntity));
       expect(personRepositoryCreateMock).toHaveBeenCalledWith(expect.any(PersonEntity));
       expect(mailerSendVerificationEmailMock).toHaveBeenCalledWith('test@example.com', 'Alice Saturnine', expect.any(String));
+    });
+
+    it('should throw an error if the email already exists', async () => {
+      repositoryEmailExistsMock.mockResolvedValue(true);
+
+      await expect(AccountCreateService.prototype.create.call(
+        new AccountCreateService(),
+        {
+          email: 'test@example.com',
+          password: '@Abc123456',
+          role: AccountRole.default,
+          status: AccountStatus.unverified,
+        },
+        {
+          birthDate: new DateVO('2000-01-01'),
+          name: 'Alice Saturnine',
+        },
+      )).rejects.toThrowError(ValidationError);
+
+      expect(repositoryEmailExistsMock).toHaveBeenCalledWith('test@example.com');
+      expect(repositoryCreateMock).toHaveBeenCalledTimes(0);
+      expect(detailsRepositoryCreateMock).toHaveBeenCalledTimes(0);
+      expect(personRepositoryCreateMock).toHaveBeenCalledTimes(0);
+      expect(mailerSendVerificationEmailMock).toHaveBeenCalledTimes(0);
     });
   });
 });

@@ -57,6 +57,11 @@ describe('ImagePolicy', () => {
       expect(() => ImagePolicy.validateSize(validSize)).not.toThrow();
     });
 
+    it('should not throw an error when size < max size', () => {
+      const validSize = 1024;
+      expect(() => ImagePolicy.validateSize(validSize, 2048)).not.toThrow();
+    });
+
     it('should throw an error when given an empty size', () => {
       expect(() => ImagePolicy.validateSize('')).toThrowError(ValidationError);
     });

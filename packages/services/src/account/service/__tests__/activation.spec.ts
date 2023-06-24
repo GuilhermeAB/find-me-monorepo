@@ -108,6 +108,104 @@ describe('AccountActivationService', () => {
       // Expect the failedActivationAttempts to have increased by 1
       expect(detailsRepositoryIncreaseFailedActivationAttemptsMock).toHaveBeenCalledWith(detailsId.value);
     });
+
+    it('should throw validation error if account is not found', async () => {
+      accountRepositoryFindByAccountMock.mockResolvedValue(undefined);
+
+      const {
+        id
+      } = account.getProps();
+
+      // Call the activation method with an invalid activation code
+      await expect(AccountActivationService.prototype.activation.call(new AccountActivationService(), id.value, '123')).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if account details is not found', async () => {
+      detailsRepositoryGetByAccountMock.mockResolvedValue(undefined);
+
+      const {
+        id
+      } = account.getProps();
+
+      // Call the activation method with an invalid activation code
+      await expect(AccountActivationService.prototype.activation.call(new AccountActivationService(), id.value, '123')).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if account status is not unverified', async () => {
+      const newAccount = new AccountEntity({
+        id: UUID.generate(),
+        props: {
+          email: 'test@example.com',
+          status: AccountStatus.verified,
+          role: AccountRole.default,
+          password: '@Abc123456',
+          person: new PersonEntity({
+            id: UUID.generate(),
+            props: {
+              name: 'Alice',
+              birthDate: new DateVO('2000-01-01'),
+            }
+          })
+        }
+      });
+
+      accountRepositoryFindByAccountMock.mockResolvedValue(newAccount);
+
+      const {
+        id
+      } = newAccount.getProps();
+
+      // Call the activation method with an invalid activation code
+      await expect(AccountActivationService.prototype.activation.call(new AccountActivationService(), id.value, '123')).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if failedActivationAttempts exceeds max attempts', async () => {
+      const newAccountDetails = new AccountDetailsEntity({
+        id: UUID.generate(),
+        props: {
+          lastSignInAt: undefined,
+          lastFailedSignInAttempt: undefined,
+          failedSignInAttempts: 0,
+          activationCode: '123456',
+          activationCodeCreatedAt: DateVO.now().subMinutes(5),
+          failedActivationAttempts: 3,
+          account: account.getProps().id,
+        },
+      });
+
+      detailsRepositoryGetByAccountMock.mockResolvedValue(newAccountDetails);
+
+      const {
+        id
+      } = account.getProps();
+
+      // Call the activation method with an invalid activation code
+      await expect(AccountActivationService.prototype.activation.call(new AccountActivationService(), id.value, '123')).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if code is expired', async () => {
+      const newAccountDetails = new AccountDetailsEntity({
+        id: UUID.generate(),
+        props: {
+          lastSignInAt: undefined,
+          lastFailedSignInAttempt: undefined,
+          failedSignInAttempts: 0,
+          activationCode: '123456',
+          activationCodeCreatedAt: DateVO.now().subMinutes(31),
+          failedActivationAttempts: 1,
+          account: account.getProps().id,
+        },
+      });
+
+      detailsRepositoryGetByAccountMock.mockResolvedValue(newAccountDetails);
+
+      const {
+        id
+      } = account.getProps();
+
+      // Call the activation method with an invalid activation code
+      await expect(AccountActivationService.prototype.activation.call(new AccountActivationService(), id.value, '123')).rejects.toThrowError(ValidationError);
+    });
   });
 
   describe('requestNewCode', () => {
@@ -131,7 +229,7 @@ describe('AccountActivationService', () => {
     });
 
     it('should throw validation error for too many activation code requests', async () => {
-      detailsRepositoryGetByAccountMock = jest.fn().mockResolvedValue(
+      detailsRepositoryGetByAccountMock.mockResolvedValue(
         new AccountDetailsEntity({
           id: UUID.generate(),
           props: {
@@ -144,6 +242,79 @@ describe('AccountActivationService', () => {
           },
         }),
       );
+
+      const {
+        id,
+      } = account.getProps();
+
+      // Call the requestNewCode method again before allowed time
+      await expect(AccountActivationService.prototype.requestNewCode.call(new AccountActivationService(), id.value)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error for too many activation code requests -4 minutes', async () => {
+      detailsRepositoryGetByAccountMock.mockResolvedValue(
+        new AccountDetailsEntity({
+          id: UUID.generate(),
+          props: {
+            lastSignInAt: undefined,
+            lastFailedSignInAttempt: undefined,
+            failedSignInAttempts: 0,
+            activationCode: '123456',
+            activationCodeCreatedAt: DateVO.now().subMinutes(4),
+            account: account.getProps().id,
+          },
+        }),
+      );
+
+      const {
+        id,
+      } = account.getProps();
+
+      // Call the requestNewCode method again before allowed time
+      await expect(AccountActivationService.prototype.requestNewCode.call(new AccountActivationService(), id.value)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if account status is not unverified', async () => {
+      const newAccount = new AccountEntity({
+        id: UUID.generate(),
+        props: {
+          email: 'test@example.com',
+          status: AccountStatus.verified,
+          role: AccountRole.default,
+          password: '@Abc123456',
+          person: new PersonEntity({
+            id: UUID.generate(),
+            props: {
+              name: 'Alice',
+              birthDate: new DateVO('2000-01-01'),
+            }
+          })
+        }
+      });
+
+      accountRepositoryFindByAccountMock.mockResolvedValue(newAccount);
+
+      const {
+        id,
+      } = account.getProps();
+
+      // Call the requestNewCode method again before allowed time
+      await expect(AccountActivationService.prototype.requestNewCode.call(new AccountActivationService(), id.value)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if account is not found', async () => {
+      accountRepositoryFindByAccountMock.mockResolvedValue(undefined);
+
+      const {
+        id,
+      } = account.getProps();
+
+      // Call the requestNewCode method again before allowed time
+      await expect(AccountActivationService.prototype.requestNewCode.call(new AccountActivationService(), id.value)).rejects.toThrowError(ValidationError);
+    });
+
+    it('should throw validation error if account details is not found', async () => {
+      detailsRepositoryGetByAccountMock.mockResolvedValue(undefined);
 
       const {
         id,

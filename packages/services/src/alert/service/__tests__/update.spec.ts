@@ -2,7 +2,7 @@ import { AlertUpdateService } from '../update';
 import { AlertService } from '../../base';
 import { UUID } from '@find-me/uuid';
 import { DateVO } from '@find-me/date';
-import { AlertImageEntity, AlertLocationType, AlertPersonEntity, AlertTypeEnum, ImageType } from '@find-me/entities';
+import { AlertImageEntity, AlertLocationType, AlertPersonEntity, AlertPetEntity, AlertTypeEnum, ImageType, PetType } from '@find-me/entities';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { ValidationError } from '@find-me/errors';
@@ -124,6 +124,56 @@ describe('AlertUpdateService', () => {
       expect(storageDeleteMock).toHaveBeenCalledTimes(1);
     });
 
+    it('should update an pet alert', async () => {
+      const accountId = UUID.generate().value;
+      const alertPet = AlertPetEntity.create({
+        account: accountId,
+        birthDate: new DateVO('2000-01-01'),
+        name: 'Nami',
+        description: 'Description'.repeat(5),
+        disappearDate: new DateVO('2022-01-01'),
+        type: AlertTypeEnum.Pet,
+        location: {
+          type: AlertLocationType.Point,
+          coordinates: [-49.242825, -25.383585],
+        },
+        info: {
+          petType: PetType.Cat,
+        },
+      });
+
+      repositoryFindOneByIdMock.mockResolvedValue(alertPet);
+
+      const {
+        id,
+      } = alertPet.getProps();
+
+      await expect(AlertUpdateService.prototype.update.call(
+        new AlertUpdateService(),
+        id.value,
+        {
+          account: accountId,
+          birthDate: new DateVO('2001-01-01'),
+          name: 'Alice',
+          description: 'Description'.repeat(5),
+          disappearDate: new DateVO('2022-01-01'),
+          location: {
+            type: AlertLocationType.Point,
+            coordinates: [-47.242825, -25.283585],
+          },
+          info: {
+            petType: PetType.Cat,
+          },
+        },
+      )).resolves.toBeUndefined();
+      expect(repositoryFindOneByIdMock).toHaveBeenCalledTimes(1);
+      expect(repositoryUpdateOneMock).toHaveBeenCalledTimes(1);
+      expect(repositoryImageGetByAlertIdMock).toHaveBeenCalledTimes(0);
+      expect(repositoryImageUpdateOneMock).toHaveBeenCalledTimes(0);
+      expect(storageUploadMock).toHaveBeenCalledTimes(0);
+      expect(storageDeleteMock).toHaveBeenCalledTimes(0);
+    });
+
     it('should throw an error if alert is not found', async () => {
       const {
         id,
@@ -229,6 +279,40 @@ describe('AlertUpdateService', () => {
         new AlertUpdateService(),
         id.value,
         account instanceof UUID || typeof account === 'string' ? UUID.generate(account).value : account.getProps().id.value,
+        'Resolved',
+      )).resolves.toBeUndefined();
+      expect(repositoryFindOneByIdMock).toHaveBeenCalledTimes(1);
+      expect(repositoryUpdateStatusMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('should update status with account as string', async () => {
+      const accountId = UUID.generate().value;
+      const alertPet = AlertPetEntity.create({
+        account: accountId,
+        birthDate: new DateVO('2000-01-01'),
+        name: 'Nami',
+        description: 'Description'.repeat(5),
+        disappearDate: new DateVO('2022-01-01'),
+        type: AlertTypeEnum.Pet,
+        location: {
+          type: AlertLocationType.Point,
+          coordinates: [-49.242825, -25.383585],
+        },
+        info: {
+          petType: PetType.Cat,
+        },
+      });
+
+      repositoryFindOneByIdMock.mockResolvedValue(alertPet);
+
+      const {
+        id,
+      } = alertPerson.getProps();
+
+      await expect(AlertUpdateService.prototype.updateStatus.call(
+        new AlertUpdateService(),
+        id.value,
+        accountId,
         'Resolved',
       )).resolves.toBeUndefined();
       expect(repositoryFindOneByIdMock).toHaveBeenCalledTimes(1);

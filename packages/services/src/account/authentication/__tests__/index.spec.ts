@@ -3,6 +3,7 @@ import { Authentication, TokenBody } from '..';
 import { UUID } from '@find-me/uuid';
 import { CacheService } from '@find-me/cache';
 import { ValidationError } from '@find-me/errors';
+import { sign } from 'jsonwebtoken';
 
 const BLOCKLIST_CACHE_FOLDER = 'blocklist';
 
@@ -68,6 +69,28 @@ describe('authentication', () => {
       expect(parsedBody.status).toEqual(AccountStatus.verified);
       expect(parsedBody.createdAt).toBeTruthy();
       expect(parsedBody.revocationDate).toBeTruthy();
+    });
+
+    it('should throw an error if environment is invalid', () => {
+      delete process.env.AUTHENTICATION_SECRET_TOKEN_HASH;
+
+      expect(() => Authentication.parseToken('')).toThrowError(ValidationError);
+    });
+
+    it('should throw an error if token is invalid', () => {
+      expect(() => Authentication.parseToken('invalid-token')).toThrowError(ValidationError);
+    });
+
+    it('should throw an error if token is string', () => {
+      const stringToken = sign(
+        'string-token',
+        process.env.AUTHENTICATION_SECRET_TOKEN_HASH!,
+        {
+          algorithm: 'HS256',
+        },
+      );
+
+      expect(() => Authentication.parseToken(stringToken)).toThrowError(ValidationError);
     });
   });
 

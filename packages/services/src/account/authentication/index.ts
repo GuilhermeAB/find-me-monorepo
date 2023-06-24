@@ -78,11 +78,10 @@ export class Authentication {
 
     try {
       const payload = verify(token, AUTHENTICATION_SECRET_TOKEN_HASH);
-      if (!payload || typeof payload === 'string') {
+      if (typeof payload === 'string') {
         throw new ValidationError({ key: 'InvalidToken' });
       }
 
-      // TODO: Verify tokenId
       return payload as TokenBody;
     } catch (e) {
       throw new ValidationError({ key: 'InvalidToken' });

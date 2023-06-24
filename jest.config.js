@@ -44,5 +44,12 @@ module.exports = {
     '!**/__tests__/**',
     '!frontend/**',
     '!packages/repositories/**',
+    '!packages/services/src/**/base/**',
+    '!adapters/api/src/cert/**',
+    '!adapters/api/src/controller/**',
+    '!adapters/api/src/server/**',
+    '!adapters/database/**',
+    '!backend/**',
+    '!packages/services/src/account/mailer/templates/**',
   ],
 };

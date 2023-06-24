@@ -45,8 +45,12 @@ export class AccountActivationService extends AccountService {
 
   public async activation(id: string, code: string): Promise<void> {
     const account = await this.repository.findByAccount(id);
-    const details = await this.detailsRepository.getByAccount(account!.getProps().id.value);
-    if (!details || !account) {
+    if (!account) {
+      throw new ValidationError({ key: 'AccountNotFound' });
+    }
+
+    const details = await this.detailsRepository.getByAccount(account.getProps().id.value);
+    if (!details) {
       throw new ValidationError({ key: 'AccountNotFound' });
     }
 
@@ -77,8 +81,12 @@ export class AccountActivationService extends AccountService {
 
   public async requestNewCode(id: string): Promise<void> {
     const account = await this.repository.findByAccount(id);
-    const details = await this.detailsRepository.getByAccount(account!.getProps().id.value);
-    if (!details || !account) {
+    if (!account) {
+      throw new ValidationError({ key: 'AccountNotFound' });
+    }
+
+    const details = await this.detailsRepository.getByAccount(account.getProps().id.value);
+    if (!details) {
       throw new ValidationError({ key: 'AccountNotFound' });
     }
 

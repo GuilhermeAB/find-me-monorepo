@@ -15,7 +15,7 @@ export class AlertImageEntity extends ImageEntity<AlertImageProps> {
     const entity = new AlertImageEntity({
       props: {
         ...image.getProps(),
-        alert: UUID.generate(props.alert),
+        alert: props.alert,
       },
     });
 
