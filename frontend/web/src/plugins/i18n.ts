@@ -256,6 +256,8 @@ export const i18n = createI18n({
       AlertCreateWarning: 'First check if there is a record of the missing person in the services:',
       AlertCreateWarningServices: '- 192 SAMU (Serviço de atendimento móvel de urgência)\n- 193 Corpo de bombeiros\n- 190 Polícia militar',
       AlertCreateWarningText: 'Create a missing person report for the police and provide as much detail as possible to help with identification',
+      SpeechRecognitionUnsupported: 'Voice recognition is not supported in your browser',
+      Listening: 'Listening',
     },
     pt: {
       // BACK
@@ -508,6 +510,8 @@ export const i18n = createI18n({
       AlertCreateWarning: 'Em caso de desaparecimento primeiramente verifique se há registro da pessoa desaparecida nos serviços responsáveis:',
       AlertCreateWarningServices: '- 192 SAMU (Serviço de atendimento móvel de urgência)\n- 193 Corpo de bombeiros\n- 190 Polícia militar',
       AlertCreateWarningText: 'Registre um boletim de ocorrência do desaparecimento na polícia e informe o máximo de detalhes possíveis para auxiliar na identificação',
+      SpeechRecognitionUnsupported: 'Reconhecimento de voz não é suportado no seu navegador',
+      Listening: 'Escutando',
     },
     // Other locales and translations
   },

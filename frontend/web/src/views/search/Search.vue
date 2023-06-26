@@ -24,7 +24,9 @@
                     variant='outlined'
                     density='comfortable'
                     prepend-inner-icon='mdi-magnify'
+                    append-icon='mdi-microphone'
                     :label='$t("Search")'
+                    @click:append='openVoiceSearchDialog'
                   />
                 </v-row>
 
@@ -189,6 +191,32 @@
       </v-col>
     </v-row>
   </v-container>
+
+  <v-dialog v-model='voiceSearchDialog' persistent width='300'>
+    <v-card
+      flat
+      color='primary'
+    >
+      <v-card-text>
+        <v-container fluid>
+          <v-row no-gutters align='center' justify='center'>
+            <v-icon large>
+              mdi-microphone
+            </v-icon>
+            <span class='title'>
+              {{ $t('Listening') }}
+            </span>
+          </v-row>
+
+          <v-row justify='center' @click='abortSpeech'>
+            <v-btn variant='outlined'>
+              {{ $t('Cancel') }}
+            </v-btn>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -200,13 +228,18 @@
     AlertType, AlertService, AlertStatus, Alert,
   } from '@/services';
   import AlertListItem from '../dashboard/components/alert/AlertListItem.vue';
+  import { useNotificationStore } from '@/store/notification';
 
   const $i18n = inject<Composer>('$i18n');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const $t = $i18n!.t;
 
+  const notification = useNotificationStore();
+
   const showFilters = ref(false);
   const isLoading = ref(false);
+  const voiceSearchDialog = ref(false);
+  const recognition = ref();
 
   const filterText = ref<string | undefined>();
   const alertStatus = ref(AlertStatus.Open);
@@ -307,6 +340,52 @@
       alerts.value = list;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  function abortSpeech (): void {
+    voiceSearchDialog.value = false;
+    if (recognition.value) {
+      recognition.value.stop();
+    }
+  }
+
+  function openVoiceSearchDialog (): void {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (!window.webkitSpeechRecognition) {
+      notification.add({ type: 'warning', code: 'SpeechRecognitionUnsupported' });
+    } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const SpeechRecognition = webkitSpeechRecognition || window.webkitSpeechRecognition;
+      recognition.value = new SpeechRecognition();
+      recognition.value.lang = 'pt-BR';
+
+      recognition.value.onstart = (): void => {
+        voiceSearchDialog.value = true;
+      };
+
+      recognition.value.onspeechend = (): void => {
+        voiceSearchDialog.value = false;
+        recognition.value.stop();
+      };
+
+      recognition.value.onresult = (event: { results: { transcript: string }[][]; }): void => {
+        const { transcript } = event.results[0][0];
+
+        if (transcript) {
+          filterText.value = transcript;
+          getAlerts();
+        }
+      };
+
+      setTimeout(() => {
+        voiceSearchDialog.value = false;
+        recognition.value.stop();
+      }, 3000);
+
+      recognition.value.start();
     }
   }
 
